@@ -12,6 +12,18 @@ class App extends Component {
     editorDidMount(editor, monaco) {
         console.log('editorDidMount', editor);
         editor.focus();
+
+        let viewZoneId;
+
+        editor.changeViewZones(function(changeAccessor) {
+            var domNode = document.createElement('div');
+            domNode.style.background = 'lightgreen';
+            viewZoneId = changeAccessor.addZone({
+                        afterLineNumber: 3,
+                        heightInLines: 3,
+                        domNode: domNode
+            });
+        });
     }
 
     onChange(newValue, e) {
@@ -21,18 +33,22 @@ class App extends Component {
     render() {
         const code = this.state.code;
         const options = {
-          selectOnLineNumbers: true
+          selectOnLineNumbers: true,
+          minimap: {
+              enabled: false
+          }
         };
+
         return (
           <MonacoEditor
-            width="800"
+            width="600"
             height="600"
             language="javascript"
-            theme="vs-dark"
             value={code}
+            theme="vs-dark"
             options={options}
-            onChange={() => this.onChange}
-            editorDidMount={() => this.editorDidMount}
+            onChange={(newValue, e) => this.onChange(newValue, e)}
+            editorDidMount={(editor, monaco) => this.editorDidMount(editor, monaco)}
           />
         );
     }
