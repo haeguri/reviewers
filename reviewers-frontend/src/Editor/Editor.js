@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import MonacoEditor from 'react-monaco-editor';
 
 class Editor extends Component {
@@ -6,10 +7,6 @@ class Editor extends Component {
         editor.focus();
 
         this.props.editorDidMount(editor, monaco);
-    }
-
-    onChange(newValue, e) {
-        this.props.onChange(newValue, e)
     }
 
     render() {
@@ -21,11 +18,23 @@ class Editor extends Component {
                 value={this.props.value}
                 theme="vs-dark"
                 options={this.props.options}
-                onChange={(newValue, e) => this.onChange(newValue, e)}
+                onChange={(newValue, e) => this.props.onChange(newValue, e)}
                 editorDidMount={(editor, monaco) => this.editorDidMount(editor, monaco)}
             />
         )
     }
 }
+
+Editor.defaultProps = {
+    editorDidMount: _=>{},
+    onChange: _=>{}
+};
+
+Editor.propTypes = {
+    value: PropTypes.string,
+    options: PropTypes.object,
+    editorDidMount: PropTypes.func,
+    onChange: PropTypes.func
+};
 
 export default Editor;

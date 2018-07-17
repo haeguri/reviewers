@@ -27,42 +27,44 @@ class App extends Component {
     }
 
     onWriteEditorChange(newValue, e) {
+        this.setState({
+            writeEditorCode: newValue
+        });
+
         console.log('write editor on change', newValue, e);
     }
 
     onReadEditorChange(newValue, e) {
+        this.setState({
+            readEditorCode: newValue
+        });
+
         console.log('read editor on change', newValue, e);
     }
 
     render() {
-        const writeEditorOptions = {
-            minimap: {
-                enabled: false
-            }
-        }
-        
-        const readEditorOptions = {
-            minimap: {
-                enabled: false
-            },
-            readOnly: true
-        }
-
         return (
             <div>
-                {/* Read-Only */}
+                {/* Read-Only .*/}
                 <Editor 
-                    options={readEditorOptions}
+                    options={{
+                        minimap: {
+                            enabled: false
+                        },
+                        readOnly: true
+                    }}
                     value={this.state.readEditorCode}
-                    onChange={this.onReadEditorChange.bind(this)}
                     editorDidMount={this.editorDidMount.bind(this)}
                     />
                 {/* Editable */}
                 <Editor 
-                    options={writeEditorOptions}
+                    options={{
+                        minimap: {
+                            enabled: false
+                        }
+                    }}
                     value={this.state.writeEditorCode}
                     onChange={this.onWriteEditorChange.bind(this)}
-                    editorDidMount={this.editorDidMount.bind(this)}
                     />
             </div>
         );
