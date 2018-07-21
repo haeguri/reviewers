@@ -1,41 +1,13 @@
 import React, { Component } from 'react';
 import Editor from './Editor/Editor';
-import { debug } from 'util';
 
 class App extends Component {
     constructor(props) {
         super(props);
         
         this.state = {
-            writeEditorCode: (_=>{
-                const code = [];
-
-                for(let n of Array(10).fill(0)) {
-                    let line = '';
-                    for(let nn of Array(10).fill(n)) {
-                        line += nn;
-                    }
-
-                    code.push(line);
-                }
-
-                return code.join('\n');
-            })(),
-            readEditorCode: (_=>{
-                const code = [];
-
-                Array(10).fill(0).forEach((v, i) => {
-                    let line = '';
-
-                    Array(10).fill(0).forEach(() => {
-                        line += (i+1);
-                    })
-
-                    code.push(line);
-                });
-
-                return code.join('\n');
-            })()
+            writeEditorCode: sampleCode(),
+            readEditorCode: sampleCode()
         };
     }
 
@@ -53,23 +25,58 @@ class App extends Component {
             });
         });
 
-        editor.deltaDecorations([], [
-            {
-                range: new monaco.Range(3, 1, 3, 1),
-                options: {
-                    glyphMarginClassName: 'comment-btn'
-                }
-            }
-        ])
-
         editor.onMouseDown(e => {
             console.log('mouse down ! ', e);
         })
 
+        // let prevLineNumber;
+        let prevPosition;
+        let oldOwnerId;
         editor.onMouseMove(e => {
+            let currPosition;
+
+            if(e.target.position === null) {
+                return;
+            }
+
+            // 마우스 움직일 때 알 수 있어야 한다. 
+            // 마우스가 움직이는 line number가 바뀔 때 알 수 있어야 한다. (*)
+            // line number가 바꼈을 때 
+            //      1) 이전의 line nubmer에 있는 comment button을 제거 한다.
+            //      2) 이번의 line nubmer에 있는 comment button을 추가 한다.
+
+            prevPosition = prevPosition || e.target.position;
+            currPosition = e.target.position;
+
+            if(prevPosition.lineNumber !== currPosition.lineNumber) {
+                console.log('line number is changed!');
+            }
+
+            prevPosition = currPosition;
+
+            let oldDecorations = [];
+
+            if(typeof oldOwnerId === 'undefined') {
+                oldDecorations = [];
+            } else {
+                oldDecorations = [oldOwnerId];
+            }
+
+            oldOwnerId = editor.deltaDecorations(oldDecorations, [
+                {
+                    range: new monaco.Range(
+                        currPosition.lineNumber, currPosition.colNumber, 
+                        currPosition.lineNumber, currPosition.colNumber
+                    ),
+                    options: {
+                        linesDecorationsClassName: 'comment-btn'
+                    }
+                }
+            ])
+                           
             // debugger;
-            console.log('EventTarget toString', e.target.toString());
-            console.log('Position : ', e.target.position);
+            // console.log('EventTarget toString', e.target.toString());
+            // console.log('Position : ', e.target.position);
             // console.log('Range : ', e.target.range);
             // console.log('Mouse Column : ', e.target.mouseColumn);
             // console.log('Column : ', e.target.position.column);
@@ -105,7 +112,6 @@ class App extends Component {
                     }}
                     value={this.state.writeEditorCode}
                     onChange={this.onWriteEditorChange.bind(this)}
-                    
                     />
             </div>
         );
@@ -113,3 +119,19 @@ class App extends Component {
 }
 
 export default App;
+
+function sampleCode() {
+    const code = [];
+
+    Array(10).fill(0).forEach((v, i) => {
+        let line = '';
+
+        Array(10).fill(0).forEach(() => {
+            line += (i+1);
+        })
+
+        code.push(line);
+    });
+
+    return code.join('\n');
+}
