@@ -33,7 +33,8 @@ class App extends Component {
         let prevPosition;
         let oldOwnerId;
         editor.onMouseMove(e => {
-            let currPosition;
+            let currPosition,
+                oldDecorations = [];
 
             if(e.target.position === null) {
                 return;
@@ -54,33 +55,65 @@ class App extends Component {
 
             prevPosition = currPosition;
 
-            let oldDecorations = [];
+            // if(typeof oldOwnerId === 'undefined') {
+            //     oldDecorations = [];
+            // } else {
+            //     oldDecorations = [oldOwnerId];
+            // }
 
-            if(typeof oldOwnerId === 'undefined') {
-                oldDecorations = [];
-            } else {
-                oldDecorations = [oldOwnerId];
-            }
+            // oldOwnerId = editor.deltaDecorations(oldDecorations, [
+            //     {
+            //         range: new monaco.Range(
+            //             currPosition.lineNumber, currPosition.colNumber, 
+            //             currPosition.lineNumber, currPosition.colNumber
+            //         ),
+            //         options: {
+            //             className: 'comment-btn',
+            //             // linesDecorationsClassName: 'comment-btn',
+            //             // beforeContentClassName: 'comment-btn',
+            //             // afterContentClassName: 'comment-btn',
+            //             // inlineClassName: 'comment-btn',
+            //             // inlineClassNameAffectsLetterSpacing: 'comment-btn',
+            //             // marginClassName: 'comment-btn',
+            //             // zIndex: 1000,
+            //             isWholeLine:true,
+            //         }
+            //     }
+            // ])
 
-            oldOwnerId = editor.deltaDecorations(oldDecorations, [
-                {
-                    range: new monaco.Range(
-                        currPosition.lineNumber, currPosition.colNumber, 
-                        currPosition.lineNumber, currPosition.colNumber
-                    ),
-                    options: {
-                        linesDecorationsClassName: 'comment-btn'
-                    }
+            editor.removeContentWidget({
+                getId: function() {
+                    return 'my.content.widget';
                 }
-            ])
-                           
-            // debugger;
-            // console.log('EventTarget toString', e.target.toString());
-            // console.log('Position : ', e.target.position);
-            // console.log('Range : ', e.target.range);
-            // console.log('Mouse Column : ', e.target.mouseColumn);
-            // console.log('Column : ', e.target.position.column);
-            // console.log('Line Number : ', e.target.position.lineNumber);
+            });
+
+            console.log('before addContentWidget', currPosition);
+            editor.addContentWidget({
+                domNode: null,
+                suppressMouseDown: false,
+                allowEditorOverflow: true,
+                getId: function() {
+                    return 'my.content.widget';
+                },
+                getDomNode: function() {
+                    if (!this.domNode) {
+                        this.domNode = document.createElement('div');
+                        this.domNode.className = 'comment-btn';
+                    }
+
+                    return this.domNode;
+                },
+                getPosition: function() {
+                    console.log('in addContentWidget', currPosition);
+                    return {
+                        position: {
+                            lineNumber: currPosition.lineNumber,
+                            column: currPosition.colNumber
+                        },
+                        preference: [monaco.editor.ContentWidgetPositionPreference.ABOVE, monaco.editor.ContentWidgetPositionPreference.BELOW]
+                    };
+                }
+            })
         })
     }
 
