@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import MonacoEditor from 'react-monaco-editor';
+import Review from './Review/Review.js';
 import './Editor.css';
 
 const COMMENT_BTN_CLASSNAME = 'comment-btn';
+const REVIEW_COMPONENT_HEIGHT = 200;
 
 class Editor extends Component {
     eidtor = null;
@@ -11,6 +14,8 @@ class Editor extends Component {
 
     constructor(props) {
         super(props);
+
+        this.refReview = React.createRef();
 
         Object.assign(props.options, { 
             contextmenu: false,
@@ -20,6 +25,8 @@ class Editor extends Component {
     editorDidMount(editor, monaco) {
         this.editor = editor;
         this.monaco = monaco;
+
+        // React.render()
 
         this.editor.focus();
 
@@ -32,6 +39,8 @@ class Editor extends Component {
     }
 
     render() {
+
+
         return (
             <MonacoEditor
                 theme="vs"
@@ -47,21 +56,56 @@ class Editor extends Component {
     }
 
     _attachMouseDownEventListener() {
-        var viewZoneId;
+        let prevPosition;
+        let prevViewZoneId;
 
         this.editor.onMouseDown(e => {
-            console.log('mouse down ! ', e);
+            if(e.target.position === null) {
+                return;
+            }
+
+            let currPosition = e.target.position;
+
+            if(typeof prevPosition === 'undefined') {
+                prevPosition = currPosition;
+                if(e.target.element.className.indexOf(COMMENT_BTN_CLASSNAME)) {
+                    this.editor.changeViewZones(function(changeAccessor) {
+                        const domNode = document.createElement('div');
+                        ReactDOM.render(<Review height={REVIEW_COMPONENT_HEIGHT}/>, domNode);
+                        prevViewZoneId = changeAccessor.addZone({
+                            afterLineNumber: currPosition.lineNumber,
+                            afterColumn: currPosition.colNumber,
+                            heightInPx: REVIEW_COMPONENT_HEIGHT,
+                            domNode: domNode
+                        });
+                    });
+                }
+                return;
+            }
+
+            if(prevPosition.lineNumber === currPosition.lineNumber) {
+                return;
+            }
+
             if(e.target.element.className.indexOf(COMMENT_BTN_CLASSNAME)) {
                 this.editor.changeViewZones(function(changeAccessor) {
-                    var domNode = document.createElement('div');
-                    domNode.style.background = 'lightgreen';
-                    viewZoneId = changeAccessor.addZone({
-                        afterLineNumber: 3,
-                        heightInLines: 3,
+                    changeAccessor.removeZone(prevViewZoneId);
+
+                    const domNode = document.createElement('div');
+                    ReactDOM.render(<Review height={REVIEW_COMPONENT_HEIGHT} />, domNode);
+                    prevViewZoneId = changeAccessor.addZone({
+                        afterLineNumber: currPosition.lineNumber,
+                        afterColumn: currPosition.colNumber,
+                        heightInPx: REVIEW_COMPONENT_HEIGHT,
                         domNode: domNode
                     });
                 });
             }
+
+            prevPosition = currPosition;
+
+            // console.log('mouse down ! ', e);
+            // 
         })
     }
 
