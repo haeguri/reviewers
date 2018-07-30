@@ -5,17 +5,12 @@ import MonacoEditor from 'react-monaco-editor';
 import Review from './Review/Review.js';
 import './Editor.css';
 
-const COMMENT_BTN_CLASSNAME = 'comment-btn';
-const REVIEW_COMPONENT_HEIGHT = 200;
-
 class Editor extends Component {
     eidtor = null;
     monaco = null;
 
     constructor(props) {
         super(props);
-
-        this.refReview = React.createRef();
 
         Object.assign(props.options, { 
             contextmenu: false,
@@ -25,8 +20,6 @@ class Editor extends Component {
     editorDidMount(editor, monaco) {
         this.editor = editor;
         this.monaco = monaco;
-
-        // React.render()
 
         this.editor.focus();
 
@@ -39,8 +32,6 @@ class Editor extends Component {
     }
 
     render() {
-
-
         return (
             <MonacoEditor
                 theme="vs"
@@ -59,6 +50,8 @@ class Editor extends Component {
         let prevPosition;
         let prevViewZoneId;
 
+        let widgetId = 1;
+
         this.editor.onMouseDown(e => {
             if(e.target.position === null) {
                 return;
@@ -66,52 +59,77 @@ class Editor extends Component {
 
             let currPosition = e.target.position;
 
+            console.log(e.target);
+
             if(typeof prevPosition === 'undefined') {
                 prevPosition = currPosition;
-                if(e.target.element.className.indexOf(COMMENT_BTN_CLASSNAME)) {
-                    this.editor.changeViewZones(function(changeAccessor) {
-                        const domNode = document.createElement('div');
-                        ReactDOM.render(<Review height={REVIEW_COMPONENT_HEIGHT}/>, domNode);
-                        prevViewZoneId = changeAccessor.addZone({
-                            afterLineNumber: currPosition.lineNumber,
-                            afterColumn: currPosition.colNumber,
-                            heightInPx: REVIEW_COMPONENT_HEIGHT,
-                            domNode: domNode
-                        });
-                    });
-                }
+            }else if(prevPosition.lineNumber === currPosition.lineNumber) {
                 return;
             }
 
-            if(prevPosition.lineNumber === currPosition.lineNumber) {
-                return;
-            }
+            const REVIEW_COMMENT_HEIGHT = 200;
 
-            if(e.target.element.className.indexOf(COMMENT_BTN_CLASSNAME)) {
-                this.editor.changeViewZones(function(changeAccessor) {
-                    changeAccessor.removeZone(prevViewZoneId);
+            if(e.target.element.className.indexOf('comment-btn')) {
+                this.editor.addContentWidget({
+                    editor: this.editor,
+                    monaco: this.monaco,
+                    domNode: null,
+                    getId: function() {
+                        // return String(widgetId++);
+                        return currPosition.lineNumber + ',' + currPosition.column;
+                    },
+                    getDomNode: function() {
+                        if (!this.domNode) {
+                            console.log(this);
+                            this.domNode = document.createElement('div');
+                            ReactDOM.render(
+                                <Review
+                                    // height={}
+                                    onCancelClick={() => {
+                                        debugger;
+                                        this.editor.removeContentWidget(this.getId());
+                                    }}>
+                                </Review>,
+                                this.domNode
+                            );
 
-                    const domNode = document.createElement('div');
-                    ReactDOM.render(<Review height={REVIEW_COMPONENT_HEIGHT} />, domNode);
+                            this.domNode.style.background = 'grey';
+                            this.domNode.style.height = REVIEW_COMMENT_HEIGHT + 'px';
+                        }
+
+                        return this.domNode;
+                    },
+                    getPosition: function() {
+                        return {
+                            position: {
+                                lineNumber: currPosition.lineNumber,
+                                column: currPosition.column
+                            },
+                            preference: [this.monaco.editor.ContentWidgetPositionPreference.BELOW]
+                        };
+                    }
+                })
+
+                this.editor.changeViewZones(changeAccessor => {
+                    // ContentWidget이 들어갈 자리를 만들기 위한 Dummy DOM Node
+                    const dummyDomNode = document.createElement('div');
+
                     prevViewZoneId = changeAccessor.addZone({
                         afterLineNumber: currPosition.lineNumber,
-                        afterColumn: currPosition.colNumber,
-                        heightInPx: REVIEW_COMPONENT_HEIGHT,
-                        domNode: domNode
+                        afterColumn: currPosition.column,
+                        heightInPx: REVIEW_COMMENT_HEIGHT,
+                        domNode: dummyDomNode,
                     });
                 });
             }
 
             prevPosition = currPosition;
-
-            // console.log('mouse down ! ', e);
-            // 
         })
     }
 
     _attachMouseMoveEventListener() {
         let prevPosition;
-        let prevDecoId;
+        let prevDecoIds;
 
         this.editor.onMouseMove(e => {
             if(e.target.position === null) {
@@ -122,28 +140,26 @@ class Editor extends Component {
 
             if(typeof prevPosition === 'undefined') {
                 prevPosition = currPosition;
-                prevDecoId = this._updateDecorations([], currPosition);
+                prevDecoIds = this._updateDecorations([], currPosition);
+                return;
+            } else if(prevPosition.lineNumber === currPosition.lineNumber) {
                 return;
             }
 
-            if(prevPosition.lineNumber === currPosition.lineNumber) {
-                return;
-            }
-
-            prevDecoId = this._updateDecorations([prevDecoId], currPosition);
+            prevDecoIds = this._updateDecorations(prevDecoIds, currPosition);
             prevPosition = currPosition;
         })
     }
 
-    _updateDecorations(oldDecos, currPosition) {
-        return this.editor.deltaDecorations(oldDecos, [
+    _updateDecorations(prevDecoIds, currPosition) {
+        return this.editor.deltaDecorations(prevDecoIds, [
             {
                 range: new this.monaco.Range(
-                    currPosition.lineNumber, currPosition.colNumber, 
-                    currPosition.lineNumber, currPosition.colNumber
+                    currPosition.lineNumber, currPosition.column, 
+                    currPosition.lineNumber, currPosition.column
                 ),
                 options: {
-                    glyphMarginClassName: COMMENT_BTN_CLASSNAME,
+                    glyphMarginClassName: 'comment-btn',
                 }
             }
         ]);
@@ -154,8 +170,8 @@ Editor.defaultProps = {
     editorDidMount: _=>{},
     onChange: _=>{},
     language: 'javascript',
-    width: "600",
-    height: "600",
+    width: '600',
+    height: '600',
 };
 
 Editor.propTypes = {
