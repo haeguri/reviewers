@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+
 import MonacoEditor from 'react-monaco-editor';
 import Review from './Review/Review.js';
 import './Editor.css';
@@ -17,20 +18,6 @@ class Editor extends Component {
         });
     }
 
-    editorDidMount(editor, monaco) {
-        this.editor = editor;
-        this.monaco = monaco;
-
-        this.editor.focus();
-
-        if(this.props.isReadOnly) {
-            this._attachMouseDownEventListener();
-            this._attachMouseMoveEventListener();
-        }
-
-        this.props.editorDidMount(editor, monaco);
-    }
-
     render() {
         return (
             <MonacoEditor
@@ -41,9 +28,23 @@ class Editor extends Component {
                 value={this.props.value}
                 options={this.props.options}
                 onChange={(newValue, e) => this.props.onChange(newValue, e)}
-                editorDidMount={(editor, monaco) => this.editorDidMount(editor, monaco)}
+                editorDidMount={(editor, monaco) => this._editorDidMount(editor, monaco)}
             />
         )
+    }
+
+    _editorDidMount(editor, monaco) {
+        this.editor = editor;
+        this.monaco = monaco;
+
+        if(this.props.isReadOnly) {
+            this._attachMouseDownEventListener();
+            this._attachMouseMoveEventListener();
+        } else {
+            this.editor.focus();
+        }
+
+        this.props.editorDidMount(editor, monaco);
     }
 
     _attachMouseDownEventListener() {
@@ -70,47 +71,47 @@ class Editor extends Component {
             const REVIEW_COMMENT_HEIGHT = 200;
 
             if(e.target.element.className.indexOf('comment-btn')) {
-                this.editor.addContentWidget({
-                    editor: this.editor,
-                    monaco: this.monaco,
+                const { editor, monaco } = this;
+
+                editor.addContentWidget({
                     domNode: null,
-                    getId: function() {
-                        // return String(widgetId++);
+                    getId() {
                         return currPosition.lineNumber + ',' + currPosition.column;
                     },
-                    getDomNode: function() {
-                        if (!this.domNode) {
-                            console.log(this);
-                            this.domNode = document.createElement('div');
+                    getDomNode() {
+                        let { domNode } = this;
+
+                        if (!domNode) {
+                            domNode = document.createElement('div');
+
                             ReactDOM.render(
                                 <Review
-                                    // height={}
                                     onCancelClick={() => {
-                                        debugger;
-                                        this.editor.removeContentWidget(this.getId());
+                                        editor.removeContentWidget(this);
+                                        editor.changeViewZones(changeAccessor => {
+                                            changeAccessor.removeZone(prevViewZoneId);
+                                        })
                                     }}>
                                 </Review>,
-                                this.domNode
+                                domNode
                             );
 
-                            this.domNode.style.background = 'grey';
-                            this.domNode.style.height = REVIEW_COMMENT_HEIGHT + 'px';
+                            domNode.style.background = 'grey';
+                            domNode.style.height = REVIEW_COMMENT_HEIGHT + 'px';
                         }
 
-                        return this.domNode;
+                        return domNode;
                     },
-                    getPosition: function() {
+                    getPosition() {
+                        const { lineNumber, column } = currPosition;
                         return {
-                            position: {
-                                lineNumber: currPosition.lineNumber,
-                                column: currPosition.column
-                            },
-                            preference: [this.monaco.editor.ContentWidgetPositionPreference.BELOW]
+                            position: { lineNumber, column },
+                            preference: [ monaco.editor.ContentWidgetPositionPreference.BELOW ]
                         };
                     }
                 })
 
-                this.editor.changeViewZones(changeAccessor => {
+                editor.changeViewZones(changeAccessor => {
                     // ContentWidget이 들어갈 자리를 만들기 위한 Dummy DOM Node
                     const dummyDomNode = document.createElement('div');
 

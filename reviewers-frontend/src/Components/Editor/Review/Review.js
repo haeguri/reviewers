@@ -11,11 +11,7 @@ export default class Review extends Component {
         return (
             <div className="review-container" style={{height: this.props.height, width: this.props.width}}>
                 <h1>This is Review Component!</h1>
-                <button onClick={() => {
-                    debugger;
-                    this.props.onCancelClick();
-                }}>Close Button
-                </button>
+                <button onClick={() => this.props.onCancelClick()}>Close Button</button>
             </div>            
         )
     }
