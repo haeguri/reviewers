@@ -15,6 +15,7 @@ class Editor extends Component {
 
         Object.assign(props.options, { 
             contextmenu: false,
+            folding: false
         });
     }
 
@@ -49,7 +50,8 @@ class Editor extends Component {
 
     _attachMouseDownEventListener() {
         let prevPosition;
-        let prevViewZoneId;
+        
+        const viewZoneIds = [];
 
         let widgetId = 1;
 
@@ -59,8 +61,9 @@ class Editor extends Component {
             }
 
             let currPosition = e.target.position;
+            let currViewZoneId;
 
-            console.log(e.target);
+            // console.log(e.target);
 
             if(typeof prevPosition === 'undefined') {
                 prevPosition = currPosition;
@@ -70,13 +73,17 @@ class Editor extends Component {
 
             const REVIEW_COMMENT_HEIGHT = 200;
 
-            if(e.target.element.className.indexOf('comment-btn')) {
+            console.log(e.target.element.className);
+            if(e.target.element.className.indexOf('comment-btn') >= 0) {
                 const { editor, monaco } = this;
+
+                console.log('be add id : ', currPosition)
+                console.log(e.target);
 
                 editor.addContentWidget({
                     domNode: null,
                     getId() {
-                        return currPosition.lineNumber + ',' + currPosition.column;
+                        return currPosition.lineNumber + ',' + 1;
                     },
                     getDomNode() {
                         let { domNode } = this;
@@ -87,10 +94,9 @@ class Editor extends Component {
                             ReactDOM.render(
                                 <Review
                                     onCancelClick={() => {
+                                        console.log('be remove id : ', currPosition);
                                         editor.removeContentWidget(this);
-                                        editor.changeViewZones(changeAccessor => {
-                                            changeAccessor.removeZone(prevViewZoneId);
-                                        })
+                                        editor.changeViewZones(changeAccessor => changeAccessor.removeZone(currViewZoneId))
                                     }}>
                                 </Review>,
                                 domNode
@@ -103,7 +109,9 @@ class Editor extends Component {
                         return domNode;
                     },
                     getPosition() {
-                        const { lineNumber, column } = currPosition;
+                        const { lineNumber } = currPosition;
+                        const column = 1;
+
                         return {
                             position: { lineNumber, column },
                             preference: [ monaco.editor.ContentWidgetPositionPreference.BELOW ]
@@ -112,19 +120,22 @@ class Editor extends Component {
                 })
 
                 editor.changeViewZones(changeAccessor => {
-                    // ContentWidget이 들어갈 자리를 만들기 위한 Dummy DOM Node
+                    // ContentWidget이 들어갈 자리를 만들기 위한 더미 DOM Node
                     const dummyDomNode = document.createElement('div');
-
-                    prevViewZoneId = changeAccessor.addZone({
+                    currViewZoneId = changeAccessor.addZone({
                         afterLineNumber: currPosition.lineNumber,
                         afterColumn: currPosition.column,
                         heightInPx: REVIEW_COMMENT_HEIGHT,
                         domNode: dummyDomNode,
-                    });
-                });
-            }
+                    })
 
-            prevPosition = currPosition;
+                    viewZoneIds.push(currViewZoneId);
+                });
+
+                prevPosition = currPosition;
+            } else {
+                prevPosition = undefined;
+            }
         })
     }
 
