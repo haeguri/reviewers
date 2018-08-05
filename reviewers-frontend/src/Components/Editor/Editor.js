@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-
 import MonacoEditor from 'react-monaco-editor';
 import Review from './Review/Review.js';
-import './Editor.css';
+import styled from 'styled-components';
 
 const REVIEW_COMMENT_HEIGHT = 200;
+
+const StyledWrapper = styled.div`
+    border: solid 1px #c2c2c2;
+`;
 
 class Editor extends Component {
     eidtor = null;
@@ -23,23 +26,22 @@ class Editor extends Component {
 
     render() {
         return (
-            <MonacoEditor
-                theme="vs"
-                width={this.props.width}
-                height={this.props.height}
-                language={this.props.language}
-                value={this.props.value}
-                options={this.props.options}
-                onChange={(newValue, e) => this.props.onChange(newValue, e)}
-                editorDidMount={(editor, monaco) => this._editorDidMount(editor, monaco)}
-            />
+            <StyledWrapper>
+                <MonacoEditor
+                    theme="vs"
+                    width={this.props.width}
+                    height={this.props.height}
+                    language={this.props.language}
+                    value={this.props.value}
+                    options={this.props.options}
+                    onChange={(newValue, e) => this.props.onChange(newValue, e)}
+                    editorDidMount={(editor, monaco) => this._editorDidMount(editor, monaco)}
+                />
+            </StyledWrapper>
         )
     }
 
     _editorDidMount(editor, monaco) {
-        // this.editor = editor;
-        // this.monaco = monaco;
-
         if(this.props.isReadOnly) {
             this._attachMouseDownEventListener(editor);
             this._attachMouseMoveEventListener(editor, monaco);
