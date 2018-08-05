@@ -6,6 +6,8 @@ import MonacoEditor from 'react-monaco-editor';
 import Review from './Review/Review.js';
 import './Editor.css';
 
+const REVIEW_COMMENT_HEIGHT = 200;
+
 class Editor extends Component {
     eidtor = null;
     monaco = null;
@@ -35,24 +37,24 @@ class Editor extends Component {
     }
 
     _editorDidMount(editor, monaco) {
-        this.editor = editor;
-        this.monaco = monaco;
+        // this.editor = editor;
+        // this.monaco = monaco;
 
         if(this.props.isReadOnly) {
-            this._attachMouseDownEventListener();
-            this._attachMouseMoveEventListener();
+            this._attachMouseDownEventListener(editor);
+            this._attachMouseMoveEventListener(editor, monaco);
         } else {
-            this.editor.focus();
+            editor.focus();
         }
 
         this.props.editorDidMount(editor, monaco);
     }
 
-    _attachMouseDownEventListener() {
+    _attachMouseDownEventListener(editor) {
         let activeLineNumbers = [];
         const viewZoneIds = [];
 
-        this.editor.onMouseDown(e => {
+        editor.onMouseDown(e => {
             if(e.target.position === null) {
                 return;
             }
@@ -63,10 +65,7 @@ class Editor extends Component {
                 return;
             }
 
-            const REVIEW_COMMENT_HEIGHT = 200;
-
             if(e.target.element.className.indexOf('comment-btn') >= 0) {
-                const { editor } = this;
 
                 editor.changeViewZones(changeAccessor => {
                     let currViewZoneId;
@@ -76,6 +75,7 @@ class Editor extends Component {
 
                     ReactDOM.render(
                         <Review
+                            height={REVIEW_COMMENT_HEIGHT}
                             onCancelClick={() => {
                                 editor.changeViewZones(changeAccessor => changeAccessor.removeZone(currViewZoneId));
                                 activeLineNumbers = activeLineNumbers.filter(n => n !== currLineNumber);
@@ -87,7 +87,6 @@ class Editor extends Component {
 
                     currViewZoneId = changeAccessor.addZone({
                         afterLineNumber: currLineNumber,
-                        afterColumn: 1,
                         heightInPx: REVIEW_COMMENT_HEIGHT,
                         domNode: reviewContainerDOM,
                     })
@@ -99,11 +98,11 @@ class Editor extends Component {
         })
     }
 
-    _attachMouseMoveEventListener() {
+    _attachMouseMoveEventListener(editor, monaco) {
         let prevPosition;
         let prevDecoIds;
 
-        this.editor.onMouseMove(e => {
+        editor.onMouseMove(e => {
             if(e.target.position === null) {
                 return;
             }
@@ -112,23 +111,23 @@ class Editor extends Component {
 
             if(typeof prevPosition === 'undefined') {
                 prevPosition = currPosition;
-                prevDecoIds = this._updateDecorations([], currPosition);
+                prevDecoIds = this._updateDecorations(editor, monaco, [], currPosition);
                 return;
             } else if(prevPosition.lineNumber === currPosition.lineNumber) {
                 return;
             }
 
-            prevDecoIds = this._updateDecorations(prevDecoIds, currPosition);
+            prevDecoIds = this._updateDecorations(editor, monaco, prevDecoIds, currPosition);
             prevPosition = currPosition;
-        })
+        });
     }
 
-    _updateDecorations(prevDecoIds, currPosition) {
-        return this.editor.deltaDecorations(prevDecoIds, [
+    _updateDecorations(editor, monaco, prevDecoIds, currPosition) {
+        return editor.deltaDecorations(prevDecoIds, [
             {
-                range: new this.monaco.Range(
-                    currPosition.lineNumber, currPosition.column, 
-                    currPosition.lineNumber, currPosition.column
+                range: new monaco.Range(
+                    currPosition.lineNumber, 1, 
+                    currPosition.lineNumber, 1
                 ),
                 options: {
                     glyphMarginClassName: 'comment-btn',
