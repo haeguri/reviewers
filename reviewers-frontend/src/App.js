@@ -1,52 +1,19 @@
 import React, { Component } from 'react';
-import Editor from './components/Editor/Editor';
+// import Editor from './Components/Editor/Editor';
+import Button from './Components/Button';
 
 class App extends Component {
-    constructor(props) {
-        super(props);
-        
-        this.state = {
-            writeEditorCode: sampleCode(),
-            readEditorCode: sampleCode() + '\nfunction test(){\n return { \n }\n}'
-        };
-    }
-
-    readEditorDidMount(editor, monaco) {
-        console.log('editorDidMount', editor);
-    }
-
-    onWriteEditorChange(newValue, e) {
-        this.setState({
-            writeEditorCode: newValue
-        });
-
-        console.log('write editor on change', newValue, e);
-    }
-
     render() {
         return (
-            <div className="app-container">
-                {/* Read-Only .*/}
-                <Editor 
-                    isReadOnly={true}
-                    options={{
-                        minimap: { enabled: false },
-                        readOnly: true,
-                        glyphMargin: true,
-                    }}
-                    value={this.state.readEditorCode}
-                    editorDidMount={this.readEditorDidMount.bind(this)}
-                    />
-                {/* Editable */}
-                <Editor 
-                    options={{
-                        minimap: { enabled: false }
-                    }}
-                    value={this.state.writeEditorCode}
-                    onChange={this.onWriteEditorChange.bind(this)}
-                    />
+            <div>
+                <Button big>
+                    버튼
+                </Button>
+                <Button>
+                    버튼
+                </Button>
             </div>
-        );
+        )
     }
 }
 
