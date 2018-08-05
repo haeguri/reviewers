@@ -15,7 +15,7 @@ class Editor extends Component {
 
         Object.assign(props.options, { 
             contextmenu: false,
-            folding: false
+            folding: false,
         });
     }
 
@@ -49,92 +49,50 @@ class Editor extends Component {
     }
 
     _attachMouseDownEventListener() {
-        let prevPosition;
-        
+        let activeLineNumbers = [];
         const viewZoneIds = [];
-
-        let widgetId = 1;
 
         this.editor.onMouseDown(e => {
             if(e.target.position === null) {
                 return;
             }
 
-            let currPosition = e.target.position;
-            let currViewZoneId;
+            let currLineNumber = e.target.position.lineNumber;
 
-            // console.log(e.target);
-
-            if(typeof prevPosition === 'undefined') {
-                prevPosition = currPosition;
-            }else if(prevPosition.lineNumber === currPosition.lineNumber) {
+            if(activeLineNumbers.indexOf(currLineNumber) >= 0) {
                 return;
             }
 
             const REVIEW_COMMENT_HEIGHT = 200;
 
-            console.log(e.target.element.className);
             if(e.target.element.className.indexOf('comment-btn') >= 0) {
-                const { editor, monaco } = this;
-
-                console.log('be add id : ', currPosition)
-                console.log(e.target);
-
-                editor.addContentWidget({
-                    domNode: null,
-                    getId() {
-                        return currPosition.lineNumber + ',' + 1;
-                    },
-                    getDomNode() {
-                        let { domNode } = this;
-
-                        if (!domNode) {
-                            domNode = document.createElement('div');
-
-                            ReactDOM.render(
-                                <Review
-                                    onCancelClick={() => {
-                                        console.log('be remove id : ', currPosition);
-                                        editor.removeContentWidget(this);
-                                        editor.changeViewZones(changeAccessor => changeAccessor.removeZone(currViewZoneId))
-                                    }}>
-                                </Review>,
-                                domNode
-                            );
-
-                            domNode.style.background = 'grey';
-                            domNode.style.height = REVIEW_COMMENT_HEIGHT + 'px';
-                        }
-
-                        return domNode;
-                    },
-                    getPosition() {
-                        const { lineNumber } = currPosition;
-                        const column = 1;
-
-                        return {
-                            position: { lineNumber, column },
-                            preference: [ monaco.editor.ContentWidgetPositionPreference.BELOW ]
-                        };
-                    }
-                })
+                const { editor } = this;
 
                 editor.changeViewZones(changeAccessor => {
-                    // ContentWidget이 들어갈 자리를 만들기 위한 더미 DOM Node
-                    const dummyDomNode = document.createElement('div');
+                    let currViewZoneId;
+
+                    const reviewContainerDOM = document.createElement('div');
+                    reviewContainerDOM.style.zIndex = '9999';
+                    ReactDOM.render(
+                        <Review
+                            onCancelClick={() => {
+                                editor.changeViewZones(changeAccessor => changeAccessor.removeZone(currViewZoneId));
+                                activeLineNumbers = activeLineNumbers.filter(n => n !== currLineNumber);
+                            }}>
+                        </Review>,
+                        reviewContainerDOM
+                    );
+
                     currViewZoneId = changeAccessor.addZone({
-                        afterLineNumber: currPosition.lineNumber,
-                        afterColumn: currPosition.column,
+                        afterLineNumber: currLineNumber,
+                        afterColumn: 1,
                         heightInPx: REVIEW_COMMENT_HEIGHT,
-                        domNode: dummyDomNode,
+                        domNode: reviewContainerDOM,
                     })
 
                     viewZoneIds.push(currViewZoneId);
+                    activeLineNumbers.push(currLineNumber);
                 });
-
-                prevPosition = currPosition;
-            } else {
-                prevPosition = undefined;
             }
         })
     }

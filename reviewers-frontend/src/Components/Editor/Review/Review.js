@@ -2,14 +2,22 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 export default class Review extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    componentDidMount() {
+        console.log('[Review][componentDidMount]');
+    }
+
     componentWillUnmount() {
-        console.log('Review will be unmount!');
+        console.log('[Review][componentWillUnmount]');
     }
 
     render() {
         console.log(this.props);
         return (
-            <div className="review-container" style={{height: this.props.height, width: this.props.width}}>
+            <div className="review-form" style={{height: this.props.height, width: this.props.width}}>
                 <h1>This is Review Component!</h1>
                 <button onClick={() => this.props.onCancelClick()}>Close Button</button>
             </div>            
