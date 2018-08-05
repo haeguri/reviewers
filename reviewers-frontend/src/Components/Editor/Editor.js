@@ -73,11 +73,13 @@ class Editor extends Component {
 
                     const reviewContainerDOM = document.createElement('div');
                     reviewContainerDOM.style.zIndex = '9999';
+
                     ReactDOM.render(
                         <Review
                             onCancelClick={() => {
                                 editor.changeViewZones(changeAccessor => changeAccessor.removeZone(currViewZoneId));
                                 activeLineNumbers = activeLineNumbers.filter(n => n !== currLineNumber);
+                                ReactDOM.unmountComponentAtNode(reviewContainerDOM);
                             }}>
                         </Review>,
                         reviewContainerDOM
