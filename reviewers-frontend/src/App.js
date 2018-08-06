@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Editor from './components/Editor/Editor';
+import Editor from './components/Editor';
 
 class App extends Component {
     constructor(props) {

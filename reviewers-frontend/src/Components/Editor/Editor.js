@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import MonacoEditor from 'react-monaco-editor';
-import Review from './Review/Review.js';
 import styled from 'styled-components';
+import Review from '../Review';
 
 const REVIEW_COMMENT_HEIGHT = 200;
 
