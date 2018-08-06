@@ -8,7 +8,14 @@ import Review from '../Review';
 const REVIEW_COMMENT_HEIGHT = 200;
 
 const StyledWrapper = styled.div`
+    width: ${props => props.width}px;
     border: solid 1px #c2c2c2;
+    .comment-btn {
+        border-radius: 10px;
+        background: skyblue;
+        width: 20px;
+        height: 20px;
+    }
 `;
 
 class Editor extends Component {
@@ -26,7 +33,7 @@ class Editor extends Component {
 
     render() {
         return (
-            <StyledWrapper>
+            <StyledWrapper width={this.props.width}>
                 <MonacoEditor
                     theme="vs"
                     width={this.props.width}
@@ -143,7 +150,7 @@ Editor.defaultProps = {
     editorDidMount: _=>{},
     onChange: _=>{},
     language: 'javascript',
-    width: '600',
+    width: '800',
     height: '600',
 };
 

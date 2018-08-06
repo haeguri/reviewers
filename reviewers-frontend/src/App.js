@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import Editor from './components/Editor';
+import styled from 'styled-components';
 
+const StyledWrapper = styled.div`
+    * {
+        box-sizing: border-box;
+    }
+`
 class App extends Component {
     constructor(props) {
         super(props);
@@ -25,7 +31,7 @@ class App extends Component {
 
     render() {
         return (
-            <div className="app-container">
+            <StyledWrapper className="app-container">
                 {/* Read-Only .*/}
                 <Editor 
                     isReadOnly={true}
@@ -45,7 +51,7 @@ class App extends Component {
                     value={this.state.writeEditorCode}
                     onChange={this.onWriteEditorChange.bind(this)}
                     />
-            </div>
+            </StyledWrapper>
         );
     }
 }
