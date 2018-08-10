@@ -31,7 +31,8 @@ class MarkdownEditor extends Component {
         super(props);
 
         this.state = {
-            currentMenu: EDITOR_MENU
+            currentMenu: EDITOR_MENU,
+            input: ''
         };
     }
 
@@ -39,6 +40,10 @@ class MarkdownEditor extends Component {
         this.setState({
             currentMenu: menu
         });
+    }
+
+    onTextInputChange(input) {
+        this.setState({ input });
     }
 
     render() {
@@ -54,8 +59,11 @@ class MarkdownEditor extends Component {
                 </ul>
                 {
                     this.state.currentMenu === EDITOR_MENU ?
-                    <TextInput isMultiline={true} /> :
-                    <MarkdownViewer />
+                    <TextInput 
+                        isMultiline={true} 
+                        onChange={value => this.onTextInputChange(value)}/> :
+                    <MarkdownViewer
+                        rawText={this.state.input}/>
                 }
             </Styled>
         );
