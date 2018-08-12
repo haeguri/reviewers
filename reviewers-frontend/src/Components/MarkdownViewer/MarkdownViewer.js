@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import marked from 'marked';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 /**
@@ -7,6 +8,12 @@ import PropTypes from 'prop-types';
  * - 현재는 함수 컴포넌트로 작성
  * - 라이프 사이클 메서드를 테스트해보기 위해 임시로 클래스 컴포넌트로 작성
  */
+
+const StyledDiv = styled.div`
+    height: ${props => props.height}px;
+    border: solid 1px black;
+    overflow-y: scroll;
+`
 
 class MarkdownViewer extends Component {
     constructor(props) {
@@ -31,11 +38,8 @@ class MarkdownViewer extends Component {
             __html: marked(this.props.rawText)
         }
         return (
-            <div>
-                <div dangerouslySetInnerHTML={markup}>
-    
-                </div>
-            </div>
+            <StyledDiv height={this.props.height} dangerouslySetInnerHTML={markup}>
+            </StyledDiv>
         )
     }
 }
@@ -45,7 +49,8 @@ MarkdownViewer.defaultProps = {
 };
 
 MarkdownViewer.propTypes = {
-    rawText: PropTypes.string
+    rawText: PropTypes.string,
+    height: PropTypes.number
 }
 
 export default MarkdownViewer;

@@ -5,8 +5,8 @@ import MarkdownEditor from '../MarkdownEditor';
 
 const StyledWrapper = styled.div`
     height: 100%;
-    border: solid 1px #c2c2c2;
     padding: 15px;
+    border: solid 1px #c2c2c2;
 `;
 
 const Review = (props) => (

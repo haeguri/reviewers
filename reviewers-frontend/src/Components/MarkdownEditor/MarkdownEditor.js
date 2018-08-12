@@ -9,6 +9,9 @@ const VIEWER_MENU = 1;
 const Styled = styled.div`
     .tab-menu {
         overflow: hidden;
+        padding: 0;
+        list-style: none;
+        margin-top: 0;
 
         .tab-item {
             color: #a2a2a2;
@@ -23,6 +26,10 @@ const Styled = styled.div`
         .tab-item.active {
             color: inherit;
         }
+    }
+
+    .contents {
+        font-size: 12px;
     }
 `;
 
@@ -57,14 +64,18 @@ class MarkdownEditor extends Component {
                         <a onClick={() => this.onTabItemClick(VIEWER_MENU)}>Viewer</a>
                     </li>
                 </ul>
+                <div className="contents">
                 {
                     this.state.currentMenu === EDITOR_MENU ?
-                    <TextInput 
-                        isMultiline={true} 
-                        onChange={value => this.onTextInputChange(value)}/> :
+                    <TextInput
+                        height={120}
+                        onChange={value => this.onTextInputChange(value)}
+                        value={this.state.input}/> :
                     <MarkdownViewer
+                        height={120}
                         rawText={this.state.input}/>
                 }
+                </div>
             </Styled>
         );
     }

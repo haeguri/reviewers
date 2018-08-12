@@ -5,11 +5,10 @@ import MonacoEditor from 'react-monaco-editor';
 import styled from 'styled-components';
 import Review from '../Review';
 
-const REVIEW_COMMENT_HEIGHT = 200;
-
 const StyledWrapper = styled.div`
     width: ${props => props.width}px;
     border: solid 1px #c2c2c2;
+
     .comment-btn {
         border-radius: 10px;
         background: skyblue;
@@ -19,9 +18,6 @@ const StyledWrapper = styled.div`
 `;
 
 class Editor extends Component {
-    eidtor = null;
-    monaco = null;
-
     constructor(props) {
         super(props);
 
@@ -49,6 +45,7 @@ class Editor extends Component {
     }
 
     _editorDidMount(editor, monaco) {
+        console.log('react-monaco-editor did mount..');
         if(this.props.isReadOnly) {
             this._attachMouseDownEventListener(editor);
             this._attachMouseMoveEventListener(editor, monaco);
@@ -80,11 +77,19 @@ class Editor extends Component {
                     let currViewZoneId;
 
                     const reviewContainerDOM = document.createElement('div');
-                    reviewContainerDOM.style.zIndex = '9999';
+                    reviewContainerDOM.style.zIndex = 99999;
+
+                    currViewZoneId = changeAccessor.addZone({
+                        afterLineNumber: currLineNumber,
+                        heightInPx: 200,
+                        domNode: reviewContainerDOM,
+                    });
+
+                    viewZoneIds.push(currViewZoneId);
+                    activeLineNumbers.push(currLineNumber);
 
                     ReactDOM.render(
                         <Review
-                            height={REVIEW_COMMENT_HEIGHT}
                             onCancelClick={() => {
                                 editor.changeViewZones(changeAccessor => changeAccessor.removeZone(currViewZoneId));
                                 activeLineNumbers = activeLineNumbers.filter(n => n !== currLineNumber);
@@ -93,15 +98,6 @@ class Editor extends Component {
                         </Review>,
                         reviewContainerDOM
                     );
-
-                    currViewZoneId = changeAccessor.addZone({
-                        afterLineNumber: currLineNumber,
-                        heightInPx: REVIEW_COMMENT_HEIGHT,
-                        domNode: reviewContainerDOM,
-                    })
-
-                    viewZoneIds.push(currViewZoneId);
-                    activeLineNumbers.push(currLineNumber);
                 });
             }
         })

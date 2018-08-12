@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
@@ -8,7 +9,10 @@ import styled from 'styled-components';
  */
 
 const StyledTextarea = styled.textarea`
+    height: ${props => props.height}px;
     width: 100%;
+    resize: none;
+    font-size: 1em;
 `
 
 class TextInput extends Component {
@@ -18,6 +22,13 @@ class TextInput extends Component {
     }
 
     componentDidMount() {
+        // setTimeout으로 감싸지 않으면 textInput이 focus되지 않음.
+        setTimeout(() => {
+            if(this.textInput) {
+                this.textInput.focus();
+            }
+        }, 0);
+        
         console.log('[TextInput Component] did mounted');
     }
 
@@ -31,12 +42,20 @@ class TextInput extends Component {
     
     render() {
         return (
-            <StyledTextarea 
-                isMultiline={this.props.isMultiline}
+            <StyledTextarea
+                height={this.props.height}
                 onChange={e => this.props.onChange(e.target.value)}
+                value={this.props.value}
+                innerRef={element => this.textInput = element}
             />
         )
     }
 }
+
+TextInput.propTypes = {
+    height: PropTypes.number,
+    onChange: PropTypes.func,
+    value: PropTypes.string
+};
 
 export default TextInput;
