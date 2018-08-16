@@ -9,6 +9,7 @@ import styled from 'styled-components';
  */
 
 const StyledTextarea = styled.textarea`
+    display: block;
     height: ${props => props.height}px;
     width: 100%;
     resize: none;

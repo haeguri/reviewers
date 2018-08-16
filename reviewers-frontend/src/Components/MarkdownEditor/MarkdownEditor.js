@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MarkdownViewer from '../MarkdownViewer';
 import TextInput from '../TextInput';
+import Button from '../Button';
 import styled from 'styled-components';
 
 const EDITOR_MENU = 0;
@@ -31,6 +32,10 @@ const Styled = styled.div`
     .contents {
         font-size: 12px;
     }
+
+    .footer {
+        padding-top: 10px;
+    }
 `;
 
 class MarkdownEditor extends Component {
@@ -53,6 +58,10 @@ class MarkdownEditor extends Component {
         this.setState({ input });
     }
 
+    onSaveClick() {
+
+    }
+
     render() {
         return (
             <Styled>
@@ -68,14 +77,19 @@ class MarkdownEditor extends Component {
                 {
                     this.state.currentMenu === EDITOR_MENU ?
                     <TextInput
-                        height={120}
+                        height={150}
                         onChange={value => this.onTextInputChange(value)}
                         value={this.state.input}/> :
                     <MarkdownViewer
-                        height={120}
+                        height={150}
                         rawText={this.state.input}/>
                 }
                 </div>
+                <div className="footer">
+                    <Button onClick={() => this.onSaveClick()}>Save</Button>
+                    <Button onClick={() => this.props.onCancelClick()}>Cancel</Button>
+                </div>
+
             </Styled>
         );
     }

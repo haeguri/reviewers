@@ -11,7 +11,7 @@ const StyledWrapper = styled.div`
 
 const Review = (props) => (
     <StyledWrapper>
-        <MarkdownEditor />
+        <MarkdownEditor onCancelClick={props.onCancelClick}/>
     </StyledWrapper>
 );
 

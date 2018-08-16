@@ -81,7 +81,7 @@ class Editor extends Component {
 
                     currViewZoneId = changeAccessor.addZone({
                         afterLineNumber: currLineNumber,
-                        heightInPx: 200,
+                        heightInPx: 250,
                         domNode: reviewContainerDOM,
                     });
 
