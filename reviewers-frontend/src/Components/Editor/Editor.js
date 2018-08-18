@@ -23,7 +23,7 @@ class Editor extends Component {
 
         Object.assign(props.options, { 
             contextmenu: false,
-            folding: false,
+            folding: false
         });
     }
 
@@ -90,6 +90,7 @@ class Editor extends Component {
 
                     ReactDOM.render(
                         <Review
+                            editor={editor}
                             onCancelClick={() => {
                                 editor.changeViewZones(changeAccessor => changeAccessor.removeZone(currViewZoneId));
                                 activeLineNumbers = activeLineNumbers.filter(n => n !== currLineNumber);
