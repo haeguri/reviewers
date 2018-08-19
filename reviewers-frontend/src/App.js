@@ -13,7 +13,7 @@ class App extends Component {
         
         this.state = {
             writeEditorCode: sampleCode(),
-            readEditorCode: sampleCode() + '\nfunction test(){\n return { \n }\n}'
+            readEditorCode: sampleCode() + sampleCode() + '\nfunction test(){\n return { \n }\n}'
         };
     }
 

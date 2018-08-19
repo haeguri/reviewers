@@ -14,19 +14,45 @@ const StyledTextarea = styled.textarea`
     width: 100%;
     resize: none;
     font-size: 1em;
-`
+`;
 
 class TextInput extends Component {
     constructor(props) {
         super(props);
         console.log('[TextInput Component] constructor.');
+
+        this._focusInEventListener = this._focusInEventListener.bind(this);
+        this._focusOutEventListener = this._focusOutEventListener.bind(this);
+    }
+
+    _focusInEventListener() {
+        console.log('disable scroll');
+        this.props.editor.updateOptions({
+            scrollbar: {
+                vertical: 'hidden',
+                handleMouseWheel: false
+            }
+        })
+    }
+
+    _focusOutEventListener() {
+        console.log('enable scroll');
+        this.props.editor.updateOptions({
+            scrollbar: {
+                vertical: 'visible',
+                handleMouseWheel: true
+            }
+        })
     }
 
     componentDidMount() {
+        this.ref.addEventListener('mouseenter', this._focusInEventListener);
+        this.ref.addEventListener('mouseleave', this._focusOutEventListener);
+
         // setTimeout으로 감싸지 않으면 textInput이 focus되지 않음.
         setTimeout(() => {
-            if(this.textInput) {
-                this.textInput.focus();
+            if(this.ref) {
+                this.ref.focus();
             }
         }, 0);
         
@@ -38,16 +64,18 @@ class TextInput extends Component {
     }
 
     componentWillUnmount() {
+        this.ref.removeEventListener('mouseenter', this._focusInEventListener);
+        this.ref.removeEventListener('mouseleave', this._focusOutEventListener);
         console.log('[TextInput Component] Will Unmount');
     }
     
     render() {
         return (
             <StyledTextarea
+                innerRef={element => this.ref= element}
                 height={this.props.height}
                 onChange={e => this.props.onChange(e.target.value)}
                 value={this.props.value}
-                innerRef={element => this.textInput = element}
             />
         )
     }

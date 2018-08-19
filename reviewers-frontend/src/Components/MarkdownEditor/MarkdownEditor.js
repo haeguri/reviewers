@@ -59,28 +59,6 @@ class MarkdownEditor extends Component {
         };
     }
 
-    componentDidMount() {
-        console.log(this.ref);
-        this.ref.addEventListener('mouseenter', () => {
-            console.log('mouse enter', this.props.editor.updateOptions)
-            this.props.editor.updateOptions({
-                scrollbar: {
-                    vertical: 'hidden',
-                    handleMouseWheel: false
-                }
-            });
-        });
-        this.ref.addEventListener('mouseleave', () => {
-            console.log('mouse leave', this.props.editor.updateOptions)
-            this.props.editor.updateOptions({
-                scrollbar: {
-                    vertical: 'visible',
-                    handleMouseWheel: true
-                }
-            });
-        });
-    }
-
     onTabItemClick(menu) {
         this.setState({
             currentMenu: menu
@@ -97,7 +75,7 @@ class MarkdownEditor extends Component {
 
     render() {
         return (
-            <Styled innerRef={element => this.ref = element}>
+            <Styled>
                 <ul className="tab-menu">
                     <li className={'tab-item' + (this.state.currentMenu === EDITOR_MENU ? ' active' : '')}>
                         <a onClick={() => this.onTabItemClick(EDITOR_MENU)}>Editor</a>
@@ -110,6 +88,7 @@ class MarkdownEditor extends Component {
                 {
                     this.state.currentMenu === EDITOR_MENU ?
                     <TextInput
+                        editor={this.props.editor}
                         height={150}
                         onChange={value => this.onTextInputChange(value)}
                         value={this.state.input}/> :
