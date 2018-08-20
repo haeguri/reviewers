@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Editor from './components/Editor';
 import Header from './components/Header';
+import Footer from './components/Footer';
+import PageContent from './components/PageContent';
 import styled from 'styled-components';
 
 const StyledDiv = styled.div`
@@ -44,28 +46,29 @@ class App extends Component {
     render() {
         return (
             <StyledDiv className="app-container">
-                <Header 
-                    menuList={menuList}
-                />
-                {/* Read-Only .*/}
-                <Editor 
-                    isReadOnly={true}
-                    options={{
-                        minimap: { enabled: false },
-                        readOnly: true,
-                        glyphMargin: true,
-                    }}
-                    value={this.state.readEditorCode}
-                    editorDidMount={this.readEditorDidMount.bind(this)}
-                    />
-                {/* Editable */}
-                <Editor 
-                    options={{
-                        minimap: { enabled: false }
-                    }}
-                    value={this.state.writeEditorCode}
-                    onChange={this.onWriteEditorChange.bind(this)}
-                    />
+                <Header menuList={menuList}/>
+                <PageContent>
+                    {/* Read-Only */}
+                    <Editor 
+                        isReadOnly={true}
+                        options={{
+                            minimap: { enabled: false },
+                            readOnly: true,
+                            glyphMargin: true,
+                        }}
+                        value={this.state.readEditorCode}
+                        editorDidMount={this.readEditorDidMount.bind(this)}
+                        />
+                    {/* Editable */}
+                    <Editor 
+                        options={{
+                            minimap: { enabled: false }
+                        }}
+                        value={this.state.writeEditorCode}
+                        onChange={this.onWriteEditorChange.bind(this)}
+                        />
+                </PageContent>
+                <Footer />
             </StyledDiv>
         );
     }
