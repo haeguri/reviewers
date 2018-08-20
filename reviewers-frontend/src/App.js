@@ -1,12 +1,24 @@
 import React, { Component } from 'react';
 import Editor from './components/Editor';
+import Header from './components/Header';
 import styled from 'styled-components';
 
-const StyledWrapper = styled.div`
+const StyledDiv = styled.div`
     * {
         box-sizing: border-box;
     }
-`
+`;
+
+const menuList = [
+    {
+        name: 'Code',
+        path: 'code'
+    },
+    {
+        name: 'Write',
+        path: 'write'
+    }
+]
 class App extends Component {
     constructor(props) {
         super(props);
@@ -31,7 +43,10 @@ class App extends Component {
 
     render() {
         return (
-            <StyledWrapper className="app-container">
+            <StyledDiv className="app-container">
+                <Header 
+                    menuList={menuList}
+                />
                 {/* Read-Only .*/}
                 <Editor 
                     isReadOnly={true}
@@ -51,7 +66,7 @@ class App extends Component {
                     value={this.state.writeEditorCode}
                     onChange={this.onWriteEditorChange.bind(this)}
                     />
-            </StyledWrapper>
+            </StyledDiv>
         );
     }
 }
