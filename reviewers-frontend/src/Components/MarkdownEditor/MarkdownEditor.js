@@ -93,6 +93,7 @@ class MarkdownEditor extends Component {
                         onChange={value => this.onTextInputChange(value)}
                         value={this.state.input}/> :
                     <MarkdownViewer
+                        editor={this.props.editor}
                         height={150}
                         rawText={this.state.input}/>
                 }

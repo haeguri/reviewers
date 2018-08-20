@@ -19,9 +19,35 @@ class MarkdownViewer extends Component {
     constructor(props) {
         super(props);
         console.log('[MarkdownViewer Component] constructor.');
+
+        this._mouseEnterEventListener = this._mouseEnterEventListener.bind(this);
+        this._mouseLeaveEventListener = this._mouseLeaveEventListener.bind(this);
+    }
+
+    _mouseEnterEventListener() {
+        console.log('disable scroll');
+        this.props.editor.updateOptions({
+            scrollbar: {
+                vertical: 'hidden',
+                handleMouseWheel: false
+            }
+        })
+    }
+
+    _mouseLeaveEventListener() {
+        console.log('enable scroll');
+        this.props.editor.updateOptions({
+            scrollbar: {
+                vertical: 'visible',
+                handleMouseWheel: true
+            }
+        })
     }
 
     componentDidMount() {
+        this.ref.addEventListener('mouseenter', this._mouseEnterEventListener);
+        this.ref.addEventListener('mouseleave', this._mouseLeaveEventListener);
+
         console.log('[MarkdownViewer Component] did mounted');
     }
 
@@ -30,16 +56,22 @@ class MarkdownViewer extends Component {
     }
 
     componentWillUnmount() {
+        this.ref.removeEventListener('mouseenter', this._mouseEnterEventListener);
+        this.ref.removeEventListener('mouseleave', this._mouseLeaveEventListener);
         console.log('[MarkdownViewer Component] Will Unmount');
     }
 
     render() {
         const markup = {
             __html: marked(this.props.rawText)
-        }
+        };
+
         return (
-            <StyledDiv height={this.props.height} dangerouslySetInnerHTML={markup}>
-            </StyledDiv>
+            <StyledDiv 
+                innerRef={element => this.ref = element}
+                height={this.props.height} 
+                dangerouslySetInnerHTML={markup}
+            />
         )
     }
 }

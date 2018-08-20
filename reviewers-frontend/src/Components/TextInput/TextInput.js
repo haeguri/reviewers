@@ -2,12 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-/**
- * @TODO
- * - 현재는 함수 컴포넌트로 작성
- * - 라이프 사이클 메서드를 테스트해보기 위해 임시로 클래스 컴포넌트로 작성
- */
-
 const StyledTextarea = styled.textarea`
     display: block;
     height: ${props => props.height}px;
@@ -21,11 +15,11 @@ class TextInput extends Component {
         super(props);
         console.log('[TextInput Component] constructor.');
 
-        this._focusInEventListener = this._focusInEventListener.bind(this);
-        this._focusOutEventListener = this._focusOutEventListener.bind(this);
+        this._mouseEnterEventListener = this._mouseEnterEventListener.bind(this);
+        this._mouseLeaveEventListener = this._mouseLeaveEventListener.bind(this);
     }
 
-    _focusInEventListener() {
+    _mouseEnterEventListener() {
         console.log('disable scroll');
         this.props.editor.updateOptions({
             scrollbar: {
@@ -35,7 +29,7 @@ class TextInput extends Component {
         })
     }
 
-    _focusOutEventListener() {
+    _mouseLeaveEventListener() {
         console.log('enable scroll');
         this.props.editor.updateOptions({
             scrollbar: {
@@ -46,10 +40,10 @@ class TextInput extends Component {
     }
 
     componentDidMount() {
-        this.ref.addEventListener('mouseenter', this._focusInEventListener);
-        this.ref.addEventListener('mouseleave', this._focusOutEventListener);
+        this.ref.addEventListener('mouseenter', this._mouseEnterEventListener);
+        this.ref.addEventListener('mouseleave', this._mouseLeaveEventListener);
 
-        // setTimeout으로 감싸지 않으면 textInput이 focus되지 않음.
+        // monaco editor  textInput이 focus되지 않음.
         setTimeout(() => {
             if(this.ref) {
                 this.ref.focus();
@@ -72,7 +66,7 @@ class TextInput extends Component {
     render() {
         return (
             <StyledTextarea
-                innerRef={element => this.ref= element}
+                innerRef={element => this.ref = element}
                 height={this.props.height}
                 onChange={e => this.props.onChange(e.target.value)}
                 value={this.props.value}
