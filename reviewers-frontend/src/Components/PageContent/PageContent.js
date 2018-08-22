@@ -1,20 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { centerWithAbsSize } from '../../utils/style-utils';
-
-const StyledSection = styled.section`
-    .content {
-        ${ centerWithAbsSize('desktop') }
-    }
-`;
+import ContentWrapper from '../ContentWrapper';
 
 const PageContent = props => (
-    <StyledSection>
-        <section className="content">
-            {props.children}
-        </section>
-    </StyledSection>
+    <ContentWrapper>
+        { props.children }
+    </ContentWrapper>
 )
 
 PageContent.defaultProps = {

@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { centerWithAbsSize } from '../../utils/style-utils';
+import ContentWrapper from '../ContentWrapper';
 
 const StyledNav = styled.nav`
     border-bottom: solid 1px #e2e2e2;
-
-    .container {
-        ${ centerWithAbsSize('desktop') }
+    
+    .nav-content {
         background: red;
         overflow: hidden;
 
@@ -31,12 +31,12 @@ const StyledNav = styled.nav`
                 }
             }
         }
-    }\
+    }
 `;
 
 const Header = props => (
     <StyledNav>
-        <div className="container">
+        <ContentWrapper className="nav-content">
             <div className="logo">
                 <h1>Reviewers</h1>
             </div>
@@ -45,7 +45,7 @@ const Header = props => (
                     <li key={m.name} className="menu-item"><a>{m.name}</a></li>
                 )}
             </ul>
-        </div>
+        </ContentWrapper>
     </StyledNav>
 )
 
