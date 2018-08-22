@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import Editor from './components/Editor';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import PageContent from './components/PageContent';
-import styled from 'styled-components';
 
 const StyledDiv = styled.div`
     * {

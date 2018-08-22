@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { centerWithAbsSize } from '../../utils/style-utils';
 
 const StyledNav = styled.nav`
     border-bottom: solid 1px #e2e2e2;
 
     .container {
-        width: 900px;
-        margin-left: auto;
-        margin-right: auto;
+        ${ centerWithAbsSize('desktop') }
         background: red;
         overflow: hidden;
 
