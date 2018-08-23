@@ -4,6 +4,12 @@ import Editor from './components/Editor';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import PageContent from './components/PageContent';
+import CodeDetail from './pages/CodeDetail';
+import CodeList from './pages/CodeList';
+import Login from './pages/Login';
+import NewCode from './pages/NewCode';
+
+import { Route } from 'react-router-dom';
 
 const StyledDiv = styled.div`
     * {
@@ -13,12 +19,16 @@ const StyledDiv = styled.div`
 
 const menuList = [
     {
-        name: 'Code',
-        path: 'code'
+        name: 'Codes',
+        path: '/code-list'
     },
     {
-        name: 'Write',
-        path: 'write'
+        name: 'New Code',
+        path: '/new-code'
+    },
+    {
+        name: 'Login',
+        path: '/login'
     }
 ]
 class App extends Component {
@@ -48,7 +58,10 @@ class App extends Component {
             <StyledDiv className="app-container">
                 <Header menuList={menuList}/>
                 <PageContent>
-                    { this.props.children }
+                    <Route path="/code-detail" component={CodeDetail}/>
+                    <Route path="/code-list" component={CodeList}/>
+                    <Route path="/login" component={Login}/>
+                    <Route path="/new-code" component={NewCode}/>
                     {/* Read-Only */}
                     {/* <Editor 
                         isReadOnly={true}

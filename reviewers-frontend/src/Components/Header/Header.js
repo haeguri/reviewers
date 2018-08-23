@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ContentWrapper from '../../containers/ContentWrapper';
+import { Link } from 'react-router-dom';
 
 const StyledNav = styled.nav`
     border-bottom: solid 1px #e2e2e2;
@@ -41,7 +42,7 @@ const Header = props => (
             </div>
             <ul className="nav-menus">
                 {props.menuList.map(m => 
-                    <li key={m.name} className="menu-item"><a>{m.name}</a></li>
+                    <Link className="menu-item" key={m.name} to={m.path}>{m.name}</Link>
                 )}
             </ul>
         </ContentWrapper>
