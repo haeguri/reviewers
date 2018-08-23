@@ -48,8 +48,9 @@ class App extends Component {
             <StyledDiv className="app-container">
                 <Header menuList={menuList}/>
                 <PageContent>
+                    { this.props.children }
                     {/* Read-Only */}
-                    <Editor 
+                    {/* <Editor 
                         isReadOnly={true}
                         options={{
                             minimap: { enabled: false },
@@ -58,15 +59,15 @@ class App extends Component {
                         }}
                         value={this.state.readEditorCode}
                         editorDidMount={this.readEditorDidMount.bind(this)}
-                        />
+                        /> */}
                     {/* Editable */}
-                    <Editor 
+                    {/* <Editor 
                         options={{
                             minimap: { enabled: false }
                         }}
                         value={this.state.writeEditorCode}
                         onChange={this.onWriteEditorChange.bind(this)}
-                        />
+                        /> */}
                 </PageContent>
                 <Footer />
             </StyledDiv>
