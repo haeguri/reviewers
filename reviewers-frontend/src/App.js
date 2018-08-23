@@ -58,7 +58,7 @@ class App extends Component {
             <StyledDiv className="app-container">
                 <Header menuList={menuList}/>
                 <PageContent>
-                    <Route path="/code-detail" component={CodeDetail}/>
+                    <Route path="/code-detail/:codeId" component={CodeDetail}/>
                     <Route path="/code-list" component={CodeList}/>
                     <Route path="/login" component={Login}/>
                     <Route path="/new-code" component={NewCode}/>

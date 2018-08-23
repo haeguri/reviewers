@@ -41,9 +41,7 @@ const Header = props => (
                 <h1>Reviewers</h1>
             </div>
             <ul className="nav-menus">
-                {props.menuList.map(m => 
-                    <Link className="menu-item" key={m.name} to={m.path}>{m.name}</Link>
-                )}
+                {props.menuList.map(m => <Link className="menu-item" key={m.name} to={m.path}>{m.name}</Link>)}
             </ul>
         </ContentWrapper>
     </StyledNav>
