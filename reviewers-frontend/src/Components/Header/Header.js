@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { centerWithAbsSize } from '../../utils/style-utils';
-import ContentWrapper from '../ContentWrapper';
+import ContentWrapper from '../../containers/ContentWrapper';
 
 const StyledNav = styled.nav`
     border-bottom: solid 1px #e2e2e2;

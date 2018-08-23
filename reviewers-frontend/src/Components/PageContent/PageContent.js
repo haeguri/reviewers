@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import ContentWrapper from '../ContentWrapper';
+import ContentWrapper from '../../containers/ContentWrapper';
 
 const PageContent = props => (
     <ContentWrapper>

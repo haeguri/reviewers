@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import ContentWrapper from '../ContentWrapper';
+import ContentWrapper from '../../containers/ContentWrapper';
 
 const StyledFooter = styled.footer`
     background-color: #c2c2c2;
