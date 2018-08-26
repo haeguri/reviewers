@@ -11,23 +11,13 @@ import NewQuestion from './pages/NewQuestion';
 import { Route } from 'react-router-dom';
 
 const StyledDiv = styled.div`
-    * {
-        box-sizing: border-box;
-    }
 
-    a, a:visited { text-decoration: none; color: inherit; }
-
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: sans-serif;
-    }
 `;
 
 const menuList = [
     {
         name: 'Questions',
-        path: '/question-list'
+        path: '/'
     },
     {
         name: 'New Question',
@@ -52,8 +42,8 @@ class App extends Component {
             <StyledDiv className="app-container">
                 <Header menuList={menuList}/>
                 <PageContent>
+                    <Route exact path="/" component={QuestionList}/>
                     <Route path="/question-detail/:qId" component={QuestionDetail}/>
-                    <Route path="/question-list" component={QuestionList}/>
                     <Route path="/login" component={Login}/>
                     <Route path="/new-question" component={NewQuestion}/>
                 </PageContent>
