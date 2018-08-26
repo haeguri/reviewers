@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import PageContent from './components/PageContent';
-import CodeDetail from './pages/CodeDetail';
-import CodeList from './pages/CodeList';
+import QuestionDetail from './pages/QuestionDetail';
+import QuestionList from './pages/QuestionList';
 import Login from './pages/Login';
-import NewCode from './pages/NewCode';
+import NewQuestion from './pages/NewQuestion';
 
 import { Route } from 'react-router-dom';
 
@@ -15,8 +15,7 @@ const StyledDiv = styled.div`
         box-sizing: border-box;
     }
 
-    a { text-decoration: none; }
-    a:visited { color: inherit; }
+    a, a:visited { text-decoration: none; color: inherit; }
 
     body {
         margin: 0;
@@ -27,12 +26,12 @@ const StyledDiv = styled.div`
 
 const menuList = [
     {
-        name: 'Codes',
-        path: '/code-list'
+        name: 'Questions',
+        path: '/question-list'
     },
     {
-        name: 'New Code',
-        path: '/new-code'
+        name: 'New Question',
+        path: '/new-question'
     },
     {
         name: 'Login',
@@ -53,10 +52,10 @@ class App extends Component {
             <StyledDiv className="app-container">
                 <Header menuList={menuList}/>
                 <PageContent>
-                    <Route path="/code-detail/:codeId" component={CodeDetail}/>
-                    <Route path="/code-list" component={CodeList}/>
+                    <Route path="/question-detail/:qId" component={QuestionDetail}/>
+                    <Route path="/question-list" component={QuestionList}/>
                     <Route path="/login" component={Login}/>
-                    <Route path="/new-code" component={NewCode}/>
+                    <Route path="/new-question" component={NewQuestion}/>
                 </PageContent>
                 <Footer />
             </StyledDiv>

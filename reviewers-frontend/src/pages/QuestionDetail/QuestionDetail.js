@@ -6,7 +6,7 @@ import { getSampleCode } from '../../utils/test-utils';
 
 const sampleCode = getSampleCode() + getSampleCode() + '\nfunction test(){\n return { \n }\n}';
 
-class CodeDetail extends Component {
+class QuestionDetail extends Component {
     constructor(props) {
         super(props);
         console.log('props', props);
@@ -34,14 +34,14 @@ class CodeDetail extends Component {
     }
 }
 
-CodeDetail.defaultProps = {
+QuestionDetail.defaultProps = {
 
 };
 
-CodeDetail.propTypes = {
+QuestionDetail.propTypes = {
 
 };
 
 
 
-export default CodeDetail;
+export default QuestionDetail;

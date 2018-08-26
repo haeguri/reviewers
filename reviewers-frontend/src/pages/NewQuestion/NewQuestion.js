@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { getSampleCode } from '../../utils/test-utils';
 
-class NewCode extends Component {
+class NewQuestion extends Component {
     constructor(props) {
         super(props);
 
@@ -33,14 +33,14 @@ class NewCode extends Component {
     }
 }
 
-NewCode.defaultProps = {
+NewQuestion.defaultProps = {
 
 };
 
-NewCode.propTypes = {
+NewQuestion.propTypes = {
 
 };
 
 
 
-export default NewCode;
+export default NewQuestion;

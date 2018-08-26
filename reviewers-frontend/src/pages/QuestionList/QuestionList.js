@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const sampleCodeList = [
+const sampleQuestionList = [
     {
         id: '1',
         title: 'test1',
@@ -20,7 +20,7 @@ const sampleCodeList = [
     }
 ];
 
-class CodeList extends Component {
+class QuestionList extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -41,10 +41,10 @@ class CodeList extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                    {sampleCodeList.map(obj => (
+                    {sampleQuestionList.map(obj => (
                         <tr key={obj.id}>
                             <td>
-                                <Link to={`/code-detail/${obj.id}`}>
+                                <Link to={`/question-detail/${obj.id}`}>
                                 {obj.title}
                                 </Link>
                             </td>
@@ -61,14 +61,14 @@ class CodeList extends Component {
     }
 }
 
-CodeList.defaultProps = {
+QuestionList.defaultProps = {
 
 };
 
-CodeList.propTypes = {
+QuestionList.propTypes = {
 
 };
 
 
 
-export default CodeList;
+export default QuestionList;
