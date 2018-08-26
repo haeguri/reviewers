@@ -21,9 +21,12 @@ class Editor extends Component {
     constructor(props) {
         super(props);
 
-        Object.assign(props.options, { 
+        const { options = {} } = props;
+
+        Object.assign(options, { 
             contextmenu: false,
-            folding: false
+            folding: false,
+            enable: false
         });
     }
 

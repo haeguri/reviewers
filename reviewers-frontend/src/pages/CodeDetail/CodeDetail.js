@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+import Editor from '../../components/Editor';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { getSampleCode } from '../../utils/test-utils';
+
+const sampleCode = getSampleCode() + getSampleCode() + '\nfunction test(){\n return { \n }\n}';
 
 class CodeDetail extends Component {
     constructor(props) {
@@ -17,6 +21,15 @@ class CodeDetail extends Component {
         return (
             <div>
                <h1>Code Detail Page!</h1>
+                <Editor 
+                    isReadOnly={true}
+                    options={{
+                        readOnly: true,
+                        glyphMargin: true,
+                    }}
+                    value={sampleCode}
+                    editorDidMount={this.readEditorDidMount.bind(this)}
+                />
             </div>
         );
     }
