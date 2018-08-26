@@ -28,7 +28,6 @@ class CodeDetail extends Component {
                         glyphMargin: true,
                     }}
                     value={sampleCode}
-                    editorDidMount={this.readEditorDidMount.bind(this)}
                 />
             </div>
         );
