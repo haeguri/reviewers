@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import MonacoEditor from 'react-monaco-editor';
 import styled from 'styled-components';
-import Review from '../Review';
+import ReviewForm from '../ReviewForm';
 
 const StyledWrapper = styled.div`
     width: ${props => props.width}px;
@@ -26,13 +26,19 @@ class Editor extends Component {
         Object.assign(options, { 
             contextmenu: false,
             folding: false,
-            enable: false
+            enable: false,
+            minimap: {
+                enabled: false
+            }
         });
     }
 
     render() {
         return (
-            <StyledWrapper width={this.props.width}>
+            <StyledWrapper 
+                className={this.props.className}
+                width={this.props.width}
+                >
                 <MonacoEditor
                     theme="vs"
                     width={this.props.width}
@@ -92,14 +98,14 @@ class Editor extends Component {
                     activeLineNumbers.push(currLineNumber);
 
                     ReactDOM.render(
-                        <Review
+                        <ReviewForm
                             editor={editor}
                             onCancelClick={() => {
                                 editor.changeViewZones(changeAccessor => changeAccessor.removeZone(currViewZoneId));
                                 activeLineNumbers = activeLineNumbers.filter(n => n !== currLineNumber);
                                 ReactDOM.unmountComponentAtNode(reviewContainerDOM);
                             }}>
-                        </Review>,
+                        </ReviewForm>,
                         reviewContainerDOM
                     );
                 });
@@ -150,14 +156,14 @@ Editor.defaultProps = {
     editorDidMount: _=>{},
     onChange: _=>{},
     language: 'javascript',
-    width: '800',
-    height: '600',
+    width: 600,
+    height: 600,
 };
 
 Editor.propTypes = {
     language: PropTypes.string,
-    width: PropTypes.string,
-    height: PropTypes.string,
+    width: PropTypes.number,
+    height: PropTypes.number,
     value: PropTypes.string,
     options: PropTypes.object,
     editorDidMount: PropTypes.func,

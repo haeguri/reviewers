@@ -25,6 +25,7 @@ class NewQuestion extends Component {
             <div>
                 <h1>New Code Page!</h1>
                 <Editor 
+                    width={700}
                     value={this.state.code}
                     onChange={(newValue, e) => this.onCodeChange(newValue, e)}
                 />

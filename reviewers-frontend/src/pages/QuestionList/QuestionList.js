@@ -45,7 +45,7 @@ class QuestionList extends Component {
                         <tr key={obj.id}>
                             <td>
                                 <Link to={`/question-detail/${obj.id}`}>
-                                {obj.title}
+                                    {obj.title}
                                 </Link>
                             </td>
                             <td>{obj.author}</td>

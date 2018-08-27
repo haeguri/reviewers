@@ -2,14 +2,31 @@ import React, { Component } from 'react';
 import Editor from '../../components/Editor';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { getSampleCode } from '../../utils/test-utils';
+import { getSampleCode, getSampleReviewList } from '../../utils/test-utils';
+import ReviewList from '../../components/ReviewList';
 
+const editorSize = { height: 600, width: 500 };
+const reviewListSize = { height: 600, width: 400 };
 const sampleCode = getSampleCode() + getSampleCode() + '\nfunction test(){\n return { \n }\n}';
+
+const StyledDiv = styled.div`
+    .editor,
+    .review-list {
+        display: inline-block;
+    }
+
+    .review-list {
+        padding: 0 10px;
+        width: ${reviewListSize.width}px;
+        height: ${reviewListSize.height}px;
+    }
+`;
 
 class QuestionDetail extends Component {
     constructor(props) {
         super(props);
         console.log('props', props);
+        console.log('teststst', getSampleReviewList());
         this.state = {
 
         };
@@ -19,9 +36,12 @@ class QuestionDetail extends Component {
         console.log(this.props);
 
         return (
-            <div>
+            <StyledDiv>
                <h1>Code Detail Page!</h1>
-                <Editor 
+                <Editor
+                    className="editor"
+                    width={editorSize.width}
+                    height={editorSize.height}
                     isReadOnly={true}
                     options={{
                         readOnly: true,
@@ -29,7 +49,11 @@ class QuestionDetail extends Component {
                     }}
                     value={sampleCode}
                 />
-            </div>
+                <ReviewList
+                    className="review-list"
+                    data={getSampleReviewList()} 
+                />
+            </StyledDiv>
         );
     }
 }
