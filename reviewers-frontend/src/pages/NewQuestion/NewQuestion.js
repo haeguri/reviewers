@@ -27,17 +27,19 @@ class NewQuestion extends Component {
   render() {
     return (
       <PageContent width={700}>
-        <seciton>
+        <section className="input-group">
+          <label>제목</label>
           <TextInput />
-        </seciton>
-        <seciton>
+        </section>
+        <section className="input-group">
+          <label>소스코드</label>
           <Editor 
             width={700}
             height={400}
             value={this.state.code}
             onChange={(newValue, e) => this.onCodeChange(newValue, e)}
           />
-        </seciton>
+        </section>
         <section>
           <Button>Save</Button>
           <Button>Cancel</Button>

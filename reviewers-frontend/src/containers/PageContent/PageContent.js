@@ -5,8 +5,7 @@ import styled from 'styled-components';
 const StyledSection = styled.section`
   width: ${props => props.width || 900}px;
   margin-left: auto;
-  margin-right: auto; 
-  overflow-y: hidden;
+  margin-right: auto;
 `
 
 const PageContent = props => (
