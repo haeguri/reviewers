@@ -1,84 +1,34 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const StyledTextarea = styled.textarea`
-    display: block;
-    height: ${props => props.height}px;
-    width: 100%;
-    resize: none;
-    font-size: 1em;
+const StyeldTextInput = styled.input`
+  width: 100%;
+  height: 50px;
 `;
 
-class TextInput extends Component {
-    constructor(props) {
-        super(props);
-        console.log('[TextInput Component] constructor.');
+const TextInput = (props) => {
+  const { className, maxInputLength, onTextChange } = props;
 
-        this._mouseEnterEventListener = this._mouseEnterEventListener.bind(this);
-        this._mouseLeaveEventListener = this._mouseLeaveEventListener.bind(this);
-    }
-
-    _mouseEnterEventListener() {
-        console.log('disable scroll');
-        this.props.editor.updateOptions({
-            scrollbar: {
-                vertical: 'hidden',
-                handleMouseWheel: false
-            }
-        })
-    }
-
-    _mouseLeaveEventListener() {
-        console.log('enable scroll');
-        this.props.editor.updateOptions({
-            scrollbar: {
-                vertical: 'visible',
-                handleMouseWheel: true
-            }
-        })
-    }
-
-    componentDidMount() {
-        this.ref.addEventListener('mouseenter', this._mouseEnterEventListener);
-        this.ref.addEventListener('mouseleave', this._mouseLeaveEventListener);
-
-        // monaco editor  textInput이 focus되지 않음.
-        setTimeout(() => {
-            if(this.ref) {
-                this.ref.focus();
-            }
-        }, 0);
-        
-        console.log('[TextInput Component] did mounted');
-    }
-
-    componentDidUpdate() {
-        console.log('[TextInput Component] componentDidUpdate');
-    }
-
-    componentWillUnmount() {
-        this.ref.removeEventListener('mouseenter', this._focusInEventListener);
-        this.ref.removeEventListener('mouseleave', this._focusOutEventListener);
-        console.log('[TextInput Component] Will Unmount');
-    }
-    
-    render() {
-        return (
-            <StyledTextarea
-                innerRef={element => this.ref = element}
-                height={this.props.height}
-                onChange={e => this.props.onChange(e.target.value)}
-                value={this.props.value}
-            />
-        )
-    }
-}
+  return (
+    <StyeldTextInput
+      className={className}
+      maxlength={maxInputLength}
+      onChange={onTextChange}
+    >
+    </StyeldTextInput>
+  )
+};
 
 TextInput.propTypes = {
-    height: PropTypes.number,
-    onChange: PropTypes.func,
-    value: PropTypes.string
+  onTextChange: PropTypes.func,
+  className: PropTypes.string,
+  maxlength: PropTypes.number
+};
+
+TextInput.defaultProps ={
+  onTextChange: _=>{},
+  className: ''
 };
 
 export default TextInput;

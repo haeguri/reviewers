@@ -3,6 +3,8 @@ import Editor from '../../components/Editor';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import PageContent from '../../containers/PageContent';
+import Button from '../../components/Button';
+import TextInput from '../../components/TextInput';
 import { getSampleCode } from '../../utils/test-utils';
 
 class NewQuestion extends Component {
@@ -25,12 +27,21 @@ class NewQuestion extends Component {
   render() {
     return (
       <PageContent width={700}>
-        <h1>New Code Page!</h1>
-        <Editor 
-          width={700}
-          value={this.state.code}
-          onChange={(newValue, e) => this.onCodeChange(newValue, e)}
-        />
+        <seciton>
+          <TextInput />
+        </seciton>
+        <seciton>
+          <Editor 
+            width={700}
+            height={400}
+            value={this.state.code}
+            onChange={(newValue, e) => this.onCodeChange(newValue, e)}
+          />
+        </seciton>
+        <section>
+          <Button>Save</Button>
+          <Button>Cancel</Button>
+        </section>
       </PageContent>
     )
   }

@@ -15,7 +15,7 @@ const StyledFooter = styled.footer`
 
 const Footer = props => (
     <StyledFooter>
-      <div class="container">
+      <div className="container">
         <p>Footer</p>
       </div>
     </StyledFooter>  
