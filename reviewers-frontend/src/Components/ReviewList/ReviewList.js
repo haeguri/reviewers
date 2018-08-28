@@ -18,7 +18,6 @@ ReviewList.propTypes = {
     data: PropTypes.arrayOf(PropTypes.object),
     className: PropTypes.string
 };
-
 ReviewList.defaultProps = {
     data: [],
     className: '',

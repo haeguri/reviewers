@@ -1,18 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import ContentWrapper from '../../containers/ContentWrapper';
 
 const StyledFooter = styled.footer`
     background-color: #c2c2c2;
     height: 100px;
+    overflow: hidden;
+
+    .container {
+      width: 900px;
+      margin: 0 auto;
+    }
 `;
 
 const Footer = props => (
     <StyledFooter>
-        <ContentWrapper>
-            <p>Footer</p>
-        </ContentWrapper>
+      <div class="container">
+        <p>Footer</p>
+      </div>
     </StyledFooter>  
 );
 
