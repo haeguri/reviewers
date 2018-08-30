@@ -6,8 +6,8 @@ import { getSampleCode, getSampleReviewList } from '../../utils/test-utils';
 import PageContent from '../../containers/PageContent';
 import ReviewList from '../../components/ReviewList';
 
-const editorSize = { height: 600, width: 500 };
-const reviewListSize = { height: 600, width: 400 };
+const editorSize = { height: 600, width: 600};
+const reviewListSize = { height: 600, width: 500};
 const sampleCode = getSampleCode() + getSampleCode() + '\nfunction test(){\n return { \n }\n}';
 
 const StyledDiv = styled.div`
@@ -37,7 +37,7 @@ class QuestionDetail extends Component {
       console.log(this.props);
 
       return (
-        <PageContent>
+        <PageContent width={1100}>
           <StyledDiv>
             <h1>Code Detail Page!</h1>
             <Editor 

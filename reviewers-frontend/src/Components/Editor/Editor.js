@@ -6,15 +6,22 @@ import styled from 'styled-components';
 import ReviewForm from '../ReviewForm';
 
 const StyledWrapper = styled.div`
-    width: ${props => props.width}px;
-    border: solid 1px #c2c2c2;
+  width: ${props => props.width}px;
+  height: ${props => props.height}px;
+  border: solid 1px #c2c2c2;
 
-    .comment-btn {
-        border-radius: 10px;
-        background: skyblue;
-        width: 20px;
-        height: 20px;
-    }
+  .comment-btn {
+      border-radius: 10px;
+      background: skyblue;
+      width: 20px;
+      height: 20px;
+  }
+
+  .myLineDecoration {
+    background: lightblue;
+    width: 100% !important;
+    left: 3px;
+  }
 `;
 
 class Editor extends Component {
@@ -27,6 +34,7 @@ class Editor extends Component {
             contextmenu: false,
             folding: false,
             enable: false,
+            lineDecorationsWidth: 20,
             minimap: {
                 enabled: false
             }
@@ -38,11 +46,10 @@ class Editor extends Component {
             <StyledWrapper 
                 className={this.props.className}
                 width={this.props.width}
-                >
+                height={this.props.height}
+            >
                 <MonacoEditor
                     theme="vs"
-                    width={this.props.width}
-                    height={this.props.height}
                     language={this.props.language}
                     value={this.props.value}
                     options={this.props.options}
@@ -144,9 +151,7 @@ class Editor extends Component {
                     currPosition.lineNumber, 1, 
                     currPosition.lineNumber, 1
                 ),
-                options: {
-                    glyphMarginClassName: 'comment-btn',
-                }
+                options: { iisWholeLine: true, linesDecorationsClassName: 'comment-btn' }
             }
         ]);
     }

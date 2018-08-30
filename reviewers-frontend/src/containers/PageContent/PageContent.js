@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const StyledSection = styled.section`
-  width: ${props => props.width || 900}px;
+  width: ${props => props.width}px;
   margin-left: auto;
   margin-right: auto;
 `
