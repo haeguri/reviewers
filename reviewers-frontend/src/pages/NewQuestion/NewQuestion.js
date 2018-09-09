@@ -7,6 +7,16 @@ import Button from '../../components/Button';
 import TextInput from '../../components/TextInput';
 import { getSampleCode } from '../../utils/test-utils';
 
+const StyledPageContent = styled(PageContent)`
+  .input-title {
+    width: 100%;
+  }
+
+  .input-body {
+    width: 100%;
+  }
+`;
+
 class NewQuestion extends Component {
   constructor(props) {
     super(props);
@@ -26,10 +36,19 @@ class NewQuestion extends Component {
 
   render() {
     return (
-      <PageContent width={700}>
+      <StyledPageContent width={700}>
         <section className="input-group">
           <label>제목</label>
-          <TextInput />
+          <TextInput 
+            className="input-title"
+          />
+        </section>
+        <section className="input-group">
+          <label>본문</label>
+          <TextInput 
+            className="input-body" 
+            multiline={true} 
+          />
         </section>
         <section className="input-group">
           <label>소스코드</label>
@@ -44,7 +63,7 @@ class NewQuestion extends Component {
           <Button>Save</Button>
           <Button>Cancel</Button>
         </section>
-      </PageContent>
+      </StyledPageContent>
     )
   }
 }

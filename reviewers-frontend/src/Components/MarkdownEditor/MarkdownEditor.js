@@ -20,7 +20,7 @@ const Styled = styled.div`
       margin-left: 5px;
     }
 
-    .tab-item:nth-child(1) {
+    .tab-item:first-child {
       margin-left: 0;
     }
 

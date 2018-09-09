@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ReviewItem from '../ReviewItem';
 
 const StyledSection = styled.section`
-    overflow: scroll;
+    overflow-y: scroll;
 `;
 
 const ReviewList = props => (

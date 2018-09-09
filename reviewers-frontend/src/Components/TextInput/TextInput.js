@@ -2,24 +2,41 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const StyeldTextInput = styled.input`
+const CommonTextInputStyle = `
   width: ${props => props.width};
   height: ${props => props.height};
-`;
+`
+
+const TextAreaStyle = `${CommonTextInputStyle}
+  resize: none;
+`
 
 const TextInput = (props) => {
-  console.log(props);
-  const { className, maxInputLength, onTextChange, width, height } = props;
+  const { 
+    className, 
+    maxInputLength, 
+    onTextChange, 
+    width, 
+    height,
+    multiline
+  } = props;
+
+  let StyledTextInput;
+
+  if(multiline) {
+    StyledTextInput = styled.textarea`${TextAreaStyle}`;
+  } else {
+    StyledTextInput = styled.input`${CommonTextInputStyle}`;
+  }
 
   return (
-    <StyeldTextInput
+    <StyledTextInput
       className={className}
       maxlength={maxInputLength}
       onChange={onTextChange}
       width={width}
       height={height}
-    >
-    </StyeldTextInput>
+    />
   )
 };
 
@@ -29,6 +46,7 @@ TextInput.propTypes = {
   maxlength: PropTypes.number,
   width: PropTypes.string,
   height: PropTypes.string,
+  multiline: PropTypes.bool
 };
 
 TextInput.defaultProps = {
@@ -36,6 +54,7 @@ TextInput.defaultProps = {
   className: '',
   width: '100%',
   height: '20px',
+  multiline: false
 };
 
 export default TextInput;
