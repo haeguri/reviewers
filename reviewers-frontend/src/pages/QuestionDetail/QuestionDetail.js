@@ -5,21 +5,26 @@ import PropTypes from 'prop-types';
 import { getSampleCode, getSampleReviewList } from '../../utils/test-utils';
 import PageContent from '../../containers/PageContent';
 import ReviewList from '../../components/ReviewList';
+import MarkdownViewer from '../../components/MarkdownViewer';
 
-const editorSize = { height: 600, width: 600};
 const reviewListSize = { height: 600, width: 500};
 const sampleCode = getSampleCode() + getSampleCode() + '\nfunction test(){\n return { \n }\n}';
 
-const StyledDiv = styled.div`
-  .editor,
-  .review-list {
-    display: inline-block;
+const StyledPageContent = styled(PageContent)`
+  .left {
+    width: 600px;
+    float: left;
   }
 
-  .review-list {
-    padding: 0 10px;
-    width: ${reviewListSize.width}px;
-    height: ${reviewListSize.height}px;
+  .right {
+    width: 500px;
+    float: right;
+
+    .review-list {
+      padding: 0 10px;
+      width: ${reviewListSize.width}px;
+      height: ${reviewListSize.height}px;
+    }
   }
 `;
 
@@ -37,26 +42,37 @@ class QuestionDetail extends Component {
       console.log(this.props);
 
       return (
-        <PageContent width={1100}>
-          <StyledDiv>
-            <h1>Code Detail Page!</h1>
-            <Editor 
-              className="editor"
-              width={editorSize.width}
-              height={editorSize.height}
-              isReadOnly={true}
-              options={{
-                readOnly: true,
-                glyphMargin: true,
-              }}
-              value={sampleCode}
-            />
+        <StyledPageContent width={1100}>
+          <section className="left">
+            <section className="title-area">
+              <h1>Code Detail Page!</h1>
+            </section>
+            <section className="body-area">
+              <MarkdownViewer>
+
+              </MarkdownViewer>
+            </section>
+            <section className="source-code-area">
+              <Editor
+                className="editor"
+                height={600}
+                isReadOnly={true}
+                options={{
+                  readOnly: true,
+                  glyphMargin: true,
+                }}
+                value={sampleCode}
+              />
+            </section>
+          </section>
+          <section className="right">
             <ReviewList 
               className="review-list"
               data={getSampleReviewList()} 
             />
-          </StyledDiv>
-        </PageContent>
+          </section>
+          <div></div>
+        </StyledPageContent>
       );
     }
 }

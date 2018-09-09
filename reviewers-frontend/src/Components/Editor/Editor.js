@@ -3,18 +3,17 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import MonacoEditor from 'react-monaco-editor';
 import styled from 'styled-components';
-import ReviewForm from '../ReviewForm';
+import ReviewEditor from '../ReviewEditor';
 
-const StyledWrapper = styled.div`
-  width: ${props => props.width}px;
+const StyledWrapper = styled.section`
   height: ${props => props.height}px;
   border: solid 1px #c2c2c2;
 
   .comment-btn {
-      border-radius: 10px;
-      background: skyblue;
-      width: 20px;
-      height: 20px;
+    border-radius: 10px;
+    background: skyblue;
+    width: 20px;
+    height: 20px;
   }
 
   .myLineDecoration {
@@ -25,144 +24,142 @@ const StyledWrapper = styled.div`
 `;
 
 class Editor extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        const { options = {} } = props;
+    const { options = {} } = props;
 
-        Object.assign(options, { 
-            contextmenu: false,
-            folding: false,
-            enable: false,
-            lineDecorationsWidth: 20,
-            minimap: {
-                enabled: false
-            }
+    Object.assign(options, { 
+      contextmenu: false,
+      folding: false,
+      enable: false,
+      lineDecorationsWidth: 20,
+      minimap: {
+        enabled: false
+      }
+    });
+  }
+
+  render() {
+    return (
+      <StyledWrapper>
+        <MonacoEditor
+          className={this.props.className}
+          height={this.props.height}
+          width={this.props.width}
+          theme="vs"
+          language={this.props.language}
+          value={this.props.value}
+          options={this.props.options}
+          onChange={(newValue, e) => this.props.onChange(newValue, e)}
+          editorDidMount={(editor, monaco) => this._editorDidMount(editor, monaco)}
+        />
+      </StyledWrapper>
+    )
+  }
+
+  _editorDidMount(editor, monaco) {
+    console.log('react-monaco-editor did mount..');
+    if(this.props.isReadOnly) {
+      this._attachMouseDownEventListener(editor);
+      this._attachMouseMoveEventListener(editor, monaco);
+    } else {
+      editor.focus();
+    }
+
+    this.props.editorDidMount(editor, monaco);
+  }
+
+  _attachMouseDownEventListener(editor) {
+    let activeLineNumbers = [];
+    const viewZoneIds = [];
+
+    editor.onMouseDown(e => {
+      if(e.target.position === null) {
+          return;
+      }
+
+      let currLineNumber = e.target.position.lineNumber;
+
+      if(activeLineNumbers.indexOf(currLineNumber) >= 0) {
+          return;
+      }
+
+      if(e.target.element.className.indexOf('comment-btn') >= 0) {
+
+        editor.changeViewZones(changeAccessor => {
+          let currViewZoneId;
+
+          const reviewContainerDOM = document.createElement('div');
+          reviewContainerDOM.style.zIndex = 99999;
+
+          currViewZoneId = changeAccessor.addZone({
+              afterLineNumber: currLineNumber,
+              heightInPx: 250,
+              domNode: reviewContainerDOM,
+          });
+
+          viewZoneIds.push(currViewZoneId);
+          activeLineNumbers.push(currLineNumber);
+
+          ReactDOM.render(
+            <ReviewEditor
+              height={250}
+              editor={editor}
+              onCancelClick={() => {
+                editor.changeViewZones(changeAccessor => changeAccessor.removeZone(currViewZoneId));
+                activeLineNumbers = activeLineNumbers.filter(n => n !== currLineNumber);
+                ReactDOM.unmountComponentAtNode(reviewContainerDOM);
+              }}>
+            </ReviewEditor>,
+            reviewContainerDOM
+          );
         });
-    }
+      }
+    });
+  }
 
-    render() {
-        return (
-            <StyledWrapper 
-                className={this.props.className}
-                width={this.props.width}
-                height={this.props.height}
-            >
-                <MonacoEditor
-                    theme="vs"
-                    language={this.props.language}
-                    value={this.props.value}
-                    options={this.props.options}
-                    onChange={(newValue, e) => this.props.onChange(newValue, e)}
-                    editorDidMount={(editor, monaco) => this._editorDidMount(editor, monaco)}
-                />
-            </StyledWrapper>
-        )
-    }
+  _attachMouseMoveEventListener(editor, monaco) {
+    let prevPosition;
+    let prevDecoIds;
 
-    _editorDidMount(editor, monaco) {
-        console.log('react-monaco-editor did mount..');
-        if(this.props.isReadOnly) {
-            this._attachMouseDownEventListener(editor);
-            this._attachMouseMoveEventListener(editor, monaco);
-        } else {
-            editor.focus();
-        }
+    editor.onMouseMove(e => {
+      if(e.target.position === null) {
+        return;
+      }
 
-        this.props.editorDidMount(editor, monaco);
-    }
+      let currPosition = e.target.position;
 
-    _attachMouseDownEventListener(editor) {
-        let activeLineNumbers = [];
-        const viewZoneIds = [];
+      if(typeof prevPosition === 'undefined') {
+        prevPosition = currPosition;
+        prevDecoIds = this._updateDecorations(editor, monaco, [], currPosition);
+        return;
+      } else if(prevPosition.lineNumber === currPosition.lineNumber) {
+        return;
+      }
 
-        editor.onMouseDown(e => {
-            if(e.target.position === null) {
-                return;
-            }
+      prevDecoIds = this._updateDecorations(editor, monaco, prevDecoIds, currPosition);
+      prevPosition = currPosition;
+    });
+  }
 
-            let currLineNumber = e.target.position.lineNumber;
-
-            if(activeLineNumbers.indexOf(currLineNumber) >= 0) {
-                return;
-            }
-
-            if(e.target.element.className.indexOf('comment-btn') >= 0) {
-
-                editor.changeViewZones(changeAccessor => {
-                    let currViewZoneId;
-
-                    const reviewContainerDOM = document.createElement('div');
-                    reviewContainerDOM.style.zIndex = 99999;
-
-                    currViewZoneId = changeAccessor.addZone({
-                        afterLineNumber: currLineNumber,
-                        heightInPx: 250,
-                        domNode: reviewContainerDOM,
-                    });
-
-                    viewZoneIds.push(currViewZoneId);
-                    activeLineNumbers.push(currLineNumber);
-
-                    ReactDOM.render(
-                        <ReviewForm
-                            editor={editor}
-                            onCancelClick={() => {
-                                editor.changeViewZones(changeAccessor => changeAccessor.removeZone(currViewZoneId));
-                                activeLineNumbers = activeLineNumbers.filter(n => n !== currLineNumber);
-                                ReactDOM.unmountComponentAtNode(reviewContainerDOM);
-                            }}>
-                        </ReviewForm>,
-                        reviewContainerDOM
-                    );
-                });
-            }
-        })
-    }
-
-    _attachMouseMoveEventListener(editor, monaco) {
-        let prevPosition;
-        let prevDecoIds;
-
-        editor.onMouseMove(e => {
-            if(e.target.position === null) {
-                return;
-            }
-
-            let currPosition = e.target.position;
-
-            if(typeof prevPosition === 'undefined') {
-                prevPosition = currPosition;
-                prevDecoIds = this._updateDecorations(editor, monaco, [], currPosition);
-                return;
-            } else if(prevPosition.lineNumber === currPosition.lineNumber) {
-                return;
-            }
-
-            prevDecoIds = this._updateDecorations(editor, monaco, prevDecoIds, currPosition);
-            prevPosition = currPosition;
-        });
-    }
-
-    _updateDecorations(editor, monaco, prevDecoIds, currPosition) {
-        return editor.deltaDecorations(prevDecoIds, [
-            {
-                range: new monaco.Range(
-                    currPosition.lineNumber, 1, 
-                    currPosition.lineNumber, 1
-                ),
-                options: { iisWholeLine: true, linesDecorationsClassName: 'comment-btn' }
-            }
-        ]);
-    }
+  _updateDecorations(editor, monaco, prevDecoIds, currPosition) {
+    return editor.deltaDecorations(prevDecoIds, [
+      {
+        range: new monaco.Range(
+            currPosition.lineNumber, 1, 
+            currPosition.lineNumber, 1
+        ),
+        options: { iisWholeLine: true, linesDecorationsClassName: 'comment-btn' }
+      }
+    ]);
+  }
 }
 
 Editor.defaultProps = {
     editorDidMount: _=>{},
     onChange: _=>{},
     language: 'javascript',
-    width: 600,
-    height: 600,
 };
 
 Editor.propTypes = {

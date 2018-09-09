@@ -10,7 +10,7 @@ const StyledTextarea = styled.textarea`
     font-size: 1em;
 `;
 
-class Textarea extends Component {
+class ReviewInput extends Component {
     constructor(props) {
         super(props);
         console.log('[TextInput Component] constructor.');
@@ -75,10 +75,11 @@ class Textarea extends Component {
     }
 }
 
-Textarea.propTypes = {
-    height: PropTypes.number,
-    onChange: PropTypes.func,
-    value: PropTypes.string
+ReviewInput.propTypes = {
+  editor: PropTypes.object,
+  height: PropTypes.number,
+  onChange: PropTypes.func,
+  value: PropTypes.string,
 };
 
-export default Textarea;
+export default ReviewInput;

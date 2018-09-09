@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import MarkdownViewer from '../MarkdownViewer';
-import Textarea from '../Textarea';
+import PropTypes from 'prop-types';
+import ReviewPreview from './ReviewPreview';
+import ReviewInput from './ReviewInput';
 import Button from '../Button';
 import styled from 'styled-components';
 
@@ -8,6 +9,10 @@ const EDITOR_MENU = 0;
 const VIEWER_MENU = 1;
 
 const Styled = styled.div`
+  height: 100%;
+  padding: 15px;
+  border: solid 1px #c2c2c2;
+
   .tab-menu {
     overflow: hidden;
     padding: 0;
@@ -38,7 +43,7 @@ const Styled = styled.div`
   }
 `;
 
-class MarkdownEditor extends Component {
+class ReviewEditor extends Component {
   constructor(props) {
     super(props);
 
@@ -54,7 +59,9 @@ class MarkdownEditor extends Component {
         "# test",
         "# test",
         "# test",
-        "# test"
+        "# test",
+        '- asdfasdfasdf',
+        '- asdfasdfsadf'
       ].join('\n')
     };
   }
@@ -86,13 +93,15 @@ class MarkdownEditor extends Component {
         </ul>
         <div className="contents">
         {
-          this.state.currentMenu === EDITOR_MENU ?
-          <Textarea
+          this.state.currentMenu === EDITOR_MENU
+          ?
+          <ReviewInput
             editor={this.props.editor}
             height={150}
             onChange={value => this.onTextareaChange(value)}
-            value={this.state.input}/> :
-          <MarkdownViewer
+            value={this.state.input}/>
+          :
+          <ReviewPreview
             editor={this.props.editor}
             height={150}
             rawText={this.state.input}/>
@@ -107,4 +116,11 @@ class MarkdownEditor extends Component {
   }
 }
 
-export default MarkdownEditor;
+ReviewEditor.propTypes = {
+  editor: PropTypes.object,
+  height: PropTypes.number,
+  width: PropTypes.number,
+  onCancelClick: PropTypes.func
+};
+
+export default ReviewEditor;
