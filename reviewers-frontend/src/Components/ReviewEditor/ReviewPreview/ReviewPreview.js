@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import MarkdownViewer from '../../MarkdownViewer';
 
-const StyledWrapper = styled.section`
+const StyledWrapper = styled.div`
   height: ${props => props.height}px;
   border: solid 1px black;
   overflow-y: scroll;

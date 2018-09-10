@@ -3,6 +3,16 @@ import marked from 'marked';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+const StyledDiv = styled.div`
+  h1, h2, h3, h4, h5, h6 { margin: 0.8em 0; }
+  h1 { font-size: 18px; }
+  h2 { font-size: 16px; }
+  h3 { font-size: 15px; }
+  h4 { font-size: 14px; }
+  h5, h6 { font-size: 13px; }
+  overflow: hidden;
+`
+
 const MarkdownViewer = props => {
   const { className, rawText } = props;
   const markup = {
@@ -10,11 +20,11 @@ const MarkdownViewer = props => {
   };
 
   return (
-    <div 
+    <StyledDiv 
       className={className}
       dangerouslySetInnerHTML={markup}
       >
-    </div>
+    </StyledDiv>
   )
 }
 

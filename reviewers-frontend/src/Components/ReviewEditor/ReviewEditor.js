@@ -49,20 +49,6 @@ class ReviewEditor extends Component {
 
     this.state = {
       currentMenu: EDITOR_MENU,
-      input: [
-        "# test",
-        "# test",
-        "# test",
-        "# test",
-        "# test",
-        "# test",
-        "# test",
-        "# test",
-        "# test",
-        "# test",
-        '- asdfasdfasdf',
-        '- asdfasdfsadf'
-      ].join('\n')
     };
   }
 

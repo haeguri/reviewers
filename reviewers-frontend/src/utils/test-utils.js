@@ -42,7 +42,23 @@ const getSampleReviewList = () => {
     return reviewList;
 }
 
+const getSampleMarkdown = () => [
+  "# test",
+  "# test",
+  "# test",
+  "# test",
+  "# test",
+  "# test",
+  "# test",
+  "# test",
+  "# test",
+  "# test",
+  '- asdfasdfasdf',
+  '- asdfasdfsadf'
+].join('\n');
+
 export {
     getSampleCode,
-    getSampleReviewList
+    getSampleReviewList,
+    getSampleMarkdown
 };
