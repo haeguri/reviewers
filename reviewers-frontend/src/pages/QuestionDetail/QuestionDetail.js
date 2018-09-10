@@ -13,7 +13,7 @@ const sampleCode = getSampleCode() + getSampleCode() + '\nfunction test(){\n ret
 
 const StyledPageContent = styled(PageContent)`
   overflow: hidden;
-  padding: 0 0 0 40px;
+  padding: 0 0 20px 40px;
   border-left: solid 1px #a2a2a2;
   border-right: solid 1px #a2a2a2;
 
@@ -27,10 +27,12 @@ const StyledPageContent = styled(PageContent)`
 
     .body-area {
       position: relative;
+      padding: 20px 0;
+      min-height: 60px;
 
       .toggle-btn {
         position: absolute;
-        top: 0;
+        top: 20px;
         left: -40px;
         height: 20px;
         background: skyblue;
@@ -43,9 +45,7 @@ const StyledPageContent = styled(PageContent)`
     float: right;
 
     .review-list {
-      padding: 0 10px;
-      width: ${reviewListSize.width}px;
-      height: ${reviewListSize.height}px;
+      width: 100%;
     }
   }
 `;
@@ -86,7 +86,7 @@ class QuestionDetail extends Component {
               {
                 this.state.showBody ? 
                 <MarkdownViewer rawText={this.state.sampleBody}/> :
-                null
+                <span>...</span>
               }
             </section>
             <section className="source-code-area">
@@ -103,6 +103,7 @@ class QuestionDetail extends Component {
             </section>
           </section>
           <section className="right">
+            <h3>O 번째 줄 리뷰</h3>
             <ReviewList 
               className="review-list"
               data={getSampleReviewList()} 

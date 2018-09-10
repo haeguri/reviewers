@@ -79,14 +79,12 @@ class ReviewEditor extends Component {
         </ul>
         <div className="contents">
         {
-          this.state.currentMenu === EDITOR_MENU
-          ?
+          this.state.currentMenu === EDITOR_MENU ?
           <ReviewInput
             editor={this.props.editor}
             height={150}
             onChange={value => this.onTextareaChange(value)}
-            value={this.state.input}/>
-          :
+            value={this.state.input}/> :
           <ReviewPreview
             editor={this.props.editor}
             height={150}
