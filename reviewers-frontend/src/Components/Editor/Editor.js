@@ -79,7 +79,10 @@ class Editor extends Component {
           return;
       }
 
+      let prevLineNumber = currLineNumber;
       let currLineNumber = e.target.position.lineNumber;
+
+      this.props.onLineClick(prevLineNumber, currLineNumber);
 
       if(activeLineNumbers.indexOf(currLineNumber) >= 0) {
           return;
@@ -160,6 +163,7 @@ Editor.defaultProps = {
     editorDidMount: _=>{},
     onChange: _=>{},
     language: 'javascript',
+    onLineClick: _=>{}
 };
 
 Editor.propTypes = {
@@ -170,6 +174,7 @@ Editor.propTypes = {
     options: PropTypes.object,
     editorDidMount: PropTypes.func,
     onChange: PropTypes.func,
+    onLineClick: PropTypes.func
 };
 
 export default Editor;

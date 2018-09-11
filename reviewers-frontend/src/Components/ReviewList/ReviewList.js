@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import ReviewItem from './ReviewItem';
+import Review from './Review';
 
 const StyledSection = styled.section`
     overflow-y: scroll;
@@ -24,8 +24,11 @@ const StyledSection = styled.section`
 
 const ReviewList = props => (
     <StyledSection
-        className={props.className}>
-        {props.data.map(v => <ReviewItem key={v.id} data={v} />)}
+      className={props.className}
+      >
+      {
+        props.data.map(v => <Review key={v.id} data={v} />)
+      }
     </StyledSection>
 )
 

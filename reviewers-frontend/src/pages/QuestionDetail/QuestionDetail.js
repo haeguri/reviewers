@@ -57,7 +57,11 @@ class QuestionDetail extends Component {
       console.log('teststst', getSampleReviewList());
       this.state = {
         sampleBody: getSampleMarkdown(),
-        showBody: true
+        showBody: true,
+        selectedCodeLine: 0,
+
+        // server data...
+        body: getSampleMarkdown()
       };
     }
 
@@ -67,8 +71,23 @@ class QuestionDetail extends Component {
       });
     }
 
+    onLineClick(prev, curr) {
+      if(prev !== curr) {
+        this.setState({
+          selectedCodeLine: curr
+        });
+      }
+    }
+
     render() {
-      console.log(this.props);
+      const { selectedCodeLine, showBody } = this.state;
+
+      let reviewListHeaderMsg;
+      if(selectedCodeLine >= 1) {
+        reviewListHeaderMsg = `${selectedCodeLine} line reviews`;
+      } else {
+        reviewListHeaderMsg = 'all of review';
+      }
 
       return (
         <StyledPageContent width={1150}>
@@ -80,11 +99,11 @@ class QuestionDetail extends Component {
               <span 
                 className="toggle-btn" 
                 onClick={() => this.onToggleBodyButtonClick()}
-                >
-                <a>{this.state.showBody ? '접기' : '열기'}</a>
+              >
+                <a>{showBody ? '접기' : '열기'}</a>
               </span>
               {
-                this.state.showBody ? 
+                showBody ? 
                 <MarkdownViewer rawText={this.state.sampleBody}/> :
                 <span>...</span>
               }
@@ -94,16 +113,19 @@ class QuestionDetail extends Component {
                 className="editor"
                 height={600}
                 isReadOnly={true}
+                onLineClick={(prev, curr) => this.onLineClick(prev, curr)}
+                // react-monaco-editor 옵션
                 options={{
                   readOnly: true,
                   glyphMargin: true,
                 }}
+
                 value={sampleCode}
               />
             </section>
           </section>
           <section className="right">
-            <h3>O 번째 줄 리뷰</h3>
+            <h3>{reviewListHeaderMsg}</h3>
             <ReviewList 
               className="review-list"
               data={getSampleReviewList()} 
@@ -122,7 +144,5 @@ QuestionDetail.defaultProps = {
 QuestionDetail.propTypes = {
 
 };
-
-
 
 export default QuestionDetail;

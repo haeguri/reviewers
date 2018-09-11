@@ -32,7 +32,15 @@ const getSampleReviewList = () => {
             id,
             author: 'author' + id,
             created: 'sample-date',
-            body: 'review as markdown...',
+            body: [
+              '<h1>Review!</h1>',
+              '<p>Review!</p>',
+              '<ul>Review!</ul>',
+              '<li>Review!</li>',
+              '<li>Review!</li>',
+              '<h1>Review!</h1>',
+              '<p>Review!</p>'
+            ].join('\n'),
             lineNumber: id
         });
 

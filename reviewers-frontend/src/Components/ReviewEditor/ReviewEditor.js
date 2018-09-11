@@ -4,6 +4,7 @@ import ReviewPreview from './ReviewPreview';
 import ReviewInput from './ReviewInput';
 import Button from '../Button';
 import styled from 'styled-components';
+import { getSampleMarkdown } from '../../utils/test-utils';
 
 const EDITOR_MENU = 0;
 const VIEWER_MENU = 1;
@@ -49,6 +50,7 @@ class ReviewEditor extends Component {
 
     this.state = {
       currentMenu: EDITOR_MENU,
+      input: getSampleMarkdown()
     };
   }
 
