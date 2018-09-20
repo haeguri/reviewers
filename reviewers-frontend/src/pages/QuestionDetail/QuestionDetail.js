@@ -28,14 +28,31 @@ const StyledPageContent = styled(PageContent)`
     .body-area {
       position: relative;
       padding: 20px 0;
-      min-height: 60px;
+
+      .body-contents {
+        max-height: ${props => props.isBodyFold ? '150px' : 'none'};
+        overflow: hidden;
+      }
 
       .toggle-btn {
         position: absolute;
         top: 20px;
         left: -40px;
-        height: 20px;
         background: skyblue;
+
+        .unfold, .fold {
+          display: inline-block;
+          height: 20px;
+          width: 20px;
+        }
+
+        .unfold {
+          background-color: yellow;
+        }
+
+        .fold {
+          background-color: red;
+        }
       }
     }
   }
@@ -57,7 +74,7 @@ class QuestionDetail extends Component {
       console.log('teststst', getSampleReviewList());
       this.state = {
         sampleBody: getSampleMarkdown(),
-        showBody: true,
+        isBodyFold: true,
         selectedCodeLine: 0,
 
         // server data...
@@ -65,22 +82,21 @@ class QuestionDetail extends Component {
       };
     }
 
-    onToggleBodyButtonClick() {
+    onToggleBodyClick() {
       this.setState({
-        showBody: !this.state.showBody
+        isBodyFold: !this.state.isBodyFold
       });
     }
 
-    onLineClick(prev, curr) {
-      if(prev !== curr) {
-        this.setState({
-          selectedCodeLine: curr
-        });
-      }
+    onLineClick(curr) {
+      console.log(`onLineClick curr: ${curr}`);
+      this.setState({
+        selectedCodeLine: curr
+      });
     }
 
     render() {
-      const { selectedCodeLine, showBody } = this.state;
+      const { selectedCodeLine, isBodyFold, sampleBody } = this.state;
 
       let reviewListHeaderMsg;
       if(selectedCodeLine >= 1) {
@@ -90,30 +106,25 @@ class QuestionDetail extends Component {
       }
 
       return (
-        <StyledPageContent width={1150}>
+        <StyledPageContent width={1150} isBodyFold={isBodyFold}>
           <section className="left">
             <section className="title-area">
               <h1>Code Detail Page!</h1>
             </section>
             <section className="body-area">
-              <span 
-                className="toggle-btn" 
-                onClick={() => this.onToggleBodyButtonClick()}
-              >
-                <a>{showBody ? '접기' : '열기'}</a>
+              <span className="toggle-btn" 
+                    onClick={() => this.onToggleBodyClick()}>
+                <a className={isBodyFold ? 'unfold' : 'fold'}><span></span></a>
               </span>
-              {
-                showBody ? 
-                <MarkdownViewer rawText={this.state.sampleBody}/> :
-                <span>...</span>
-              }
+              <MarkdownViewer className="body-contents"
+                              rawText={sampleBody}/>
             </section>
             <section className="source-code-area">
               <Editor
                 className="editor"
                 height={600}
                 isReadOnly={true}
-                onLineClick={(prev, curr) => this.onLineClick(prev, curr)}
+                onLineClick={(curr) => this.onLineClick(curr)}
                 // react-monaco-editor 옵션
                 options={{
                   readOnly: true,

@@ -79,10 +79,9 @@ class Editor extends Component {
           return;
       }
 
-      let prevLineNumber = currLineNumber;
       let currLineNumber = e.target.position.lineNumber;
 
-      this.props.onLineClick(prevLineNumber, currLineNumber);
+      this.props.onLineClick(currLineNumber);
 
       if(activeLineNumbers.indexOf(currLineNumber) >= 0) {
           return;

@@ -45,19 +45,52 @@ const Styled = styled.div`
 `;
 
 class ReviewEditor extends Component {
+  state = {
+    currentMenu: EDITOR_MENU,
+    input: getSampleMarkdown()
+  }
+
   constructor(props) {
     super(props);
 
-    this.state = {
-      currentMenu: EDITOR_MENU,
-      input: getSampleMarkdown()
-    };
+    this.contentsRef = React.createRef();
+
+    this._mouseEnterEventListener = this._mouseEnterEventListener.bind(this);
+    this._mouseLeaveEventListener = this._mouseLeaveEventListener.bind(this);
+  }
+
+  _mouseEnterEventListener() {
+    console.log('disable scroll');
+    this.props.editor.updateOptions({
+      scrollbar: {
+        vertical: 'hidden',
+        handleMouseWheel: false
+      }
+    })
+  }
+
+  _mouseLeaveEventListener() {
+    console.log('enable scroll');
+    this.props.editor.updateOptions({
+      scrollbar: {
+        vertical: 'visible',
+        handleMouseWheel: true
+      }
+    })
+  }
+
+  componentDidMount() {
+    this.contentsRef.current.addEventListener('mouseenter', this._mouseEnterEventListener);
+    this.contentsRef.current.addEventListener('mouseleave', this._mouseLeaveEventListener);
+  }
+
+  componentWillUnmount() {
+    this.contentsRef.current.removeEventListener('mouseenter', this._mouseEnterEventListener);
+    this.contentsRef.current.removeEventListener('mouseleave', this._mouseLeaveEventListener);
   }
 
   onTabItemClick(menu) {
-    this.setState({
-        currentMenu: menu
-    });
+    this.setState({ currentMenu: menu });
   }
 
   onTextareaChange(input) {
@@ -79,7 +112,8 @@ class ReviewEditor extends Component {
             <a onClick={() => this.onTabItemClick(VIEWER_MENU)}>Viewer</a>
           </li>
         </ul>
-        <div className="contents">
+        <div className="contents"
+            ref={this.contentsRef}>
         {
           this.state.currentMenu === EDITOR_MENU ?
           <ReviewInput
