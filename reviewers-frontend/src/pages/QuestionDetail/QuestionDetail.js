@@ -12,10 +12,26 @@ const sampleCode = getSampleCode() + getSampleCode() + '\nfunction test(){\n ret
 const StyledPageContainer = styled(PageContainer)`
   overflow: hidden;
   padding-left: 40px;
+  display: flex;
+  flex-direction: row;
+
+  .left, .right {
+    .title-area {
+      display: flex;
+      align-items: center;
+      height: 50px;
+      overflow: hidden;
+      border-bottom: solid 1px #b2b5b8;
+
+      h1 {
+        margin: 0;
+      }
+    }
+  }
 
   .left {
     width: 600px;
-    float: left;
+    margin-right: 10px;
 
     .title-area {
       border-bottom: solid 1px #e2e2e2;
@@ -56,7 +72,6 @@ const StyledPageContainer = styled(PageContainer)`
   .right {
     background-color: #E8EBF0;
     width: 500px;
-    float: right;
     padding: 0 10px;
     border-left: solid 1px #d2d2d2;
 
@@ -138,7 +153,10 @@ class QuestionDetail extends Component {
             </section>
           </section>
           <section className="right">
-            <p>{reviewListHeaderMsg}</p>
+            <div className="title-area">
+              <p>리뷰 목록</p>
+              <span>{reviewListHeaderMsg}</span>
+            </div>
             <ReviewList className="review-list"
               data={(_=>{
                 const reviewList = getSampleReviewList();
