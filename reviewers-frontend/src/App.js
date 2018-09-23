@@ -29,7 +29,6 @@ class App extends Component {
         <Route path="/question-detail/:qId" component={QuestionDetail}/>
         <Route path="/login" component={Login}/>
         <Route path="/new-question" component={NewQuestion}/>
-        <Footer />
     </StyledDiv>
         );
     }

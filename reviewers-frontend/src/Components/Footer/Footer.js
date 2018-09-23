@@ -5,7 +5,12 @@ import PropTypes from 'prop-types';
 const StyledFooter = styled.footer`
     background-color: #c2c2c2;
     height: 100px;
+    width: 100%;
     overflow: hidden;
+    min-width: ${props => {
+      const width = parseInt(props.width, 10);
+      return width > 900 ? width : 900;
+    }}px;
 
     .container {
       width: 900px;
@@ -14,7 +19,7 @@ const StyledFooter = styled.footer`
 `;
 
 const Footer = props => (
-    <StyledFooter>
+    <StyledFooter width={props.width}>
       <div className="container">
         <p>Footer</p>
       </div>

@@ -21,36 +21,33 @@ const menuList = [
 const StyledNav = styled.nav`
   border-bottom: solid 1px #e2e2e2;
   width: 100%;
+  height: 50px;
   min-width: ${props => {
     const width = parseInt(props.width, 10);
-    return width > 900 ? width : 900
+    return width > 900 ? width : 900;
   }}px;
   
   .container {
+    height: 100%;
     width: 900px;
     margin: 0 auto; 
-    background: red;
     overflow: hidden;
+    display: flex;
+    align-items: center;
 
-    .logo {
-        background: yellow;
-        float: left;
-    }
+    .logo h1 { margin: 0; }
 
     .nav-menus {
-        list-style: none;
-        padding-left: 0;
-        float: right;
+      margin-left: auto;
+      list-style: none;
+      padding-left: 0;
 
-        .menu-item {
-            display: inline-block;
-            background: yellow;
-            margin-right: 10px;
+      .menu-item {
+        display: inline-block;
+        margin-right: 10px;
 
-            &:last-child {
-                margin-right: 0;
-            }
-        }
+        &:last-child { margin-right: 0; }
+      }
     }
   }
 `;
@@ -59,7 +56,7 @@ const Header = props => (
   <StyledNav width={props.width}>
     <div className="container">
       <div className="logo">
-          <Link to="/"><h1>Reviewers</h1></Link>
+          <Link to="/"><h2>Reviewers</h2></Link>
       </div>
       <ul className="nav-menus">
           {menuList.map(m => <Link className="menu-item" key={m.name} to={m.path}>{m.name}</Link>)}

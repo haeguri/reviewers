@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import MarkdownViewer from '../MarkdownViewer';
 import TextInput from '../TextInput';
-import ReviewInput from './ReviewInput';
 import Button from '../Button';
 import styled from 'styled-components';
 import { getSampleMarkdown } from '../../utils/test-utils';
