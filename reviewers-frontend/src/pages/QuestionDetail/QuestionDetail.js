@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import Editor from '../../components/Editor';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import { getSampleCode, getSampleReviewList } from '../../utils/test-utils';
 import PageContainer from '../../containers/PageContainer';
 import ReviewList from '../../components/ReviewList';
 import MarkdownViewer from '../../components/MarkdownViewer';
 import { getSampleMarkdown } from '../../utils/test-utils.js';
 
-const reviewListSize = { height: 600, width: 500};
 const sampleCode = getSampleCode() + getSampleCode() + '\nfunction test(){\n return { \n }\n}';
 
 const StyledPageContainer = styled(PageContainer)`
@@ -60,6 +58,7 @@ const StyledPageContainer = styled(PageContainer)`
     width: 500px;
     float: right;
     padding: 0 10px;
+    border-left: solid 1px #d2d2d2;
 
     .review-list {
       width: 100%;
@@ -157,13 +156,5 @@ class QuestionDetail extends Component {
       );
     }
 }
-
-QuestionDetail.defaultProps = {
-
-};
-
-QuestionDetail.propTypes = {
-
-};
 
 export default QuestionDetail;

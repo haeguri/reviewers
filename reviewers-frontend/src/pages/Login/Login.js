@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import PageContainer from '../../containers/PageContainer';
 
 class Login extends Component {
@@ -19,13 +17,5 @@ class Login extends Component {
     );
   }
 }
-
-Login.defaultProps = {
-
-};
-
-Login.propTypes = {
-
-};
 
 export default Login;

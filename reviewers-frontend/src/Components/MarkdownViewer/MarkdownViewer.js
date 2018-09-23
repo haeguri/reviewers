@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import marked from 'marked';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';

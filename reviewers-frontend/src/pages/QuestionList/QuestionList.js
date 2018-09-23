@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import PageContainer from '../../containers/PageContainer';
 import { getSampleQuestionList } from '../../utils/test-utils';
@@ -48,13 +46,5 @@ class QuestionList extends Component {
     );
   }
 }
-
-QuestionList.defaultProps = {
-
-};
-
-QuestionList.propTypes = {
-
-};
 
 export default QuestionList;

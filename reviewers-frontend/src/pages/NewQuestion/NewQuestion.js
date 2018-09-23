@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Editor from '../../components/Editor';
 import styled from 'styled-components';
 import PageContainer from '../../containers/PageContainer';
-import Header from '../../components/Header';
 import Button from '../../components/Button';
 import TextInput from '../../components/TextInput';
 import { getSampleCode } from '../../utils/test-utils';

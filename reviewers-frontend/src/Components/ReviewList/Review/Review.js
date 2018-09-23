@@ -33,12 +33,18 @@ const StyledArticle = styled.article`
     .review-footer {
       padding: 10px;
 
-      button {
+      a {
         background: none;
         border: none;
         font-size: 14px;
         color: #85888a;
         text-decoration: underline;
+        cursor: pointer;
+        padding: 0 6px;
+
+        &:hover {
+          color: #5d5f60;
+        }
       }
     }
 `;
@@ -60,8 +66,8 @@ const Review = props => {
         <MarkdownViewer rawText={body} />
       </div>
       <div className="review-footer">
-        <button>수정</button>
-        <button>삭제</button>
+        <a onClick={() => {}}>수정</a>
+        <a onClick={() => {}}>삭제</a>
       </div>
     </StyledArticle>
   ) 
