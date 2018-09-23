@@ -19,6 +19,8 @@ const menuList = [
 ];
 
 const StyledNav = styled.nav`
+  background-color: #092d63;
+  color: white;
   border-bottom: solid 1px #e2e2e2;
   width: 100%;
   height: 50px;

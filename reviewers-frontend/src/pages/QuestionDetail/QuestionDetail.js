@@ -13,9 +13,7 @@ const sampleCode = getSampleCode() + getSampleCode() + '\nfunction test(){\n ret
 
 const StyledPageContainer = styled(PageContainer)`
   overflow: hidden;
-  padding: 0 0 20px 40px;
-  border-left: solid 1px #a2a2a2;
-  border-right: solid 1px #a2a2a2;
+  padding-left: 40px;
 
   .left {
     width: 600px;
@@ -58,8 +56,10 @@ const StyledPageContainer = styled(PageContainer)`
   }
 
   .right {
+    background-color: #E8EBF0;
     width: 500px;
     float: right;
+    padding: 0 10px;
 
     .review-list {
       width: 100%;
@@ -116,32 +116,31 @@ class QuestionDetail extends Component {
             </section>
             <section className="body-area">
               <span className="toggle-btn" 
-                    onClick={() => this.onToggleBodyClick()}>
+                onClick={() => this.onToggleBodyClick()}
+              >
                 <a className={isBodyFold ? 'unfold' : 'fold'}><span></span></a>
               </span>
               <MarkdownViewer className="body-contents"
-                              rawText={sampleBody}/>
+                rawText={sampleBody}
+              />
             </section>
             <section className="source-code-area">
-              <Editor
-                className="editor"
+              <Editor className="editor"
                 height={600}
                 isReadOnly={true}
                 onLineClick={(curr) => this.onLineClick(curr)}
+                value={sampleCode}
                 // react-monaco-editor 옵션
                 options={{
                   readOnly: true,
                   glyphMargin: true,
                 }}
-
-                value={sampleCode}
               />
             </section>
           </section>
           <section className="right">
-            <h3>{reviewListHeaderMsg}</h3>
-            <ReviewList 
-              className="review-list"
+            <p>{reviewListHeaderMsg}</p>
+            <ReviewList className="review-list"
               data={(_=>{
                 const reviewList = getSampleReviewList();
 

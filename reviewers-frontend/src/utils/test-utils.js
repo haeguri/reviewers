@@ -14,6 +14,28 @@ const getSampleCode = () => {
     return code.join('\n');
 }
 
+const getSampleQuestionList = () => {
+  const languageList = [
+    'JavaScript',
+    'Java',
+    'Python',
+    'Scala'
+  ]
+  return Array(10).fill(0).map((value, idx) => {
+    return {
+      id: idx+1,
+      title: `${idx+1}'s question title. title. title. title..`,
+      author: `author${idx+1}`,
+      reviewCount: Math.ceil(Math.random() * 5),
+      language: (_=>{
+        const randomPick = Math.ceil(Math.random() * 4) - 1;
+        return languageList[randomPick];
+      })(),
+      created: '2018-07-01',
+    }
+  })
+}
+
 const getSampleReviewList = () => {
     const reviewList = [];
 
@@ -26,7 +48,8 @@ const getSampleReviewList = () => {
             author: 'author' + id,
             questionId: 1,
             lineNumber: randomLineNumber,
-            created: 'sample-date',
+            created: '2018-09-23 13:14:32',
+            updated: '2018-09-23 23:44:00',
             body: [
               `<h1>${randomLineNumber} line review!</h1>`,
               '<p>Review!</p>',
@@ -61,6 +84,7 @@ const getSampleMarkdown = () => [
 
 export {
     getSampleCode,
+    getSampleQuestionList,
     getSampleReviewList,
     getSampleMarkdown
 };
