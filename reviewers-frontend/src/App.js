@@ -13,20 +13,6 @@ const StyledDiv = styled.div`
 
 `;
 
-const menuList = [
-  {
-    name: 'Questions',
-    path: '/'
-  },
-  {
-    name: 'New Question',
-    path: '/new-question'
-  },
-  {
-    name: 'Login',
-    path: '/login'
-  }
-]
 class App extends Component {
   constructor(props) {
     super(props);
@@ -39,7 +25,6 @@ class App extends Component {
   render() {
     return (
       <StyledDiv className="app-container">
-        <Header menuList={menuList}/>
         <Route exact path="/" component={QuestionList}/>
         <Route path="/question-detail/:qId" component={QuestionDetail}/>
         <Route path="/login" component={Login}/>

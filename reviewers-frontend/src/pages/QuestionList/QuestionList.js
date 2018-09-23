@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import PageContent from '../../containers/PageContent';
+import PageContainer from '../../containers/PageContainer';
 
 const sampleQuestionList = [
   {
@@ -31,7 +31,7 @@ class QuestionList extends Component {
 
   render() {
     return (
-      <PageContent width={700}>
+      <PageContainer width={700}>
         <table>
           <thead>
             <tr>
@@ -56,7 +56,7 @@ class QuestionList extends Component {
           ))}
           </tbody>
         </table>
-      </PageContent>
+      </PageContainer>
     );
   }
 }

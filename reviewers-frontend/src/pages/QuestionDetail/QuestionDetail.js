@@ -3,7 +3,7 @@ import Editor from '../../components/Editor';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { getSampleCode, getSampleReviewList } from '../../utils/test-utils';
-import PageContent from '../../containers/PageContent';
+import PageContainer from '../../containers/PageContainer';
 import ReviewList from '../../components/ReviewList';
 import MarkdownViewer from '../../components/MarkdownViewer';
 import { getSampleMarkdown } from '../../utils/test-utils.js';
@@ -11,7 +11,7 @@ import { getSampleMarkdown } from '../../utils/test-utils.js';
 const reviewListSize = { height: 600, width: 500};
 const sampleCode = getSampleCode() + getSampleCode() + '\nfunction test(){\n return { \n }\n}';
 
-const StyledPageContent = styled(PageContent)`
+const StyledPageContainer = styled(PageContainer)`
   overflow: hidden;
   padding: 0 0 20px 40px;
   border-left: solid 1px #a2a2a2;
@@ -106,7 +106,10 @@ class QuestionDetail extends Component {
       }
 
       return (
-        <StyledPageContent width={1150} isBodyFold={isBodyFold}>
+        <StyledPageContainer 
+          headerWidth={1150} width={1150}
+          isBodyFold={isBodyFold}>
+
           <section className="left">
             <section className="title-area">
               <h1>Code Detail Page!</h1>
@@ -139,11 +142,19 @@ class QuestionDetail extends Component {
             <h3>{reviewListHeaderMsg}</h3>
             <ReviewList 
               className="review-list"
-              data={getSampleReviewList()} 
+              data={(_=>{
+                const reviewList = getSampleReviewList();
+
+                if(selectedCodeLine === 0) {
+                  return reviewList;
+                } else {
+                  return reviewList.filter(r => r.lineNumber === selectedCodeLine);
+                }
+              })()} 
             />
           </section>
           <div></div>
-        </StyledPageContent>
+        </StyledPageContainer>
       );
     }
 }

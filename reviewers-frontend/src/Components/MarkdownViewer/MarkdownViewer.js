@@ -4,6 +4,9 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const StyledDiv = styled.div`
+  overflow-y: scroll;
+  height: ${props => props.height ? props.height+'px' : 'auto'};
+
   & * {
     margin: 0 0 0.8em 0;
   }
@@ -13,32 +16,31 @@ const StyledDiv = styled.div`
   h3 { font-size: 15px; }
   h4 { font-size: 14px; }
   h5, h6 { font-size: 13px; }
-  overflow: hidden;
 `
 
 const MarkdownViewer = props => {
-  const { className, rawText } = props;
+  const { className, rawText, ...otherProps } = props;
   const markup = {
     __html: marked(rawText)
   };
 
   return (
-    <StyledDiv 
-      className={className}
-      dangerouslySetInnerHTML={markup}
-      >
-    </StyledDiv>
+    <StyledDiv className={className}
+        dangerouslySetInnerHTML={markup}
+        {...otherProps} 
+    />
   )
 }
 
 MarkdownViewer.defaultProps = {
     rawText: '',
     className: '',
+    height: 'auto'
 };
 
 MarkdownViewer.propTypes = {
     rawText: PropTypes.string,
-    className: PropTypes.string,
+    className: PropTypes.string
 }
 
 export default MarkdownViewer;

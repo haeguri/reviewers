@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ReviewPreview from './ReviewPreview';
+import MarkdownViewer from '../MarkdownViewer';
+import TextInput from '../TextInput';
 import ReviewInput from './ReviewInput';
 import Button from '../Button';
 import styled from 'styled-components';
@@ -37,6 +38,16 @@ const Styled = styled.div`
 
   .contents {
     font-size: 12px;
+    height: 150px;
+
+    .md-viewer, .md-input {
+      width: 100%;
+      height: 100%;
+    }
+
+    .md-viewer {
+      border: solid 1px black;
+    }
   }
 
   .footer {
@@ -113,18 +124,19 @@ class ReviewEditor extends Component {
           </li>
         </ul>
         <div className="contents"
-            ref={this.contentsRef}>
+          ref={this.contentsRef}>
         {
           this.state.currentMenu === EDITOR_MENU ?
-          <ReviewInput
+          <TextInput className="md-input"
+            multiline={true}
             editor={this.props.editor}
-            height={150}
             onChange={value => this.onTextareaChange(value)}
-            value={this.state.input}/> :
-          <ReviewPreview
+            value={this.state.input}
+          /> :
+          <MarkdownViewer className="md-viewer"
             editor={this.props.editor}
-            height={150}
-            rawText={this.state.input}/>
+            rawText={this.state.input}
+          />
         }
         </div>
         <div className="footer">

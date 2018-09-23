@@ -106,7 +106,6 @@ class Editor extends Component {
 
           ReactDOM.render(
             <ReviewEditor
-              height={250}
               editor={editor}
               onCancelClick={() => {
                 editor.changeViewZones(changeAccessor => changeAccessor.removeZone(currViewZoneId));

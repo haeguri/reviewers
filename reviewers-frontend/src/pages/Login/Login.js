@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import PageContent from '../../containers/PageContent';
+import PageContainer from '../../containers/PageContainer';
 
 class Login extends Component {
   constructor(props) {
@@ -13,10 +13,9 @@ class Login extends Component {
 
   render() {
     return (
-      <PageContent
-        width={500}>
+      <PageContainer width={500}>
         <h1>Login Page!</h1>
-      </PageContent>
+      </PageContainer>
     );
   }
 }

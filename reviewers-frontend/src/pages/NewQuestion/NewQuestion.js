@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import Editor from '../../components/Editor';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import PageContent from '../../containers/PageContent';
+import PageContainer from '../../containers/PageContainer';
+import Header from '../../components/Header';
 import Button from '../../components/Button';
 import TextInput from '../../components/TextInput';
 import { getSampleCode } from '../../utils/test-utils';
 
-const StyledPageContent = styled(PageContent)`
+const StyledPageContainer = styled(PageContainer)`
   .input-title {
     width: 100%;
   }
@@ -36,7 +36,7 @@ class NewQuestion extends Component {
 
   render() {
     return (
-      <StyledPageContent width={700}>
+      <StyledPageContainer width={700}>
         <section className="input-group">
           <label>제목</label>
           <TextInput 
@@ -60,10 +60,10 @@ class NewQuestion extends Component {
           />
         </section>
         <section>
-          <Button>Save</Button>
-          <Button>Cancel</Button>
+          <Button>저장</Button>
+          <Button>취소</Button>
         </section>
-      </StyledPageContent>
+      </StyledPageContainer>
     )
   }
 }

@@ -3,22 +3,21 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const CommonTextInputStyle = `
-  width: ${props => props.width};
-  height: ${props => props.height};
-`
+  
+`;
 
-const TextAreaStyle = `${CommonTextInputStyle}
+const TextAreaStyle = `
+  ${CommonTextInputStyle}
   resize: none;
-`
+`;
 
 const TextInput = (props) => {
   const { 
     className, 
     maxInputLength, 
     onTextChange, 
-    width, 
-    height,
-    multiline
+    multiline,
+    ...others
   } = props;
 
   let StyledTextInput;
@@ -30,12 +29,10 @@ const TextInput = (props) => {
   }
 
   return (
-    <StyledTextInput
-      className={className}
+    <StyledTextInput className={className}
       maxlength={maxInputLength}
       onChange={onTextChange}
-      width={width}
-      height={height}
+      {...others}
     />
   )
 };
@@ -44,16 +41,12 @@ TextInput.propTypes = {
   onTextChange: PropTypes.func,
   className: PropTypes.string,
   maxlength: PropTypes.number,
-  width: PropTypes.string,
-  height: PropTypes.string,
   multiline: PropTypes.bool
 };
 
 TextInput.defaultProps = {
   onTextChange: _=>{},
   className: '',
-  width: '100%',
-  height: '20px',
   multiline: false
 };
 

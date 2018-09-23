@@ -15,33 +15,27 @@ const getSampleCode = () => {
 }
 
 const getSampleReviewList = () => {
-    const review = {
-        id: 0,
-        author: '',
-        created: '',
-        body: '',
-        lineNumber: '',
-    }
-
     const reviewList = [];
 
-    Array(10).fill(0).reduce((prev, curr, index) => {
+    Array(20).fill(0).reduce((prev, curr, index) => {
         // debugger;
         const id = index + 1;
+        const randomLineNumber = Math.ceil(Math.random()*5);
         prev.push({
             id,
             author: 'author' + id,
+            questionId: 1,
+            lineNumber: randomLineNumber,
             created: 'sample-date',
             body: [
-              '<h1>Review!</h1>',
+              `<h1>${randomLineNumber} line review!</h1>`,
               '<p>Review!</p>',
               '<ul>Review!</ul>',
               '<li>Review!</li>',
               '<li>Review!</li>',
               '<h1>Review!</h1>',
               '<p>Review!</p>'
-            ].join('\n'),
-            lineNumber: id
+            ].join('\n')
         });
 
         return prev;
