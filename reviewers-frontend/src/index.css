@@ -2,6 +2,8 @@
     box-sizing: border-box;
 }
 
+a { cursor: pointer; }
+
 a, a:visited { text-decoration: none; color: inherit; }
 
 body {

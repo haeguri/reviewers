@@ -22,7 +22,7 @@ const ReviewList = props => (
         props.data.map(v => (
             <Review className="review-item" key={v.id} data={v} />
         )) :
-        (<p className="info-data-empty">남겨진 리뷰가 없습니다.</p>)
+        (<p className="info-data-empty">작성된 리뷰가 없습니다.</p>)
       }
     </StyledSection>
 );

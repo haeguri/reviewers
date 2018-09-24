@@ -6,6 +6,7 @@ import PageContainer from '../../containers/PageContainer';
 import ReviewList from '../../components/ReviewList';
 import MarkdownViewer from '../../components/MarkdownViewer';
 import { getSampleMarkdown } from '../../utils/test-utils.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const sampleCode = getSampleCode() + getSampleCode() + '\nfunction test(){\n return { \n }\n}';
 
@@ -50,20 +51,10 @@ const StyledPageContainer = styled(PageContainer)`
         position: absolute;
         top: 20px;
         left: -40px;
-        background: skyblue;
 
-        .unfold, .fold {
-          display: inline-block;
-          height: 20px;
-          width: 20px;
-        }
-
-        .unfold {
-          background-color: yellow;
-        }
-
-        .fold {
-          background-color: red;
+        svg {
+          color: #1162bc;
+          font-size: 1.3em;
         }
       }
     }
@@ -74,6 +65,22 @@ const StyledPageContainer = styled(PageContainer)`
     width: 500px;
     padding: 0 10px;
     border-left: solid 1px #d2d2d2;
+
+    .title-area {
+      .info-label {
+        color: #515151;
+        font-weight: 600;
+        margin: 0;
+      }
+
+      .curr-line {
+        margin-left: auto;
+        background-color: #1162bc;
+        color: white;
+        padding: 2px 7px;
+        border-radius: 5px;
+      }
+    }
 
     .review-list {
       width: 100%;
@@ -114,9 +121,9 @@ class QuestionDetail extends Component {
 
       let reviewListHeaderMsg;
       if(selectedCodeLine >= 1) {
-        reviewListHeaderMsg = `${selectedCodeLine} line reviews`;
+        reviewListHeaderMsg = `Line No.${selectedCodeLine}`;
       } else {
-        reviewListHeaderMsg = 'all of review';
+        reviewListHeaderMsg = 'ALL';
       }
 
       return (
@@ -132,7 +139,13 @@ class QuestionDetail extends Component {
               <span className="toggle-btn" 
                 onClick={() => this.onToggleBodyClick()}
               >
-                <a className={isBodyFold ? 'unfold' : 'fold'}><span></span></a>
+                <a className="toggle-body-fold">
+                  {
+                    isBodyFold ? 
+                    <FontAwesomeIcon icon='minus-circle'/> :
+                    <FontAwesomeIcon icon='plus-circle'/>
+                  }
+                </a>
               </span>
               <MarkdownViewer className="body-contents"
                 rawText={sampleBody}
@@ -154,8 +167,8 @@ class QuestionDetail extends Component {
           </section>
           <section className="right">
             <div className="title-area">
-              <p>리뷰 목록</p>
-              <span>{reviewListHeaderMsg}</span>
+              <span className="info-label">리뷰 목록</span>
+              <span className="curr-line">{reviewListHeaderMsg}</span>
             </div>
             <ReviewList className="review-list"
               data={(_=>{

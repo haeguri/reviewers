@@ -8,7 +8,7 @@ import NewQuestion from './pages/NewQuestion';
 import { Route } from 'react-router-dom';
 
 const StyledDiv = styled.div`
-
+  
 `;
 
 class App extends Component {
@@ -27,9 +27,9 @@ class App extends Component {
         <Route path="/question-detail/:qId" component={QuestionDetail}/>
         <Route path="/login" component={Login}/>
         <Route path="/new-question" component={NewQuestion}/>
-    </StyledDiv>
-        );
-    }
+      </StyledDiv>
+    );
+  }
 }
 
 export default App;

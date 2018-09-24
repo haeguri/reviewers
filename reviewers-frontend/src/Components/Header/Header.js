@@ -45,7 +45,7 @@ const StyledNav = styled.nav`
 
       .menu-item {
         display: inline-block;
-        margin-right: 10px;
+        margin-right: 20px;
 
         &:last-child { margin-right: 0; }
       }
