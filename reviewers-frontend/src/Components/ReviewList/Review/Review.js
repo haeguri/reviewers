@@ -14,20 +14,25 @@ const StyledArticle = styled.article`
     }
 
     .review-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
       .author {
-        font-weight: 600;
+        color: #646464;
       }
 
       .updated {
+        margin-left: auto;
         font-size: 13px;
-        color: #6f7173;
-        margin-left: 10px;
+        color: #9a9b9d;
       }
     }
 
     .review-body {
       border: solid 1px #e2e2e2;
       background-color: #fff;
+      border-radius: 5px;
     }
 
     .review-footer {
@@ -59,7 +64,7 @@ const Review = props => {
   return (
     <StyledArticle className={className}>
       <div className="review-header">
-        <span className="author">{author}</span>
+        <span className="author"><a>{author}</a></span>
         <span className="updated">{updated}</span>
       </div>
       <div className="review-body">

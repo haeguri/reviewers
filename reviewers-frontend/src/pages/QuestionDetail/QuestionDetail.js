@@ -24,7 +24,17 @@ const StyledPageContainer = styled(PageContainer)`
       overflow: hidden;
       border-bottom: solid 1px #b2b5b8;
 
+      .info-badge {
+        margin-left: 15px;
+        background-color: #1162bc;
+        color: white;
+        padding: 2px 7px;
+        font-size: 12px;
+        border-radius: 5px;
+      }
+
       h1 {
+        font-size: 20px;
         margin: 0;
       }
     }
@@ -34,22 +44,41 @@ const StyledPageContainer = styled(PageContainer)`
     width: 600px;
     margin-right: 10px;
 
+    .author {
+      color: #646464;
+    }
+
+    .updated {
+      font-size: 13px;
+      color: #9a9b9d;
+    }
+
     .title-area {
       border-bottom: solid 1px #e2e2e2;
     }
 
     .body-area {
       position: relative;
-      padding: 20px 0;
+      padding: 10px 0;
+
+      .meta-info {
+        display: flex;
+        align-items: center;
+
+        .updated {
+          margin-left: 10px;
+        }
+      }
 
       .body-contents {
         max-height: ${props => props.isBodyFold ? '150px' : 'none'};
         overflow: hidden;
+        margin-top: 20px;
       }
 
       .toggle-btn {
         position: absolute;
-        top: 20px;
+        top: 50px;
         left: -40px;
 
         svg {
@@ -67,18 +96,10 @@ const StyledPageContainer = styled(PageContainer)`
     border-left: solid 1px #d2d2d2;
 
     .title-area {
-      .info-label {
+      .txt-review-list {
         color: #515151;
         font-weight: 600;
         margin: 0;
-      }
-
-      .curr-line {
-        margin-left: auto;
-        background-color: #1162bc;
-        color: white;
-        padding: 2px 7px;
-        border-radius: 5px;
       }
     }
 
@@ -118,41 +139,45 @@ class QuestionDetail extends Component {
 
     render() {
       const { selectedCodeLine, isBodyFold, sampleBody } = this.state;
+      const iconToggleBody = isBodyFold ? <FontAwesomeIcon icon='plus-circle'/> :
+                                          <FontAwesomeIcon icon='minus-circle'/>;
 
       let reviewListHeaderMsg;
       if(selectedCodeLine >= 1) {
-        reviewListHeaderMsg = `Line No.${selectedCodeLine}`;
+        reviewListHeaderMsg = `Line ${selectedCodeLine}`;
       } else {
         reviewListHeaderMsg = 'ALL';
       }
 
       return (
         <StyledPageContainer 
-          headerWidth={1150} width={1150}
+          headerWidth={1150} 
+          width={1150}
           isBodyFold={isBodyFold}>
-
           <section className="left">
             <section className="title-area">
-              <h1>Code Detail Page!</h1>
+              <h1>새로운 질문...</h1>
             </section>
             <section className="body-area">
-              <span className="toggle-btn" 
-                onClick={() => this.onToggleBodyClick()}
-              >
-                <a className="toggle-body-fold">
-                  {
-                    isBodyFold ? 
-                    <FontAwesomeIcon icon='minus-circle'/> :
-                    <FontAwesomeIcon icon='plus-circle'/>
-                  }
-                </a>
+              <div className="meta-info">
+                <span className="author"><a>Author</a></span>
+                <span className="updated">2018-07-01 23:33:11</span>
+              </div>
+              <div className="author-info">
+                
+              </div>
+              <span
+                className="toggle-btn" 
+                onClick={() => this.onToggleBodyClick()}>
+                <a className="toggle-body-fold">{iconToggleBody}</a>
               </span>
-              <MarkdownViewer className="body-contents"
-                rawText={sampleBody}
-              />
+              <MarkdownViewer 
+                className="body-contents"
+                rawText={sampleBody} />
             </section>
             <section className="source-code-area">
-              <Editor className="editor"
+              <Editor 
+                className="editor"
                 height={600}
                 isReadOnly={true}
                 onLineClick={(curr) => this.onLineClick(curr)}
@@ -161,14 +186,13 @@ class QuestionDetail extends Component {
                 options={{
                   readOnly: true,
                   glyphMargin: true,
-                }}
-              />
+                }} />
             </section>
           </section>
           <section className="right">
             <div className="title-area">
-              <span className="info-label">리뷰 목록</span>
-              <span className="curr-line">{reviewListHeaderMsg}</span>
+              <span className="txt-review-list">리뷰 목록</span>
+              <span className="info-badge">{reviewListHeaderMsg}</span>
             </div>
             <ReviewList className="review-list"
               data={(_=>{
@@ -182,7 +206,6 @@ class QuestionDetail extends Component {
               })()} 
             />
           </section>
-          <div></div>
         </StyledPageContainer>
       );
     }
