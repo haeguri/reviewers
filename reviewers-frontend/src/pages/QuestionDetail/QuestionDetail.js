@@ -16,6 +16,24 @@ const StyledPageContainer = styled(PageContainer)`
   display: flex;
   flex-direction: row;
 
+  .language-badge, .info-badge {
+    padding: 2px 7px;
+    font-size: 12px;
+    border-radius: 5px;
+  }
+
+  .language-badge { 
+    border: solid 2px #1162bc;
+    color: #1162bc;
+    margin-left: 15px;
+    margin-bottom: 5px;
+  }
+
+  .info-badge {
+    background-color: #1162bc;
+    color: white;
+  }
+
   .left, .right {
     .title-area {
       display: flex;
@@ -23,15 +41,6 @@ const StyledPageContainer = styled(PageContainer)`
       height: 50px;
       overflow: hidden;
       border-bottom: solid 1px #b2b5b8;
-
-      .info-badge {
-        margin-left: 15px;
-        background-color: #1162bc;
-        color: white;
-        padding: 2px 7px;
-        font-size: 12px;
-        border-radius: 5px;
-      }
 
       h1 {
         font-size: 20px;
@@ -101,6 +110,10 @@ const StyledPageContainer = styled(PageContainer)`
         font-weight: 600;
         margin: 0;
       }
+
+      .info-badge {
+        margin-left: 15px;
+      }
     }
 
     .review-list {
@@ -157,14 +170,12 @@ class QuestionDetail extends Component {
           <section className="left">
             <section className="title-area">
               <h1>새로운 질문...</h1>
+              <span className="language-badge">JavaScript</span>
             </section>
             <section className="body-area">
               <div className="meta-info">
                 <span className="author"><a>Author</a></span>
                 <span className="updated">2018-07-01 23:33:11</span>
-              </div>
-              <div className="author-info">
-                
               </div>
               <span
                 className="toggle-btn" 

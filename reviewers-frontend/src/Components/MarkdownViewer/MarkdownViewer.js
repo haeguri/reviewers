@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const StyledDiv = styled.div`
-  overflow-y: scroll;
+  overflow-y: ${props => props.hasScroll ? 'scroll' : 'visible'};
   height: ${props => props.height ? props.height+'px' : 'auto'};
 
   & * {
@@ -35,12 +35,15 @@ const MarkdownViewer = props => {
 MarkdownViewer.defaultProps = {
     rawText: '',
     className: '',
-    height: 'auto'
+    height: '',
+    hasScroll: false
 };
 
 MarkdownViewer.propTypes = {
     rawText: PropTypes.string,
-    className: PropTypes.string
-}
+    className: PropTypes.string,
+    height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    hasScroll: PropTypes.bool
+};
 
 export default MarkdownViewer;

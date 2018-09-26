@@ -2,6 +2,7 @@
     box-sizing: border-box;
 }
 
+button:focus { outline: none; }
 button, a { cursor: pointer; }
 
 a, a:visited { text-decoration: none; color: inherit; }

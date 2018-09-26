@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import MarkdownEditor from '../../MarkdownEditor';
 import MarkdownViewer from '../../MarkdownViewer';
 
 const StyledArticle = styled.article`
@@ -52,31 +53,92 @@ const StyledArticle = styled.article`
         }
       }
     }
+
+    .md-editor {
+      height: 250px;
+    }
 `;
 
-const Review = props => {
-  const { 
-    className, 
-    data: { 
-      body, author, updated
-    } 
-  }  = props;
-  return (
-    <StyledArticle className={className}>
-      <div className="review-header">
-        <span className="author"><a>{author}</a></span>
-        <span className="updated">{updated}</span>
-      </div>
-      <div className="review-body">
-        <MarkdownViewer rawText={body} />
-      </div>
-      <div className="review-footer">
-        <a onClick={() => {}}>수정</a>
-        <a onClick={() => {}}>삭제</a>
-      </div>
-    </StyledArticle>
-  ) 
-};
+class Review extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isEditMode: false,
+      editForm: {
+        body: this.props.data.body
+      }
+    };
+  }
+
+  onEditClick() {
+    this.setState({
+      isEditMode: true
+    })
+  }
+
+  onCancelClick() {
+    this.setState({
+      isEditMode: false
+    });
+  }
+
+  onTextChange(e) {
+    this.setState({
+      editForm: {
+        body: e.target.value
+      }
+    });
+  }
+
+  render() {
+    const { 
+      className, 
+      data: { 
+        body, author, updated
+      } 
+    } = this.props;
+  
+    const {
+      isEditMode
+    } = this.state;
+  
+    return (
+      <StyledArticle className={className}>
+        <div className="review-header">
+          <span className="author"><a>{author}</a></span>
+          <span className="updated">{updated}</span>
+        </div>
+        {
+          !isEditMode ?
+          (<div className="review-body">
+            <MarkdownViewer 
+              rawText={body} 
+              hasScroll={false} />
+          </div>) :
+          (<div className="review-body">
+            <MarkdownEditor 
+              className="md-editor" 
+              value={this.state.editForm.body}
+              onTextChange={(e) => this.onTextChange(e)}/>
+            {null}
+          </div>)
+        }
+        {
+          !isEditMode ?
+          (<div className="review-footer">
+            <a onClick={() => this.onEditClick()}>수정</a>
+            <a onClick={() => { /* TODO: confirm modal call */ }}>삭제</a>
+          </div>) :
+          <div className="review-footer">
+            <a onClick={() => { /* TODO: save api call.. */ }}>저장</a>
+            <a onClick={() => this.onCancelClick()}>취소</a>
+          </div>
+        }
+      </StyledArticle>
+    ) 
+  }
+}
 
 Review.propTypes = {
   data: PropTypes.shape({
