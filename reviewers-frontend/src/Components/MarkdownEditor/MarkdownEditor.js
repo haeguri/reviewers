@@ -73,14 +73,18 @@ class MarkdownEditor extends Component {
     return (
       <StyledDiv
         innerRef={ref => this.ref = ref}
-        {...others}
-      >
+        {...others}>
         <ToggleButton 
           className="md-preview-btn" 
           onClick={e => this.onPreviewClick(e)}>
           Preview
         </ToggleButton>
-        {
+        <TextInput 
+            className="md-input"
+            multiline={true}
+            onChange={e => onTextChange(e)}
+            value={value} />
+        {/* {
           !isPreviewMode ?
           (<TextInput 
             className="md-input"
@@ -91,7 +95,7 @@ class MarkdownEditor extends Component {
             className="md-viewer"
             hasScroll={true}
             rawText={value} />)
-        }
+        } */}
       </StyledDiv>
     )
   }

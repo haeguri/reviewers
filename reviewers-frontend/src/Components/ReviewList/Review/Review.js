@@ -9,8 +9,7 @@ const StyledArticle = styled.article`
     min-height: 100px;
     border-bottom: solid 1px #b2b5b8;
 
-    .review-header,
-    .review-body {
+    .review-header {
       padding: 10px;
     }
 
@@ -116,7 +115,7 @@ class Review extends Component {
               rawText={body} 
               hasScroll={false} />
           </div>) :
-          (<div className="review-body">
+          (<div className="review-body" >
             <MarkdownEditor 
               className="md-editor" 
               value={this.state.editForm.body}

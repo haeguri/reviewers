@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const CommonTextInputStyle = `
-  
-`;
-
-const TextAreaStyle = `
-  ${CommonTextInputStyle}
+const StyledTextAreaInput = styled.textarea`
   resize: none;
 `;
+const StyledTextInput = styled.input`
+
+`;
+
+let StyledInput;
 
 const TextInput = (props) => {
   const { 
@@ -20,18 +20,16 @@ const TextInput = (props) => {
     ...others
   } = props;
 
-  let StyledTextInput;
-
-  if(multiline) {
-    StyledTextInput = styled.textarea`${TextAreaStyle}`;
-  } else {
-    StyledTextInput = styled.input`${CommonTextInputStyle}`;
+  if(!StyledInput) {
+    StyledInput = multiline ? StyledTextAreaInput : StyledTextInput;
   }
 
   return (
-    <StyledTextInput className={className}
+    <StyledInput 
+      className={className}
+      // innerRef={ref => textInputRef = ref}z
       maxlength={maxInputLength}
-      onChange={onTextChange}
+      onChange={e => onTextChange(e)}
       {...others}
     />
   )

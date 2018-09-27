@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 const StyledDiv = styled.div`
   overflow-y: ${props => props.hasScroll ? 'scroll' : 'visible'};
   height: ${props => props.height ? props.height+'px' : 'auto'};
+  padding: 10px 5px;
 
   & * {
     margin: 0 0 0.8em 0;
