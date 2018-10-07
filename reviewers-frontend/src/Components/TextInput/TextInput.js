@@ -5,35 +5,43 @@ import styled from 'styled-components';
 const StyledTextAreaInput = styled.textarea`
   resize: none;
 `;
-const StyledTextInput = styled.input`
 
+const StyledTextInput = styled.input`
+  width: 100%;
+  height: 30px;
+  border-radius: 4px;
+  border: solid 1px #c2c2c2;
 `;
 
 let StyledInput;
 
-const TextInput = (props) => {
-  const { 
-    className, 
-    maxInputLength, 
-    onTextChange, 
-    multiline,
-    ...others
-  } = props;
+class TextInput extends React.Component {
+  constructor(props) {
+    super(props);
 
-  if(!StyledInput) {
-    StyledInput = multiline ? StyledTextAreaInput : StyledTextInput;
+    StyledInput = props.multiline ?  StyledTextAreaInput : StyledTextInput;
   }
 
-  return (
-    <StyledInput 
-      className={className}
-      // innerRef={ref => textInputRef = ref}z
-      maxlength={maxInputLength}
-      onChange={e => onTextChange(e)}
-      {...others}
-    />
-  )
-};
+  render() {
+    const { 
+      className, 
+      maxInputLength, 
+      onTextChange, 
+      multiline,
+      ...others
+    } = this.props;
+
+    return (
+      <StyledInput 
+        className={className}
+        // innerRef={ref => textInputRef = ref}z
+        maxlength={maxInputLength}
+        onChange={e => onTextChange(e)}
+        {...others}
+      />
+    )
+  }
+}
 
 TextInput.propTypes = {
   onTextChange: PropTypes.func,

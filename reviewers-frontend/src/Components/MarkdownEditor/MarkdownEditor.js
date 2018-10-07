@@ -5,7 +5,6 @@ import MarkdownViewer from '../MarkdownViewer';
 import TextInput from '../TextInput';
 import ToggleButton from '../ToggleButton';
 
-
 const StyledDiv = styled.div`
   position: relative;
   font-size: 12px;
@@ -15,7 +14,7 @@ const StyledDiv = styled.div`
     right: 5px;
     top: 3px;
     padding: 2px 4px;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: ${props => props.background};
     border-style: solid;
     border-width: 1px;
     border-radius: 3px;
@@ -37,7 +36,7 @@ const StyledDiv = styled.div`
     border: solid 1px #c2c2c2;
     border-radius: 5px;
     font-size: 13px;
-    background-color: #f4f4f5;
+    background-color: #inherit;
   }
 
   .md-viewer {
@@ -79,12 +78,7 @@ class MarkdownEditor extends Component {
           onClick={e => this.onPreviewClick(e)}>
           Preview
         </ToggleButton>
-        <TextInput 
-            className="md-input"
-            multiline={true}
-            onChange={e => onTextChange(e)}
-            value={value} />
-        {/* {
+        {
           !isPreviewMode ?
           (<TextInput 
             className="md-input"
@@ -95,7 +89,7 @@ class MarkdownEditor extends Component {
             className="md-viewer"
             hasScroll={true}
             rawText={value} />)
-        } */}
+        }
       </StyledDiv>
     )
   }
@@ -108,7 +102,8 @@ MarkdownEditor.propTypes = {
 
 MarkdownEditor.defaultProps = {
   onTextChange: () => {},
-  value: ''
+  value: '',
+  background: 'transparent'
 };
 
 export default MarkdownEditor;

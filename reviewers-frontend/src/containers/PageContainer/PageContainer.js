@@ -8,12 +8,13 @@ const StyledSection = styled.section`
   width: ${props => props.width}px;
   margin-left: auto;
   margin-right: auto;
-`
+`;
 
 const PageContainer = props => (
   <div>
-    <Header width={props.width}/>
-    <StyledSection className={props.className}
+    <Header width={props.width} />
+    <StyledSection 
+      className={props.className}
       width={props.width}
     >
       { props.children }
