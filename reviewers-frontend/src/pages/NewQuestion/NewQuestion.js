@@ -9,6 +9,20 @@ import { getSampleCode, getSampleMarkdown } from '../../utils/test-utils';
 import MarkdownEditor from '../../components/MarkdownEditor';
 
 const StyledPageContainer = styled(PageContainer)`
+  .title-area {
+    display: flex;
+    align-items: center;
+    border-bottom: solid 1px #c2c2c2;
+
+    .button-area {
+      margin-left: auto;
+
+      .cancel {
+        margin-left: 10px;
+      }
+    }
+  }
+
   .form {
     display: flex;
     flex-direction: row;
@@ -60,7 +74,8 @@ class NewQuestion extends Component {
   onDropdownChange = (selectedItem) => {
     this.setState({
       form: {
-        language: selectedItem
+        ...this.state.form,
+        language: selectedItem,
       }
     });
   }
@@ -68,6 +83,7 @@ class NewQuestion extends Component {
   onBodyChange = e => {
     this.setState({
       form: {
+        ...this.state.form,
         body: e.target.value
       }
     })
@@ -75,7 +91,10 @@ class NewQuestion extends Component {
 
   onCodeChange = (newValue, e) => {
     this.setState({
-      code: newValue
+      form: {
+        ...this.state.form,
+        code: newValue
+      }
     });
 
     console.log('write editor on change', newValue, e);
@@ -85,19 +104,26 @@ class NewQuestion extends Component {
     return (
       <StyledPageContainer
         width={1200}>
+        <section className="title-area">
+          <h2>질문하기</h2>
+          <div className="button-area">
+            <Button className="filled primary">저장</Button>
+            <Button className="cancel">취소</Button>
+          </div>
+        </section>
         <section className="form">
           <section className="left">
+            <div className="input-group">
+              <label>제목</label>
+              <TextInput 
+                className="input-title"
+              />
+            </div>
             <div className="input-group">
               <label className="inline">프로그래밍 언어</label>
               <Dropdown 
                 options={testLanguageOptions}
                 onChange={this.onDropdownChange}
-              />
-            </div>
-            <div className="input-group">
-              <label>제목</label>
-              <TextInput 
-                className="input-title"
               />
             </div>
             <div className="input-group">
@@ -120,10 +146,6 @@ class NewQuestion extends Component {
               />
             </div>
           </section>
-        </section>
-        <section>
-          <Button>저장</Button>
-          <Button>취소</Button>
         </section>
       </StyledPageContainer>
     )

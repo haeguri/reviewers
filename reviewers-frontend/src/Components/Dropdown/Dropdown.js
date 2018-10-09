@@ -6,33 +6,20 @@ const StyledSelect = styled(Select)`
 
 `;
 
-class Dropdown extends React.Component {
-  constructor(props) {
-    super(props);
+const Dropdown = props => {
+  const { 
+    className,
+    value,
+    ...others
+  } = props;
 
-    this.state = {
-      selectedItem: ''
-    }
-  }
-
-  handleChange = (selectedItem) => {
-    this.setState({selectedItem});
-  }
-
-  render() {
-    const { 
-      className,
-      ...others
-    } = this.props;
-
-    return (
-      <StyledSelect 
-        className={className}
-        value={this.state.selectedItem}
-        {...others}>
-      </StyledSelect>
-    )
-  }
+  return (
+    <StyledSelect 
+      className={className}
+      value={value}
+      {...others}>
+    </StyledSelect>
+  )
 }
 
 Dropdown.propTypes = {

@@ -13,13 +13,11 @@ const StyledTextInput = styled.input`
   border: solid 1px #c2c2c2;
 `;
 
-let StyledInput;
-
 class TextInput extends React.Component {
   constructor(props) {
     super(props);
 
-    StyledInput = props.multiline ?  StyledTextAreaInput : StyledTextInput;
+    this.StyledInput = props.multiline ?  StyledTextAreaInput : StyledTextInput;
   }
 
   render() {
@@ -30,6 +28,9 @@ class TextInput extends React.Component {
       multiline,
       ...others
     } = this.props;
+    const { 
+      StyledInput 
+    } = this;
 
     return (
       <StyledInput 
