@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import QuestionDetail from './pages/QuestionDetail';
-import QuestionList from './pages/QuestionList';
+import Home from './pages/Home';
 import Login from './pages/Login';
 import NewQuestion from './pages/NewQuestion';
 
@@ -23,7 +23,7 @@ class App extends Component {
   render() {
     return (
       <StyledDiv className="app-container">
-        <Route exact path="/" component={QuestionList}/>
+        <Route exact path="/" component={Home}/>
         <Route path="/question-detail/:qId" component={QuestionDetail}/>
         <Route path="/login" component={Login}/>
         <Route path="/new-question" component={NewQuestion}/>

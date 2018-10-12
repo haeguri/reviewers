@@ -36,7 +36,7 @@ const StyledDiv = styled.div`
     border: solid 1px #c2c2c2;
     border-radius: 5px;
     font-size: 13px;
-    background-color: #inherit;
+    background-color: inherit;
   }
 
   .md-viewer {

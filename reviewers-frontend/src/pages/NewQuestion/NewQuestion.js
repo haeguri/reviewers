@@ -16,10 +16,6 @@ const StyledPageContainer = styled(PageContainer)`
 
     .button-area {
       margin-left: auto;
-
-      .cancel {
-        margin-left: 10px;
-      }
     }
   }
 
@@ -47,7 +43,7 @@ const StyledPageContainer = styled(PageContainer)`
   }
 
   .md-editor {
-    height: 300px;
+    height: 460px;
   }
 `;
 
@@ -105,10 +101,9 @@ class NewQuestion extends Component {
       <StyledPageContainer
         width={1200}>
         <section className="title-area">
-          <h2>질문하기</h2>
+          <h2>새로운 질문</h2>
           <div className="button-area">
-            <Button className="filled primary">저장</Button>
-            <Button className="cancel">취소</Button>
+            <Button className="filled primary">등록하기</Button>
           </div>
         </section>
         <section className="form">
@@ -117,13 +112,6 @@ class NewQuestion extends Component {
               <label>제목</label>
               <TextInput 
                 className="input-title"
-              />
-            </div>
-            <div className="input-group">
-              <label className="inline">프로그래밍 언어</label>
-              <Dropdown 
-                options={testLanguageOptions}
-                onChange={this.onDropdownChange}
               />
             </div>
             <div className="input-group">
@@ -137,10 +125,17 @@ class NewQuestion extends Component {
           </section>
           <section className="right">
             <div className="input-group">
+              <label className="inline">프로그래밍 언어</label>
+              <Dropdown 
+                options={testLanguageOptions}
+                value={this.state.form.language}
+                onChange={this.onDropdownChange}
+              />
+            </div>
+            <div className="input-group">
               <label>소스코드</label>
               <Editor 
-                // width={50}
-                height={400}
+                height={450}
                 value={this.state.code}
                 onChange={(newValue, e) => this.onCodeChange(newValue, e)}
               />
