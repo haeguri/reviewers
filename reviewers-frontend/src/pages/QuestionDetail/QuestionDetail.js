@@ -123,103 +123,103 @@ const StyledPageContainer = styled(PageContainer)`
 `;
 
 class QuestionDetail extends Component {
-    constructor(props) {
-      super(props);
-      console.log('props', props);
-      console.log('teststst', getSampleReviewList());
-      this.state = {
-        sampleBody: getSampleMarkdown(),
-        isBodyFold: true,
-        selectedCodeLine: 0,
+  constructor(props) {
+    super(props);
+    console.log('props', props);
+    console.log('teststst', getSampleReviewList());
+    this.state = {
+      sampleBody: getSampleMarkdown(),
+      isBodyFold: true,
+      selectedCodeLine: 0,
 
-        // server data...
-        body: getSampleMarkdown()
-      };
+      // server data...
+      body: getSampleMarkdown()
+    };
+  }
+
+  onToggleBodyClick() {
+    this.setState({
+      isBodyFold: !this.state.isBodyFold
+    });
+  }
+
+  onLineClick(curr) {
+    console.log(`onLineClick curr: ${curr}`);
+    this.setState({
+      selectedCodeLine: curr
+    });
+  }
+
+  render() {
+    const { selectedCodeLine, isBodyFold, sampleBody } = this.state;
+    const iconToggleBody = isBodyFold ? <FontAwesomeIcon icon='plus-circle'/> :
+                                        <FontAwesomeIcon icon='minus-circle'/>;
+
+    let reviewListHeaderMsg;
+    if(selectedCodeLine >= 1) {
+      reviewListHeaderMsg = `Line ${selectedCodeLine}`;
+    } else {
+      reviewListHeaderMsg = 'ALL';
     }
 
-    onToggleBodyClick() {
-      this.setState({
-        isBodyFold: !this.state.isBodyFold
-      });
-    }
-
-    onLineClick(curr) {
-      console.log(`onLineClick curr: ${curr}`);
-      this.setState({
-        selectedCodeLine: curr
-      });
-    }
-
-    render() {
-      const { selectedCodeLine, isBodyFold, sampleBody } = this.state;
-      const iconToggleBody = isBodyFold ? <FontAwesomeIcon icon='plus-circle'/> :
-                                          <FontAwesomeIcon icon='minus-circle'/>;
-
-      let reviewListHeaderMsg;
-      if(selectedCodeLine >= 1) {
-        reviewListHeaderMsg = `Line ${selectedCodeLine}`;
-      } else {
-        reviewListHeaderMsg = 'ALL';
-      }
-
-      return (
-        <StyledPageContainer 
-          headerWidth={1150} 
-          width={1150}
-          isBodyFold={isBodyFold}>
-          <section className="left">
-            <section className="title-area">
-              <h1>새로운 질문...</h1>
-              <span className="language-badge">JavaScript</span>
-            </section>
-            <section className="body-area">
-              <div className="meta-info">
-                <span className="author"><a>Author</a></span>
-                <span className="updated">2018-07-01 23:33:11</span>
-              </div>
-              <span
-                className="toggle-btn" 
-                onClick={() => this.onToggleBodyClick()}>
-                <a className="toggle-body-fold">{iconToggleBody}</a>
-              </span>
-              <MarkdownViewer 
-                className="body-contents"
-                rawText={sampleBody} />
-            </section>
-            <section className="source-code-area">
-              <Editor 
-                className="editor"
-                height={600}
-                isReadOnly={true}
-                onLineClick={(curr) => this.onLineClick(curr)}
-                value={sampleCode}
-                // react-monaco-editor 옵션
-                options={{
-                  readOnly: true,
-                  glyphMargin: true,
-                }} />
-            </section>
+    return (
+      <StyledPageContainer 
+        headerWidth={1150} 
+        width={1150}
+        isBodyFold={isBodyFold}>
+        <section className="left">
+          <section className="title-area">
+            <h1>새로운 질문...</h1>
+            <span className="language-badge">JavaScript</span>
           </section>
-          <section className="right">
-            <div className="title-area">
-              <span className="txt-review-list">리뷰 목록</span>
-              <span className="info-badge">{reviewListHeaderMsg}</span>
+          <section className="body-area">
+            <div className="meta-info">
+              <span className="author"><a>Author</a></span>
+              <span className="updated">2018-07-01 23:33:11</span>
             </div>
-            <ReviewList className="review-list"
-              data={(_=>{
-                const reviewList = getSampleReviewList();
-
-                if(selectedCodeLine === 0) {
-                  return reviewList;
-                } else {
-                  return reviewList.filter(r => r.lineNumber === selectedCodeLine);
-                }
-              })()} 
-            />
+            <span
+              className="toggle-btn" 
+              onClick={() => this.onToggleBodyClick()}>
+              <a className="toggle-body-fold">{iconToggleBody}</a>
+            </span>
+            <MarkdownViewer 
+              className="body-contents"
+              rawText={sampleBody} />
           </section>
-        </StyledPageContainer>
-      );
-    }
+          <section className="source-code-area">
+            <Editor 
+              className="editor"
+              height={600}
+              isReadOnly={true}
+              onLineClick={(curr) => this.onLineClick(curr)}
+              value={sampleCode}
+              // react-monaco-editor 옵션
+              options={{
+                readOnly: true,
+                glyphMargin: true,
+              }} />
+          </section>
+        </section>
+        <section className="right">
+          <div className="title-area">
+            <span className="txt-review-list">리뷰 목록</span>
+            <span className="info-badge">{reviewListHeaderMsg}</span>
+          </div>
+          <ReviewList className="review-list"
+            data={(_=>{
+              const reviewList = getSampleReviewList();
+
+              if(selectedCodeLine === 0) {
+                return reviewList;
+              } else {
+                return reviewList.filter(r => r.lineNumber === selectedCodeLine);
+              }
+            })()} 
+          />
+        </section>
+      </StyledPageContainer>
+    );
+  }
 }
 
 export default QuestionDetail;

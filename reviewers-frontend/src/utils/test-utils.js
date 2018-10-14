@@ -21,7 +21,7 @@ const getSampleQuestionList = () => {
     'Python',
     'Scala'
   ]
-  return Array(10).fill(0).map((value, idx) => {
+  return Array(60).fill(0).map((value, idx) => {
     return {
       id: idx+1,
       title: `${idx+1}'s question title. title. title. title..`,
@@ -34,6 +34,28 @@ const getSampleQuestionList = () => {
       created: '2018-07-01',
     }
   })
+}
+
+/**
+ * 데이터가 총 44개
+ * page 1 ? list.slice(0, 10)
+ * page 2 ? list.slice(10, 20)
+ * page 3 ? list.slice(20, 30)
+ * page 4 ? list.slice(30, 40)
+ * page 5 ? list.slice(40, 44)
+ */
+
+const getQuestionsWithPage = (page, pageSize) => {
+  const list = getSampleQuestionList();
+  
+  const from = (pageSize * (page-1))
+  const to = (pageSize * page);
+  const pages = Math.ceil(list.length / pageSize);
+
+  return {
+    pages,
+    data: list.slice(from, to)
+  };
 }
 
 const getSampleReviewList = () => {
@@ -83,8 +105,9 @@ const getSampleMarkdown = () => [
 ].join('\n');
 
 export {
-    getSampleCode,
-    getSampleQuestionList,
-    getSampleReviewList,
-    getSampleMarkdown
+  getQuestionsWithPage,
+  getSampleCode,
+  getSampleQuestionList,
+  getSampleReviewList,
+  getSampleMarkdown
 };
