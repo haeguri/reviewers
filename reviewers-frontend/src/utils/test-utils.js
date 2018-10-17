@@ -21,7 +21,7 @@ const getSampleQuestionList = () => {
     'Python',
     'Scala'
   ]
-  return Array(60).fill(0).map((value, idx) => {
+  return Array(550).fill(0).map((value, idx) => {
     return {
       id: idx+1,
       title: `${idx+1}'s question title. title. title. title..`,

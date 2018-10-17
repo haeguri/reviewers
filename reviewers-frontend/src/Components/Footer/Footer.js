@@ -20,7 +20,7 @@ const StyledFooter = styled.footer`
 const Footer = props => (
     <StyledFooter width={props.width}>
       <div className="container">
-        <p>Footer</p>
+        <p className="intro">Footer</p>
       </div>
     </StyledFooter>  
 );

@@ -5,15 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { range } from '../../utils/js-util';
 import Button from '../Button';
 
-/**
- * 1. 버튼 생성
- *  - << 
- *  - 숫자..
- *    - (pages, )
- *  - >>
- * 
- */
-
 const StyledDiv = styled.div`
   display: flex;
   justify-content: center;
@@ -46,85 +37,80 @@ const StyledDiv = styled.div`
   }
 `;
 
-/**
- * 
- * 총 페이지가 10
- * currPage 1 ? 1 ~ 6  (6)
- * currPage 2 ? 1 ~ 6  (6)
- * currPage 3 ? 2 ~ 7  (6)
- * currPage 4 ? 3 ~ 8  (6)
- * currPage 5 ? 4 ~ 9  (6)
- * currPage 6 ? 5 ~ 10 (6)
- * currPage 7 ? 6 ~ 10 (5)
- *  - 5 ~ 10 : 6개 *
- *    10(to) - 6(maxSize) + 1 = 5
- *    if 5 <= 
- *  - 6 ~ 10 : 5개
- * 
- * 
- */
+const getPageGroup = page => Math.ceil(page / MAX_PAGE_BTN_CNT)
 
-const MAX_PAGE_NUMBERS = 5
+const MAX_PAGE_BTN_CNT = 7;
+class Pagination extends React.Component {
+  onNextGroupClick() {
+    const lastPageGroup = getPageGroup(this.props.pages);
+    let pageGroup = getPageGroup(this.props.page) + 1;
 
-const getPageNumbers = (currPage, pages) => {
-  let fromPage = currPage - 1;
-  let toPage = currPage + MAX_PAGE_NUMBERS - 1;
+    if(pageGroup > lastPageGroup) {
+      pageGroup = lastPageGroup;
+    }
 
-  if(currPage === 1) {
-    fromPage = currPage;
+    const startPageNum = (pageGroup - 1) * MAX_PAGE_BTN_CNT + 1
+
+    this.onPageClick(startPageNum);
   }
 
-  if(toPage > pages) {
-    toPage = pages;
+  onPrevGroupClick() {
+    let pageGroup = getPageGroup(this.props.page) - 1;
+
+    if(pageGroup < 1) {
+      pageGroup = 1;
+    }
+
+    const startPageNum = (pageGroup - 1) * MAX_PAGE_BTN_CNT + 1
+
+    this.onPageClick(startPageNum);
   }
 
-  return [
-    fromPage, toPage
-  ];
-};
+  onPageClick(page) {
+    if(page > this.props.pages) {
+      page = this.props.pages;
+    }
 
-const Pagination = props => {
-  const { 
-    pages, 
-    page: currPage,
-    onPageChange,
-  } = props;
+    if(page < 1) {
+      page = 1;
+    }
 
-  if(currPage === 0 | pages === 0) {
-    return null;
+    this.props.onPageChange(page);
   }
-
-  const [fromPage, toPage] = getPageNumbers(currPage, pages);
-
-  const numberButtons = range(fromPage, toPage+1).map((v, i) => {
-    const className = `${currPage === v ? 'filled primary' : ''} page-btn`;
-    return (
-      <Button key={v} className={className} onClick={() => onPageChange(v)}>{v}</Button>
-    );  
-  });
-
-  let [ prevPhase, nextPhase ] = [currPage - MAX_PAGE_NUMBERS, currPage + MAX_PAGE_NUMBERS];
   
-  if(nextPhase > pages) {
-    nextPhase = pages;
-  }
+  render() {
+    const { page, pages, totalDataCount, onPageChange } = this.props;
 
-  if(prevPhase < 1) {
-    prevPhase = 1;
-  }
+    if(pages <= 0 || totalDataCount <= 0) {
+      return null;
+    }
 
-  return (
-    <StyledDiv>
-      <Button className="most-left arrow-btn" onClick={() => onPageChange(1)}><FontAwesomeIcon icon="angle-double-left"/></Button>
-      <Button className="arrow-btn" onClick={() => onPageChange(prevPhase)}><FontAwesomeIcon icon="angle-left"/></Button>
-      {numberButtons}
-      <Button className="arrow-btn" onClick={() => onPageChange(nextPhase)}><FontAwesomeIcon icon="angle-double-right"/></Button>
-      <Button className="most-right arrow-btn" onClick={() => onPageChange(pages)}><FontAwesomeIcon icon="angle-right"/></Button>
-    </StyledDiv>
-  );
+    let pageGroupNum = Math.ceil(page/MAX_PAGE_BTN_CNT);
+    let currFromPageNum = (pageGroupNum-1) * MAX_PAGE_BTN_CNT + 1;
+    let currToPageNum = currFromPageNum + MAX_PAGE_BTN_CNT - 1;
+  
+    if(currToPageNum > pages) {
+      currToPageNum = pages;
+    }
+
+    const numberButtons = range(currFromPageNum, currToPageNum + 1).map((v, i) => {
+      const className = `${page === v ? 'filled primary' : ''} page-btn`;
+      return (
+        <Button key={v} className={className} onClick={() => onPageChange(v)}>{v}</Button>
+      );  
+    });
+
+    return (
+      <StyledDiv>
+        <Button className="most-left arrow-btn" onClick={() => this.onPageClick(1)}><FontAwesomeIcon icon="angle-double-left"/></Button>
+        <Button className="arrow-btn" onClick={() => this.onPrevGroupClick()}><FontAwesomeIcon icon="angle-left"/></Button>
+        {numberButtons}
+        <Button className="arrow-btn" onClick={() => this.onNextGroupClick()}><FontAwesomeIcon icon="angle-right"/></Button>
+        <Button className="most-right arrow-btn" onClick={() => this.onPageClick(pages)}><FontAwesomeIcon icon="angle-double-right"/></Button>
+      </StyledDiv>
+    );
+  }
 }
-
-
 
 Pagination.propTypes = {
   page: PropTypes.number, // 현재 페이지
