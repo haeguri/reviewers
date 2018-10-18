@@ -218,11 +218,10 @@ class QuestionDetail extends Component {
           <ReviewList className="review-list"
             data={(_=>{
               const reviewList = getSampleReviewList();
-
-              if(selectedCodeLine === 0) {
-                return reviewList;
-              } else {
+              if(selectedCodeLine > 0) {
                 return reviewList.filter(r => r.lineNumber === selectedCodeLine);
+              } else {
+                return reviewList;
               }
             })()} 
           />

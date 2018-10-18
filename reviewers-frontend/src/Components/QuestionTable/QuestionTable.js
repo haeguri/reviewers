@@ -30,7 +30,7 @@ const StyledReactTable = styled(ReactTable)`
   }
 
   .pagination-bottom {
-    padding: 10px 0;
+    padding: 30px 0;
   }
 `;
 

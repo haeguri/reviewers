@@ -11,6 +11,7 @@ const StyledTextInput = styled.input`
   height: 30px;
   border-radius: 4px;
   border: solid 1px #c2c2c2;
+  padding: 0 5px;
 `;
 
 class TextInput extends React.Component {
