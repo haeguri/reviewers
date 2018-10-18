@@ -16,7 +16,7 @@ const StyledPageContainer = styled(PageContainer)`
   display: flex;
   flex-direction: row;
 
-  .language-badge, .info-badge {
+  .language-badge, .line-info {
     padding: 2px 7px;
     font-size: 12px;
     border-radius: 5px;
@@ -29,9 +29,15 @@ const StyledPageContainer = styled(PageContainer)`
     margin-bottom: 5px;
   }
 
-  .info-badge {
+  .line-info.active {
     background-color: #1162bc;
     color: white;
+    font-weight: 600;
+  }
+
+  .line-info {
+    background-color: white;
+    color: #1162bc;
   }
 
   .left, .right {
@@ -111,7 +117,7 @@ const StyledPageContainer = styled(PageContainer)`
         margin: 0;
       }
 
-      .info-badge {
+      .line-info {
         margin-left: 15px;
       }
     }
@@ -130,7 +136,7 @@ class QuestionDetail extends Component {
     this.state = {
       sampleBody: getSampleMarkdown(),
       isBodyFold: true,
-      selectedCodeLine: 0,
+      selectedCodeLine: -1,
 
       // server data...
       body: getSampleMarkdown()
@@ -151,15 +157,13 @@ class QuestionDetail extends Component {
   }
 
   render() {
+    let reviewListHeaderMsg;
     const { selectedCodeLine, isBodyFold, sampleBody } = this.state;
     const iconToggleBody = isBodyFold ? <FontAwesomeIcon icon='plus-circle'/> :
                                         <FontAwesomeIcon icon='minus-circle'/>;
 
-    let reviewListHeaderMsg;
     if(selectedCodeLine >= 1) {
       reviewListHeaderMsg = `Line ${selectedCodeLine}`;
-    } else {
-      reviewListHeaderMsg = 'ALL';
     }
 
     return (
@@ -203,7 +207,13 @@ class QuestionDetail extends Component {
         <section className="right">
           <div className="title-area">
             <span className="txt-review-list">리뷰 목록</span>
-            <span className="info-badge">{reviewListHeaderMsg}</span>
+            <span 
+              className={`line-info ${selectedCodeLine === -1 ? ' active' : ''}`}
+              onClick={() => this.onLineClick(-1)}
+            >ALL</span>
+            {selectedCodeLine < 0 ?
+             null :
+             <span className={`line-info ${selectedCodeLine >= 0 ? ' active' : ''}`}>{reviewListHeaderMsg}</span>}
           </div>
           <ReviewList className="review-list"
             data={(_=>{
