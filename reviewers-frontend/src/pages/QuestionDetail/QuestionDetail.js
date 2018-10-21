@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Editor from '../../components/Editor';
 import styled from 'styled-components';
 import { getSampleCode, getSampleReviewList } from '../../utils/test-utils';
-import PageContainer from '../../containers/PageContainer';
+import PageTemplate from '../../templates/PageTemplate';
 import ReviewList from '../../components/ReviewList';
 import MarkdownViewer from '../../components/MarkdownViewer';
 import { getSampleMarkdown } from '../../utils/test-utils.js';
@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const sampleCode = getSampleCode() + getSampleCode() + '\nfunction test(){\n return { \n }\n}';
 
-const StyledPageContainer = styled(PageContainer)`
+const StyledPageContainer = styled(PageTemplate)`
   overflow: hidden;
   padding-left: 40px;
   display: flex;

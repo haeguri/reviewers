@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import PageContainer from '../../containers/PageContainer';
+import PageTemplate from '../../templates/PageTemplate';
 import Button from '../../components/Button';
 import TextInput from '../../components/TextInput';
-import CardForm from '../../components/CardForm';
+import CardTemplate from '../../templates/CardTemplate';
 import styled from 'styled-components';
 
-const StyledPageContainer = styled(PageContainer)`
+const StyledPageContainer = styled(PageTemplate)`
   padding: 50px 0;
 
   .login-form {
@@ -48,9 +48,9 @@ class Login extends Component {
   render() {
     return (
       <StyledPageContainer width={500}>
-        <CardForm 
+        <CardTemplate 
           className="login-card"
-          headerMsg={'WELCOME'}
+          headerMsg={'Reviewers'}
         >
           <form className="login-form">
             <TextInput className="form-input" type="text" placeholder="사용자 이이디를 입력하세요." />
@@ -58,7 +58,7 @@ class Login extends Component {
             <Button type="button" className="login-btn filled">로그인</Button>
             <Link to="/join"><Button className="join-btn filled">회원가입</Button></Link>
           </form>
-        </CardForm>
+        </CardTemplate>
       </StyledPageContainer>
     );
   }

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import PageContainer from '../../containers/PageContainer';
+import PageTemplate from '../../templates/PageTemplate';
 import QuestionTable from '../../components/QuestionTable';
 import styled from 'styled-components';
 
-const StyledPageConatiner = styled(PageContainer)`
+const StyledPageConatiner = styled(PageTemplate)`
   margin-top: 30px;
   margin-bottom: 30px;
 `;

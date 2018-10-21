@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import Editor from '../../components/Editor';
 import styled from 'styled-components';
-import PageContainer from '../../containers/PageContainer';
+import PageTemplate from '../../templates/PageTemplate';
 import Button from '../../components/Button';
 import TextInput from '../../components/TextInput';
 import Dropdown from '../../components/Dropdown';
 import { getSampleCode, getSampleMarkdown } from '../../utils/test-utils';
 import MarkdownEditor from '../../components/MarkdownEditor';
 
-const StyledPageContainer = styled(PageContainer)`
+const StyledPageContainer = styled(PageTemplate)`
   .title-area {
     display: flex;
     align-items: center;

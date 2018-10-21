@@ -17,11 +17,11 @@ const StyledSection = styled.section`
   }
 `;
 
-const CardForm = props => (
+const CardTemplate = props => (
   <StyledSection>
     <h2 className="card-header">{props.headerMsg}</h2>
     {props.children}
   </StyledSection>
 )
 
-export default CardForm;
+export default CardTemplate;

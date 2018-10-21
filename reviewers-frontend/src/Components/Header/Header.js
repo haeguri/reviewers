@@ -32,6 +32,7 @@ const StyledNav = styled.nav`
     height: 100%;
     width: 900px;
     margin: 0 auto; 
+    padding: 0 5px;
     overflow: hidden;
     display: flex;
     align-items: center;

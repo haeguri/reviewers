@@ -10,27 +10,30 @@ const StyledSection = styled.section`
   margin-right: auto;
 `;
 
-const PageContainer = props => (
-  <div>
-    <Header width={props.width} />
-    <StyledSection 
-      className={props.className}
-      width={props.width}
-    >
-      { props.children }
-    </StyledSection>
-    <Footer width={props.width} />
-  </div>
-)
+const PageTemplate = props => {
+  const { width, className, children } = props;
+  return (
+    <div>
+      <Header width={width} />
+      <StyledSection 
+        className={className}
+        width={width}
+      >
+        { children }
+      </StyledSection>
+      <Footer width={width} />
+    </div>
+  )
+}
 
-PageContainer.propTypes = {
+PageTemplate.propTypes = {
   width: PropTypes.number,
   className: PropTypes.string
 };
   
-PageContainer.defaultProps = {
+PageTemplate.defaultProps = {
   width: 900,
   className: ''
 };
 
-export default PageContainer;
+export default PageTemplate;
