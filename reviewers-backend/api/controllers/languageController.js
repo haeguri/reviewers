@@ -4,10 +4,10 @@ const { Language } = require('../models/languageModel');
 
 module.exports = {
   all: (req, res) => {
-    Language.find({}, (err, question) => {
+    Language.find({}, (err, language) => {
       if(err)
         res.send(err);
-      res.json(question);
+      res.json(language);
     });  
   }
 };

@@ -50,7 +50,8 @@ class Join extends React.Component {
           headerMsg={'JOIN'}
         >
           <form className="join-form">
-            <TextInput className="form-input" type="text" placeholder="사용자 이이디를 입력하세요." />
+            <TextInput className="form-input" type="email" placeholder="이메일을 입력하세요." />
+            <TextInput className="form-input" type="text" placeholder="이름을 입력하세요." />
             <TextInput className="form-input" type="password" placeholder="비밀번호를 입력하세요." />
             <TextInput className="form-input" type="password" placeholder="비밀번호를 다시 입력하세요." />
             <Button type="button" className="join-btn filled">회원가입</Button>

@@ -53,7 +53,7 @@ class Login extends Component {
           headerMsg={'Reviewers'}
         >
           <form className="login-form">
-            <TextInput className="form-input" type="text" placeholder="사용자 이이디를 입력하세요." />
+            <TextInput className="form-input" type="text" placeholder="이메일을 입력하세요." />
             <TextInput className="form-input" type="password" placeholder="비밀번호를 입력하세요." />
             <Button type="button" className="login-btn filled">로그인</Button>
             <Link to="/join"><Button className="join-btn filled">회원가입</Button></Link>

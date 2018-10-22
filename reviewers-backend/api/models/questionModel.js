@@ -26,9 +26,8 @@ const QuestionSchema = new Schema({
       { type: ReviewSchema, ref: 'Review' }
     ],
     language: {
-      type: Schema.Types.ObjectId,
-      required: true,
-      ref: 'Language'
+      type: String,
+      required: true
     },
     created: {
       type: Date,
