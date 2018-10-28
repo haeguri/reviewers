@@ -8,9 +8,24 @@ import NewQuestion from './pages/NewQuestion';
 
 import { Route } from 'react-router-dom';
 
-const StyledDiv = styled.div`
-  
-`;
+/**
+ * Test Code..
+ */
+import axios from 'axios';
+
+axios.post('http://localhost:3030/login', {
+  email: 'test2@test.com',
+  password: 'qwer1234'
+})
+.then(response => {
+  console.log('success', response);
+})
+.catch(response => {
+  console.log('fail', response);
+});
+
+
+const StyledDiv = styled.div``;
 
 class App extends Component {
   constructor(props) {
