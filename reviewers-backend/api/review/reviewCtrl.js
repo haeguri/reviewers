@@ -1,6 +1,6 @@
 'use strict';
 
-const { Review } = require('../models/reviewModel');
+const { Review } = require('./reviewModel');
 
 module.exports = {
   all: (req, res) => {

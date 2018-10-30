@@ -1,13 +1,13 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const { ReviewSchema } = require('../models/reviewModel');
+const { ReviewSchema } = require('../review/reviewModel');
 const Schema = mongoose.Schema;
 
 const QuestionSchema = new Schema({
     author: {
       type: Schema.Types.ObjectId,
-      required: true,
+      required: false,
       ref: 'User'
     },
     title: {

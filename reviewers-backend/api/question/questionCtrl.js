@@ -1,6 +1,6 @@
 'use strict';
 
-const { Question } = require('../models/questionModel');
+const { Question } = require('./questionModel');
 
 module.exports = {
   all: (req, res) => {
@@ -19,7 +19,7 @@ module.exports = {
     });
   },
   selectOne: (req, res) => {
-    Questionn.findById(req.params.questionId, (err, question) => {
+    Question.findById(req.params.questionId, (err, question) => {
       if (err)
         res.send(err);
       res.json(question);

@@ -1,6 +1,6 @@
 'use strict';
 
-const { Language } = require('../models/languageModel');
+const { Language } = require('./languageModel');
 
 module.exports = {
   all: (req, res) => {

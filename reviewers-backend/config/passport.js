@@ -1,5 +1,5 @@
 const LocalStrategy = require('passport-local').Strategy;
-const { User  } = require('../api/models/userModel');
+const { User  } = require('../api/auth/authModel');
 
 module.exports = passport => {
   // # serializerUser ( 세션에 저장할 떄 )

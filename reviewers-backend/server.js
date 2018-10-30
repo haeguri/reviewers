@@ -41,14 +41,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-const apiRouter = express.Router();
-const apiRoutes = [];
-apiRoutes.push(require('./api/routes/questionRoutes'));
-apiRoutes.push(require('./api/routes/languageRoutes'));
-apiRoutes.push(require('./api/routes/authRoutes'));
-apiRoutes.forEach(route => route(apiRouter));
-
-app.use('/api', apiRouter);
+app.use('/api', require('./api/apiRoute'));
 
 app.listen(port, () => {
   console.log(`Server running on ${port} port`);
