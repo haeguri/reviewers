@@ -4,7 +4,8 @@ import QuestionDetail from './pages/QuestionDetail';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Join from './pages/Join';
-import NewQuestion from './pages/NewQuestion';
+import QuestionNew from './pages/QuestionNew';
+import QuestionEdit from './pages/QuestionEdit';
 
 import { Route } from 'react-router-dom';
 
@@ -40,7 +41,8 @@ class App extends Component {
     return (
       <StyledDiv className="app-container">
         <Route exact path="/" component={Home}/>
-        <Route path="/new-question" component={NewQuestion}/>
+        <Route path="/new-question" component={QuestionNew}/>
+        <Route path="/edit-question" component={QuestionEdit}/>
         <Route path="/question-detail/:qId" component={QuestionDetail}/>
         <Route path="/login" component={Login}/>
         <Route path="/join" component={Join}/>

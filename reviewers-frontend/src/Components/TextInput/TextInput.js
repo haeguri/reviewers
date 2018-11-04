@@ -46,14 +46,14 @@ class TextInput extends React.Component {
 }
 
 TextInput.propTypes = {
-  onTextChange: PropTypes.func,
+  onChange: PropTypes.func,
   className: PropTypes.string,
   maxlength: PropTypes.number,
   multiline: PropTypes.bool
 };
 
 TextInput.defaultProps = {
-  onTextChange: _=>{},
+  onChange: _=>{},
   className: '',
   multiline: false
 };
