@@ -14,6 +14,7 @@ const StyledWrapper = styled.section`
     background: skyblue;
     width: 20px;
     height: 20px;
+    cursor: pointer;
   }
 
   .myLineDecoration {
@@ -55,11 +56,10 @@ class Editor extends Component {
           editorDidMount={(editor, monaco) => this._editorDidMount(editor, monaco)}
         />
       </StyledWrapper>
-    )
+    );
   }
 
   _editorDidMount(editor, monaco) {
-    console.log('react-monaco-editor did mount..');
     if(this.props.isReadOnly) {
       this._attachMouseDownEventListener(editor);
       this._attachMouseMoveEventListener(editor, monaco);
@@ -151,7 +151,10 @@ class Editor extends Component {
             currPosition.lineNumber, 1, 
             currPosition.lineNumber, 1
         ),
-        options: { iisWholeLine: true, linesDecorationsClassName: 'comment-btn' }
+        options: { 
+          isWholeLine: true, 
+          marginlinesDecorationsClassName: 'comment-btn' 
+        }
       }
     ]);
   }
@@ -161,7 +164,7 @@ Editor.defaultProps = {
     editorDidMount: _=>{},
     onChange: _=>{},
     language: 'javascript',
-    onLineClick: _=>{}
+    onLineClick: _=>{},
 };
 
 Editor.propTypes = {
@@ -172,7 +175,8 @@ Editor.propTypes = {
     options: PropTypes.object,
     editorDidMount: PropTypes.func,
     onChange: PropTypes.func,
-    onLineClick: PropTypes.func
+    onLineClick: PropTypes.func,
+    reviewCounts: PropTypes.object,
 };
 
 export default Editor;

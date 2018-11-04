@@ -9,6 +9,14 @@ import { getSampleMarkdown } from '../../utils/test-utils.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const sampleCode = getSampleCode() + getSampleCode() + '\nfunction test(){\n return { \n }\n}';
+const reviewList = getSampleReviewList();
+const reviewCounts = (_=>{
+  return reviewList.reduce((counts, review) => {
+    const lineNumber = review.lineNumber;
+    counts[lineNumber] = counts[lineNumber] ? counts[lineNumber] + 1 : 1;
+    return counts;
+  }, {});
+})();
 
 const StyledPageContainer = styled(PageTemplate)`
   overflow: hidden;
@@ -36,6 +44,7 @@ const StyledPageContainer = styled(PageTemplate)`
   }
 
   .line-info {
+    cursor: pointer;
     background-color: white;
     color: #1162bc;
   }
@@ -195,6 +204,7 @@ class QuestionDetail extends Component {
               className="editor"
               height={600}
               isReadOnly={true}
+              reviewCounts={reviewCounts}
               onLineClick={(curr) => this.onLineClick(curr)}
               value={sampleCode}
               // react-monaco-editor 옵션
@@ -217,7 +227,6 @@ class QuestionDetail extends Component {
           </div>
           <ReviewList className="review-list"
             data={(_=>{
-              const reviewList = getSampleReviewList();
               if(selectedCodeLine > 0) {
                 return reviewList.filter(r => r.lineNumber === selectedCodeLine);
               } else {
