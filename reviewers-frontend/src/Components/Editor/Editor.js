@@ -34,6 +34,11 @@ class Editor extends Component {
   monacoEditor = null;
   monacoAPI = null;
 
+  prevReviewDecos = {
+    lines: [],
+    ids: []
+  }
+
   constructor(props) {
     super(props);
 
@@ -69,20 +74,36 @@ class Editor extends Component {
   }
 
   componentDidMount() {
-    console.log('origin component did mount', this.props.reviewCounts);
+    const { reviewCounts } = this.props;
+    const { prevReviewDecos } = this;
+    if (Object.keys(prevReviewDecos).every(k => prevReviewDecos[k].length !== 0)) {
+      prevReviewDecos.lines = Object.keys(reviewCounts);
+      prevReviewDecos.ids = this._updateReviewCount([], )
+      // prevReviewDecos.positions = 
+      // prevReviewDecos.ids = this._updateReviewCount(pr)
+    }
+
+    prevReviewDecos.ids = this._updateReviewCount(
+      prevReviewDecos.ids,
+      prevReviewDecos.lines
+    )
+
+    prevReviewDecos.lines = 
+    console.log('parent component did mount', this.props.reviewCounts);
   }
 
   componentDidUpdate() {
-    console.log('origin component did update', this.props.reviewCounts)
+    console.log('parent component did update', this.props.reviewCounts)
   }
 
+  // child component componentDidMount
   _editorDidMount(editor, monaco) {
     const { isReadOnly } = this.props;
 
     this.monacoEditor = editor;
     this.monacoAPI = monaco;
 
-    if(isReadOnly) {
+    if (isReadOnly) {
       this._attachMouseDownEventListener();
       this._attachMouseMoveEventListener();
     } else {
@@ -144,44 +165,53 @@ class Editor extends Component {
 
   _attachMouseMoveEventListener() {
     const { monacoEditor } = this;
-    let prevPosition;
     let prevDecoIds;
+    let prevLine;
 
     monacoEditor.onMouseMove(e => {
       if(e.target.position === null) {
         return;
       }
 
-      let currPosition = e.target.position;
+      let currLine = e.target.position.lineNumber;
 
-      if(typeof prevPosition === 'undefined') {
-        prevPosition = currPosition;
-        prevDecoIds = this._updateDecorations([], currPosition);
+      if(typeof prevLine === 'undefined') {
+        prevLine = currLine
+        prevDecoIds = this._updateReviewBtn([], prevLine);
         return;
-      } else if(prevPosition.lineNumber === currPosition.lineNumber) {
+      } else if(prevLine === currLine) {
         return;
       }
 
-      prevDecoIds = this._updateDecorations(prevDecoIds, currPosition);
-      prevPosition = currPosition;
+      prevDecoIds = this._updateReviewBtn(prevDecoIds, currLine);
+      prevLine = currLine;
     });
   }
 
-  _updateDecorations(prevDecoIds, currPosition) {
-    const { monacoEditor, monacoAPI } = this;
-    return monacoEditor.deltaDecorations(prevDecoIds, [
-      {
-        range: new monacoAPI.Range(
-            currPosition.lineNumber, 1, 
-            currPosition.lineNumber, 1
-        ),
-        options: { 
-          isWholeLine: true, 
-          linesDecorationsClassName: CLASS_NAME.REVIEW_BTN,
-          // glyphMarginClassName: CLASS_NAME.REVIEW_COUNT,
-        }
+  _updateReviewBtn(prevDecoIds, line) {
+    const { monacoAPI, monacoEditor } = this;
+
+    return monacoEditor.deltaDecorations(prevDecoIds, [{
+      range: new monacoAPI.Range(line, 1, line, 1),
+      options: {
+        linesDecorationsClassName: CLASS_NAME.REVIEW_BTN
       }
-    ]);
+    }]);
+  }
+
+  _updateReviewCount(prevDecoIds, lines) {
+    const { monacoAPI, monacoEditor } = this;
+    const options = {
+      glyphMarginClassName: CLASS_NAME.REVIEW_COUNT
+    };
+    const decoOptions = lines.map(l => {
+      return {
+        range: new monacoAPI.Range(l, 1, l, 1),
+        options
+      }
+    })
+
+    return monacoEditor.deltaDecorations(prevDecoIds, decoOptions);
   }
 }
 
