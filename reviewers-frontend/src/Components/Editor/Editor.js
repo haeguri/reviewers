@@ -5,11 +5,16 @@ import MonacoEditor from 'react-monaco-editor';
 import styled from 'styled-components';
 import ReviewEditor from '../ReviewEditor';
 
+const CLASS_NAME = {
+  REVIEW_BTN: 'review-btn',
+  REVIEW_COUNT: 'review-count'
+}
+
 const StyledWrapper = styled.section`
   height: ${props => props.height}px;
   border: solid 1px #c2c2c2;
 
-  .comment-btn {
+  .${CLASS_NAME.REVIEW_BTN} {
     border-radius: 10px;
     background: skyblue;
     width: 20px;
@@ -17,14 +22,18 @@ const StyledWrapper = styled.section`
     cursor: pointer;
   }
 
-  .myLineDecoration {
-    background: lightblue;
-    width: 100% !important;
-    left: 3px;
+  .${CLASS_NAME.REVIEW_COUNT} {
+    width: 5px;
+    height: 5px;
+    left: 0;
+    background: red;
   }
 `;
 
 class Editor extends Component {
+  monacoEditor = null;
+  monacoAPI = null;
+
   constructor(props) {
     super(props);
 
@@ -59,37 +68,50 @@ class Editor extends Component {
     );
   }
 
-  _editorDidMount(editor, monaco) {
-    if(this.props.isReadOnly) {
-      this._attachMouseDownEventListener(editor);
-      this._attachMouseMoveEventListener(editor, monaco);
-    } else {
-      editor.focus();
-    }
-
-    this.props.editorDidMount(editor, monaco);
+  componentDidMount() {
+    console.log('origin component did mount', this.props.reviewCounts);
   }
 
-  _attachMouseDownEventListener(editor) {
+  componentDidUpdate() {
+    console.log('origin component did update', this.props.reviewCounts)
+  }
+
+  _editorDidMount(editor, monaco) {
+    const { isReadOnly } = this.props;
+
+    this.monacoEditor = editor;
+    this.monacoAPI = monaco;
+
+    if(isReadOnly) {
+      this._attachMouseDownEventListener();
+      this._attachMouseMoveEventListener();
+    } else {
+      this.monacoEditor.focus();
+    }
+  }
+
+  _attachMouseDownEventListener() {
+    const { monacoEditor } = this;
+    const { onLineClick } = this.props;
     let activeLineNumbers = [];
     const viewZoneIds = [];
 
-    editor.onMouseDown(e => {
+    monacoEditor.onMouseDown(e => {
       if(e.target.position === null) {
           return;
       }
 
       let currLineNumber = e.target.position.lineNumber;
 
-      this.props.onLineClick(currLineNumber);
+      onLineClick(currLineNumber);
 
       if(activeLineNumbers.indexOf(currLineNumber) >= 0) {
           return;
       }
 
-      if(e.target.element.className.indexOf('comment-btn') >= 0) {
+      if(e.target.element.className.indexOf(CLASS_NAME.REVIEW_BTN) >= 0) {
 
-        editor.changeViewZones(changeAccessor => {
+        monacoEditor.changeViewZones(changeAccessor => {
           let currViewZoneId;
 
           const reviewContainerDOM = document.createElement('div');
@@ -106,9 +128,9 @@ class Editor extends Component {
 
           ReactDOM.render(
             <ReviewEditor
-              editor={editor}
+              editor={monacoEditor}
               onCancelClick={() => {
-                editor.changeViewZones(changeAccessor => changeAccessor.removeZone(currViewZoneId));
+                monacoEditor.changeViewZones(changeAccessor => changeAccessor.removeZone(currViewZoneId));
                 activeLineNumbers = activeLineNumbers.filter(n => n !== currLineNumber);
                 ReactDOM.unmountComponentAtNode(reviewContainerDOM);
               }}>
@@ -120,11 +142,12 @@ class Editor extends Component {
     });
   }
 
-  _attachMouseMoveEventListener(editor, monaco) {
+  _attachMouseMoveEventListener() {
+    const { monacoEditor } = this;
     let prevPosition;
     let prevDecoIds;
 
-    editor.onMouseMove(e => {
+    monacoEditor.onMouseMove(e => {
       if(e.target.position === null) {
         return;
       }
@@ -133,27 +156,29 @@ class Editor extends Component {
 
       if(typeof prevPosition === 'undefined') {
         prevPosition = currPosition;
-        prevDecoIds = this._updateDecorations(editor, monaco, [], currPosition);
+        prevDecoIds = this._updateDecorations([], currPosition);
         return;
       } else if(prevPosition.lineNumber === currPosition.lineNumber) {
         return;
       }
 
-      prevDecoIds = this._updateDecorations(editor, monaco, prevDecoIds, currPosition);
+      prevDecoIds = this._updateDecorations(prevDecoIds, currPosition);
       prevPosition = currPosition;
     });
   }
 
-  _updateDecorations(editor, monaco, prevDecoIds, currPosition) {
-    return editor.deltaDecorations(prevDecoIds, [
+  _updateDecorations(prevDecoIds, currPosition) {
+    const { monacoEditor, monacoAPI } = this;
+    return monacoEditor.deltaDecorations(prevDecoIds, [
       {
-        range: new monaco.Range(
+        range: new monacoAPI.Range(
             currPosition.lineNumber, 1, 
             currPosition.lineNumber, 1
         ),
         options: { 
           isWholeLine: true, 
-          linesDecorationsClassName: 'comment-btn' 
+          linesDecorationsClassName: CLASS_NAME.REVIEW_BTN,
+          // glyphMarginClassName: CLASS_NAME.REVIEW_COUNT,
         }
       }
     ]);
@@ -161,7 +186,6 @@ class Editor extends Component {
 }
 
 Editor.defaultProps = {
-    editorDidMount: _=>{},
     onChange: _=>{},
     language: 'javascript',
     onLineClick: _=>{},
@@ -173,10 +197,9 @@ Editor.propTypes = {
     height: PropTypes.number,
     value: PropTypes.string,
     options: PropTypes.object,
-    editorDidMount: PropTypes.func,
     onChange: PropTypes.func,
     onLineClick: PropTypes.func,
-    reviewCounts: PropTypes.object,
+    reviewCounts: PropTypes.objectOf(PropTypes.number),
 };
 
 export default Editor;
