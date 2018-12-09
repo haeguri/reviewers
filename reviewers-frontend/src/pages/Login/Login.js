@@ -19,7 +19,7 @@ const StyledPageContainer = styled(PageTemplate)`
 
     .login-btn, .join-btn {
       width: 100%;
-      height: 35px;
+      height: 40px;
       font-size: 18px;
       letter-spacing: 1px;
       margin-bottom: 10px;
@@ -50,7 +50,7 @@ class Login extends Component {
       <StyledPageContainer width={500}>
         <CardTemplate 
           className="login-card"
-          headerMsg={'Reviewers'}
+          headerMsg={'REVIEWER'}
         >
           <form className="login-form">
             <TextInput className="form-input" type="text" placeholder="이메일을 입력하세요." />

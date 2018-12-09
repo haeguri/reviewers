@@ -58,7 +58,7 @@ const Header = props => (
   <StyledNav width={props.width}>
     <div className="container">
       <div className="logo">
-          <Link to="/"><h2>Reviewers</h2></Link>
+          <Link to="/"><h2>REVIEWER</h2></Link>
       </div>
       <ul className="nav-menus">
           {menuList.map(m => <Link className="menu-item" key={m.name} to={m.path}>{m.name}</Link>)}

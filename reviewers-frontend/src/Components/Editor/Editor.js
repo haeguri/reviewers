@@ -153,7 +153,7 @@ class Editor extends Component {
         ),
         options: { 
           isWholeLine: true, 
-          marginlinesDecorationsClassName: 'comment-btn' 
+          linesDecorationsClassName: 'comment-btn' 
         }
       }
     ]);
