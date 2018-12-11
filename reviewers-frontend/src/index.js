@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-free/css/all.css'
 import { 
   faPlusCircle, 
   faMinusCircle, 
@@ -23,7 +24,6 @@ library.add(
   faAngleLeft,
   faAngleRight
 );
-
 
 ReactDOM.render(
     <Router>

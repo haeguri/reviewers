@@ -6,27 +6,40 @@ import styled from 'styled-components';
 import ReviewEditor from '../ReviewEditor';
 
 const CLASS_NAME = {
-  REVIEW_BTN: 'review-btn',
-  REVIEW_COUNT: 'review-count'
+  REVIEW_BTN: 'icon review-btn',
+  HAS_REVIEW: 'icon has-review'
 }
 
-const StyledWrapper = styled.section`
+const StyledSection = styled.section`
   height: ${props => props.height}px;
   border: solid 1px #c2c2c2;
 
-  .${CLASS_NAME.REVIEW_BTN} {
-    border-radius: 10px;
-    background: skyblue;
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
+  .icon::before {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-family: "Font Awesome 5 Free"; 
+
   }
 
-  .${CLASS_NAME.REVIEW_COUNT} {
-    width: 5px;
-    height: 5px;
-    left: 0;
-    background: red;
+  .${CLASS_NAME.REVIEW_BTN.split(' ').join('.')}::before {
+    font-weight: 900;
+    content: "\f075";
+    color: #1162bc;
+    cursor: pointer;
+    font-size: 15px;
+    margin-left: 2px;
+  }
+
+  .${CLASS_NAME.HAS_REVIEW.split(' ').join('.')}::before {
+    font-weight: 900; 
+    content: "\f06a";
+    color: #63092d;
+    font-size: 14px;
+    margin-left: 5px;
+    cursor: pointer;
   }
 `;
 
@@ -34,10 +47,7 @@ class Editor extends Component {
   monacoEditor = null;
   monacoAPI = null;
 
-  prevReviewDecos = {
-    lines: [],
-    ids: []
-  }
+  prevReviewCountDecoIds = [];
 
   constructor(props) {
     super(props);
@@ -57,7 +67,7 @@ class Editor extends Component {
 
   render() {
     return (
-      <StyledWrapper>
+      <StyledSection>
         <MonacoEditor
           className={this.props.className}
           height={this.props.height}
@@ -69,31 +79,26 @@ class Editor extends Component {
           onChange={(newValue, e) => this.props.onChange(newValue, e)}
           editorDidMount={(editor, monaco) => this._editorDidMount(editor, monaco)}
         />
-      </StyledWrapper>
+      </StyledSection>
     );
   }
 
-  componentDidMount() {
-    const { reviewCounts } = this.props;
-    const { prevReviewDecos } = this;
-    if (Object.keys(prevReviewDecos).every(k => prevReviewDecos[k].length !== 0)) {
-      prevReviewDecos.lines = Object.keys(reviewCounts);
-      prevReviewDecos.ids = this._updateReviewCount([], )
-      // prevReviewDecos.positions = 
-      // prevReviewDecos.ids = this._updateReviewCount(pr)
-    }
-
-    prevReviewDecos.ids = this._updateReviewCount(
-      prevReviewDecos.ids,
-      prevReviewDecos.lines
-    )
-
-    prevReviewDecos.lines = 
-    console.log('parent component did mount', this.props.reviewCounts);
+  componentDidUpdate() {
+    this._invokeUpdateReviewCount();
   }
 
-  componentDidUpdate() {
-    console.log('parent component did update', this.props.reviewCounts)
+  componentDidMount() {
+    this._invokeUpdateReviewCount();
+
+  }
+
+  _invokeUpdateReviewCount() {
+    const { reviewCounts } = this.props;
+    let { prevReviewCountDecoIds } = this;
+
+    let lines = Object.keys(reviewCounts).filter(c => c > 0).sort();
+
+    this.prevReviewCountDecoIds = this._updateHasReviewIcon(prevReviewCountDecoIds, lines);
   }
 
   // child component componentDidMount
@@ -199,15 +204,14 @@ class Editor extends Component {
     }]);
   }
 
-  _updateReviewCount(prevDecoIds, lines) {
+  _updateHasReviewIcon(prevDecoIds, lines) {
     const { monacoAPI, monacoEditor } = this;
-    const options = {
-      glyphMarginClassName: CLASS_NAME.REVIEW_COUNT
-    };
     const decoOptions = lines.map(l => {
       return {
         range: new monacoAPI.Range(l, 1, l, 1),
-        options
+        options: {
+          glyphMarginClassName: CLASS_NAME.HAS_REVIEW
+        }
       }
     })
 
@@ -219,6 +223,7 @@ Editor.defaultProps = {
     onChange: _=>{},
     language: 'javascript',
     onLineClick: _=>{},
+    reviewCounts: {}
 };
 
 Editor.propTypes = {

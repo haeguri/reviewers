@@ -118,7 +118,7 @@ const getSampleReviewList = () => {
     Array(20).fill(0).reduce((prev, curr, index) => {
         // debugger;
         const id = index + 1;
-        const randomLineNumber = Math.ceil(Math.random()*5);
+        const randomLineNumber = Math.ceil(Math.random()*10);
         prev.push({
             id,
             author: 'author' + id,
