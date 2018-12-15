@@ -6,7 +6,7 @@ import TextInput from '../../components/TextInput';
 import Button from '../../components/Button';
 import styled from 'styled-components';
 
-const StyledPageContainer = styled(PageTemplate)`
+const StyledPageTemplate = styled(PageTemplate)`
   padding: 50px 0;
 
   .join-form {
@@ -44,7 +44,7 @@ class Join extends React.Component {
 
   render() {
     return (
-      <StyledPageContainer width={500}>
+      <StyledPageTemplate width={500}>
         <CardTemplate 
           className="join-card"
           headerMsg={'JOIN'}
@@ -58,7 +58,7 @@ class Join extends React.Component {
             <Link to="/login"><Button className="cancel-btn">취소</Button></Link>
           </form>
         </CardTemplate>
-      </StyledPageContainer>
+      </StyledPageTemplate>
     )
   }
 }

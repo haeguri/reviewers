@@ -6,7 +6,7 @@ import TextInput from '../../components/TextInput';
 import CardTemplate from '../../templates/CardTemplate';
 import styled from 'styled-components';
 
-const StyledPageContainer = styled(PageTemplate)`
+const StyledPageTemplate = styled(PageTemplate)`
   padding: 50px 0;
 
   .login-form {
@@ -47,11 +47,8 @@ class Login extends Component {
 
   render() {
     return (
-      <StyledPageContainer width={500}>
-        <CardTemplate 
-          className="login-card"
-          headerMsg={'REVIEWER'}
-        >
+      <StyledPageTemplate width={500}>
+        <CardTemplate className="login-card" headerMsg={'REVIEWER'}>
           <form className="login-form">
             <TextInput className="form-input" type="text" placeholder="이메일을 입력하세요." />
             <TextInput className="form-input" type="password" placeholder="비밀번호를 입력하세요." />
@@ -59,7 +56,7 @@ class Login extends Component {
             <Link to="/join"><Button className="join-btn filled">회원가입</Button></Link>
           </form>
         </CardTemplate>
-      </StyledPageContainer>
+      </StyledPageTemplate>
     );
   }
 }

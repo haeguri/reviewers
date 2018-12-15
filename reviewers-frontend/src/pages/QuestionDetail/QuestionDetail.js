@@ -18,7 +18,7 @@ const reviewCounts = (_=>{
   }, {});
 })();
 
-const StyledPageContainer = styled(PageTemplate)`
+const StyledPageTemplate = styled(PageTemplate)`
   overflow: hidden;
   padding-left: 40px;
   display: flex;
@@ -176,7 +176,7 @@ class QuestionDetail extends Component {
     }
 
     return (
-      <StyledPageContainer 
+      <StyledPageTemplate 
         headerWidth={1150} 
         width={1150}
         isBodyFold={isBodyFold}>
@@ -235,7 +235,7 @@ class QuestionDetail extends Component {
             })()} 
           />
         </section>
-      </StyledPageContainer>
+      </StyledPageTemplate>
     );
   }
 }
