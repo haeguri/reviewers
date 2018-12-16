@@ -20,8 +20,7 @@ const StyledSection = styled.section`
     font-variant: normal;
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
-    font-family: "Font Awesome 5 Free"; 
-
+    font-family: "Font Awesome 5 Free";
   }
 
   .${CLASS_NAME.REVIEW_BTN.split(' ').join('.')}::before {

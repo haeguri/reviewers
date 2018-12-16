@@ -20,12 +20,13 @@ module.exports = app => {
   });
 
   app.post('/login', (req, res, next) => {
-    console.log('login route handler')
     passport.authenticate("login", function(err, user, info){
       // console.log('login authenticate callback');
       if (err) { 
         return next(err);
       }
+
+      console.log(req)
 
       if (!user) { 
         return res.status(400).json({error: info});

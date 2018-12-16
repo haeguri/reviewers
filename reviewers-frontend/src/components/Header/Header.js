@@ -2,21 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-const menuList = [
-  {
-    name: '리뷰하기',
-    path: '/'
-  },
-  {
-    name: '질문하기',
-    path: '/new-question'
-  },
-  {
-    name: '로그인',
-    path: '/login'
-  }
-];
-
 const StyledNav = styled.nav`
   background-color: #092d63;
   color: white;
@@ -54,17 +39,51 @@ const StyledNav = styled.nav`
   }
 `;
 
-const Header = props => (
-  <StyledNav width={props.width}>
-    <div className="container">
-      <div className="logo">
-          <Link to="/"><h2>REVIEWER</h2></Link>
+const USER_GROUP = { ALL: 0, USER: 1, ANONYMOUS: 2 };
+
+const menuList = [
+  {
+    name: '리뷰하기',
+    path: '/',
+    viewOnly: USER_GROUP.ALL
+  },
+  {
+    name: '질문하기',
+    path: '/new-question',
+    viewOnly: USER_GROUP.ALL
+  },
+  {
+    name: '로그인',
+    path: '/login',
+    viewOnly: USER_GROUP.ANONYMOUS
+  },
+  {
+    name: '로그아웃',
+    viewOnly: USER_GROUP.USER
+  }
+];
+
+const Header = props => {
+  const { isLogin } = props.userInfo;
+
+  let filteredMenuList;
+  if (isLogin) {
+    filteredMenuList = menuList.filter(m => m.viewOnly !== USER_GROUP.ANONYMOUS)
+  } else {
+    filteredMenuList = menuList.filter(m => m.viewOnly !== USER_GROUP.USER)
+  }
+  return (
+    <StyledNav width={props.width}>
+      <div className="container">
+        <div className="logo">
+            <Link to="/"><h2>REVIEWER</h2></Link>
+        </div>
+        <ul className="nav-menus">
+            {filteredMenuList.map(m => <Link className="menu-item" key={m.name} to={m.path}>{m.name}</Link>)}
+        </ul>
       </div>
-      <ul className="nav-menus">
-          {menuList.map(m => <Link className="menu-item" key={m.name} to={m.path}>{m.name}</Link>)}
-      </ul>
-    </div>
-  </StyledNav>
-);
+    </StyledNav>
+  )
+}
 
 export default Header;

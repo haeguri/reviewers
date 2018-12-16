@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import PageTemplate from '../../templates/PageTemplate';
 import Button from '../../components/Button';
@@ -38,11 +39,23 @@ const StyledPageTemplate = styled(PageTemplate)`
 `;
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+  state = {
+    // test values...
+    email: 'test4@test.com',
+    password: 'qwer1234'
+  }
 
-    };
+  onEmailChange = (e) => {
+    this.setState({email: e.target.value})
+  } 
+
+  onPasswordChange = (e) => {
+    this.setState({password: e.target.value});
+  }
+
+  onLoginClick = (e) => {
+    const { email, password } = this.state;
+    this.props.requestLogin({email, password})
   }
 
   render() {
@@ -50,15 +63,21 @@ class Login extends Component {
       <StyledPageTemplate width={500}>
         <CardTemplate className="login-card" headerMsg={'REVIEWER'}>
           <form className="login-form">
-            <TextInput className="form-input" type="text" placeholder="이메일을 입력하세요." />
-            <TextInput className="form-input" type="password" placeholder="비밀번호를 입력하세요." />
-            <Button type="button" className="login-btn filled">로그인</Button>
+            <TextInput className="form-input" type="text" placeholder="이메일을 입력하세요." 
+                       onChange={this.onEmailChange} value={this.state.email}/>
+            <TextInput className="form-input" type="password" placeholder="비밀번호를 입력하세요."
+                       onChange={this.onPasswordChange} value={this.state.password}/>
+            <Button type="button" className="login-btn filled" onClick={this.onLoginClick}>로그인</Button>
             <Link to="/join"><Button className="join-btn filled">회원가입</Button></Link>
           </form>
         </CardTemplate>
       </StyledPageTemplate>
     );
   }
+}
+
+Login.propTypes = {
+  requestLogin: PropTypes.func.isRequired
 }
 
 export default Login;
