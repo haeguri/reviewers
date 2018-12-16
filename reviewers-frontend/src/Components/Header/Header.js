@@ -39,39 +39,10 @@ const StyledNav = styled.nav`
   }
 `;
 
-const USER_GROUP = { ALL: 0, USER: 1, ANONYMOUS: 2 };
-
-const menuList = [
-  {
-    name: '리뷰하기',
-    path: '/',
-    viewOnly: USER_GROUP.ALL
-  },
-  {
-    name: '질문하기',
-    path: '/new-question',
-    viewOnly: USER_GROUP.ALL
-  },
-  {
-    name: '로그인',
-    path: '/login',
-    viewOnly: USER_GROUP.ANONYMOUS
-  },
-  {
-    name: '로그아웃',
-    viewOnly: USER_GROUP.USER
-  }
-];
-
 const Header = props => {
-  const { isLogin } = props.userInfo;
+  const { username, isLogin } = props.userInfo;
 
-  let filteredMenuList;
-  if (isLogin) {
-    filteredMenuList = menuList.filter(m => m.viewOnly !== USER_GROUP.ANONYMOUS)
-  } else {
-    filteredMenuList = menuList.filter(m => m.viewOnly !== USER_GROUP.USER)
-  }
+  const className = 'menu-item';
   return (
     <StyledNav width={props.width}>
       <div className="container">
@@ -79,7 +50,16 @@ const Header = props => {
             <Link to="/"><h2>REVIEWER</h2></Link>
         </div>
         <ul className="nav-menus">
-            {filteredMenuList.map(m => <Link className="menu-item" key={m.name} to={m.path}>{m.name}</Link>)}
+          <Link className={className} to={'/'}>리뷰하기</Link>
+          <Link className={className} to={'/new-quesion'}>질문하기</Link>
+          {
+            !isLogin ? 
+            (<Link className={className} to={'/login'}>로그인</Link>) :
+            (<React.Fragment>
+              <a className={className}>{username} 님</a>
+              <a className={className} onClick={this.onLogoutClick}>로그아웃</a>
+            </React.Fragment>)
+          }
         </ul>
       </div>
     </StyledNav>

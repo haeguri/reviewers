@@ -19,7 +19,7 @@ const StyledPageTemplate = styled(PageTemplate)`
 
     .join-btn, .cancel-btn {
       width: 100%;
-      height: 35px;
+      height: 40px;
       font-size: 18px;
       letter-spacing: 1px;
       margin-bottom: 10px;
@@ -31,7 +31,7 @@ const StyledPageTemplate = styled(PageTemplate)`
       color: #fff;
     }
   }
-`
+`;
 
 class Join extends React.Component {
   constructor(props) {
@@ -47,7 +47,7 @@ class Join extends React.Component {
       <StyledPageTemplate width={500}>
         <CardTemplate 
           className="join-card"
-          headerMsg={'JOIN'}
+          headerMsg={'회원가입'}
         >
           <form className="join-form">
             <TextInput className="form-input" type="email" placeholder="이메일을 입력하세요." />

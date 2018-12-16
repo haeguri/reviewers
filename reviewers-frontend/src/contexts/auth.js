@@ -13,6 +13,7 @@ const {
 class AuthProvider extends React.Component {
   state = {
     email: '',
+    username: '',
     isLogin: false
   }
 
@@ -22,6 +23,7 @@ class AuthProvider extends React.Component {
         .then(json => {
           this.setState({
             email: json.email, 
+            username: json.username,
             isLogin: true
           });
 

@@ -61,7 +61,7 @@ class Login extends Component {
   render() {
     return (
       <StyledPageTemplate width={500}>
-        <CardTemplate className="login-card" headerMsg={'REVIEWER'}>
+        <CardTemplate className="login-card" headerMsg={'로그인'}>
           <form className="login-form">
             <TextInput className="form-input" type="text" placeholder="이메일을 입력하세요." 
                        onChange={this.onEmailChange} value={this.state.email}/>
