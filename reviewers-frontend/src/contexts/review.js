@@ -26,7 +26,7 @@ class ReviewProvider extends React.Component {
             return fetchData(`${BASE_REVIEW_API_URL}/${questionId}/reviews`, 'GET')
                 .then(json => {
                     this.setState({
-                        data: json.data
+                        data: json
                     });
 
                     return Promise.resolve(json);
