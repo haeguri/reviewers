@@ -8,10 +8,12 @@ const StyledNav = styled.nav`
   border-bottom: solid 1px #e2e2e2;
   width: 100%;
   height: 50px;
-  min-width: ${props => {
-    const width = parseInt(props.width, 10);
-    return width > 900 ? width : 900;
-  }}px;
+  width: ${props => props.width}px;
+
+  @media screen and (min-width: ${props => props.width}px) {
+    width: 100%;
+  }
+
   
   .container {
     height: 100%;

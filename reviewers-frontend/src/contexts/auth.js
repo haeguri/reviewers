@@ -21,19 +21,27 @@ class AuthProvider extends React.Component {
     login: (data) => {
       return fetchData(BASE_AUTH_API_URL + '/login', 'POST', data)
         .then(json => {
+          console.log(this);
           this.setState({
             email: json.email, 
             username: json.username,
             isLogin: true
           });
 
-          console.log(json);
-
           return Promise.resolve(json);
         });
     },
     logout: () => {
-      return fetchData(BASE_AUTH_API_URL + '/logut', 'POST');
+      return fetchData(BASE_AUTH_API_URL + '/logout', 'POST')
+          .then(response => {
+            this.setState({
+              email: '',
+              username: '',
+              isLogin: false
+            });
+
+            return Promise.resolve(response);
+          });
     }
   }
 

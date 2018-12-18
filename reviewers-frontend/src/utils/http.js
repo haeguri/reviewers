@@ -12,13 +12,18 @@ export const fetchData = (url, method, data) => {
 
   return fetch(url, options)
         .then(response => {
-          if(!response.ok) {
+          if (!response.ok) {
             // common http error...
             console.error('REQUEST ERROR', response);
             return Promise.reject(response);
-          }
+          } 
 
           console.log('FETCH SUCCESS', response);
-          return response.json()
+          
+          if (response.status === 204) {
+            return response;
+          } else {
+            return response.json();
+          }
         });
 };

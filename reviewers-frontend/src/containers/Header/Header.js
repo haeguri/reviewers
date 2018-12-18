@@ -6,7 +6,7 @@ const HeaderContainer = (props) => (
   <AuthConsumer>
     {
       ({state, actions}) => (
-        <Header userInfo={state} requestLogout={actions.logout} />
+        <Header userInfo={state} requestLogout={actions.logout} {...props} />
       )
     }
   </AuthConsumer>

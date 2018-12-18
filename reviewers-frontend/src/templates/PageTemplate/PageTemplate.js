@@ -13,13 +13,13 @@ const StyledSection = styled.section`
 const PageTemplate = props => {
   const { width, className, children } = props;
   return (
-    <div>
+    <React.Fragment>
       <HeaderContainer width={width} />
       <StyledSection className={className} width={width}>
         { children }
       </StyledSection>
       <Footer width={width} />
-    </div>
+    </React.Fragment>
   )
 }
 
