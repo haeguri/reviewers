@@ -2,12 +2,16 @@ import React from 'react';
 import Login from '../../pages/Login';
 import { AuthConsumer } from '../../contexts/auth';
 
-const LoginConatiner = (props) => (
+const LoginConatiner = ({history}) => (
   <AuthConsumer>
     {
-      ({actions}) => (
-        <Login requestLogin={actions.login}/>
-      )
+      ({state, actions}) => {
+        if(state.isLogin) {
+          history.push('/');
+        }
+        
+        return (<Login requestLogin={actions.login}/>)
+      }
     }
   </AuthConsumer>
 );

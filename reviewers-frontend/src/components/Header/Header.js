@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const StyledNav = styled.nav`
   background-color: #092d63;
-  color: white;
   border-bottom: solid 1px #e2e2e2;
   width: 100%;
   height: 50px;
@@ -13,7 +12,6 @@ const StyledNav = styled.nav`
   @media screen and (min-width: ${props => props.width}px) {
     width: 100%;
   }
-
   
   .container {
     height: 100%;
@@ -24,7 +22,7 @@ const StyledNav = styled.nav`
     display: flex;
     align-items: center;
 
-    .logo h1 { margin: 0; }
+    .logo h2 { margin: 0; color: #fff; }
 
     .nav-menus {
       margin-left: auto;
@@ -32,9 +30,11 @@ const StyledNav = styled.nav`
       padding-left: 0;
 
       .menu-item {
+        color: #e5e5e5;        
         display: inline-block;
         margin-right: 20px;
 
+        &.active { color: #fff; font-weight: 700;}
         &:last-child { margin-right: 0; }
       }
     }
@@ -42,24 +42,24 @@ const StyledNav = styled.nav`
 `;
 
 const Header = props => {
-  const { username, isLogin } = props.userInfo;
+  const { userInfo: { username, isLogin }, requestLogout } = props;
 
   const className = 'menu-item';
   return (
     <StyledNav width={props.width}>
       <div className="container">
         <div className="logo">
-            <Link to="/"><h2>REVIEWER</h2></Link>
+            <NavLink to="/"><h2>REVIEWER</h2></NavLink>
         </div>
         <ul className="nav-menus">
-          <Link className={className} to={'/'}>리뷰하기</Link>
-          <Link className={className} to={'/new-quesion'}>질문하기</Link>
+          <NavLink className={className} activeClassName="active" exact to={'/'}>리뷰하기</NavLink>
+          <NavLink className={className} activeClassName="active" to={'/new-question'}>질문하기</NavLink>
           {
             !isLogin ? 
-            (<Link className={className} to={'/login'}>로그인</Link>) :
+            (<NavLink className={className} activeClassName="active" to={'/login'}>로그인</NavLink>) :
             (<React.Fragment>
               <a className={className}>{username} 님</a>
-              <a className={className} onClick={this.onLogoutClick}>로그아웃</a>
+              <a className={className} onClick={requestLogout}>로그아웃</a>
             </React.Fragment>)
           }
         </ul>

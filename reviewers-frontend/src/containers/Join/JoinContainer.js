@@ -1,14 +1,19 @@
 import React from 'react';
 import Join from '../../pages/Join';
+import { AuthConsumer } from '../../contexts/auth';
 
-class JoinContainer extends React.Component {
-  onJoinClick = () => {
-    // call fetch API for join request
-  }
-
-  render() {
-    return <Join onJoinClick={this.onJoinClick}/>
-  }
-}
+const JoinContainer = ({history}) => (
+  <AuthConsumer>
+    {
+      ({state, actions}) => {
+        if(state.isLogin) {
+          history.push('/');
+        }
+        
+        return (<Join requestJoin={actions.join}/>)
+      }
+    }
+  </AuthConsumer>
+)
 
 export default JoinContainer;
