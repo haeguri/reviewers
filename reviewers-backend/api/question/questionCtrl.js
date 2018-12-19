@@ -3,12 +3,25 @@
 const { Question } = require('./questionModel');
 
 module.exports = {
-  all: (req, res) => {
-    Question.find({}, (err, question) => {
-      if(err)
-        res.send(err);
-      res.json(question);
-    });  
+  all: async ({query: {pageNo = 1, pageSize = 10}}, res) => {
+    pageNo = Number(pageNo);
+    pageSize = Number(pageSize);
+
+    const totalDataCount = await Question.count({}).exec();
+    const totalPageCount = Math.ceil(totalDataCount/pageSize);
+    const fromIndex = pageSize * (pageNo - 1);
+
+    try {
+      const questions = await Question.find().skip(fromIndex).limit(pageSize);
+      res.send({
+        totalPageCount,
+        totalDataCount,
+        length: questions.length,
+        data: questions
+      });
+    } catch (err) {
+      res.send(err);
+    }
   },
   create: (req, res) => {
     const newQuestion = new Question(req.body);

@@ -1,17 +1,34 @@
-const dbClient = require('mongodb').MongoClient;
+/**
+ * Script for put Question's sample data.
+ */
 
-// const questionData = {
-//   author: {
-    
-//   } 
-// }
+const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/reviewersDB');
 
-dbClient.connect('mongodb://127.0.0.1:27017/reviewersDB', (err, db) => {
-  if(err) {
-    console.log(err);
-  } else {
-    // db connection success.
+const { Question } = require('../api/question/questionModel');
+const sampleSourceCode = require('../sampleData/sourceCode');
+const sampleBody = require('../sampleData/body');
 
-    db.close();
-  }
-});
+const languageList = [
+  'JavaScript',
+  'Java',
+  'Python',
+  'Scala'
+];
+
+const targetCount = 200;
+for(let i = 0; i < targetCount; i++) {
+  const newQuestion = new Question({
+    title: '샘플 테스트 '+(new Date()).getTime(),
+    body: sampleBody,
+    sourceCode: sampleSourceCode,
+    language: languageList[Math.floor(Math.random()*4)]
+  });
+
+  newQuestion.save().then(result => {
+    if (i === targetCount-1) {
+      process.exit();
+    }
+  });
+}
