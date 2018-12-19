@@ -76,10 +76,7 @@ class Join extends React.Component {
   render() {
     return (
       <StyledPageTemplate width={500}>
-        <CardTemplate 
-          className="join-card"
-          headerMsg={'회원가입'}
-        >
+        <CardTemplate className="join-card" headerMsg={'회원가입'}>
           <form className="join-form">
             <TextInput className="form-input" onChange={this.onEmailChange} value={this.state.email} type="email" placeholder="이메일을 입력하세요." />
             <TextInput className="form-input" onChange={this.onUsernameChange} value={this.state.username} type="text" placeholder="이름을 입력하세요." />
