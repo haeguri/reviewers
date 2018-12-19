@@ -7,7 +7,7 @@ const Schema = mongoose.Schema;
 const QuestionSchema = new Schema({
     author: {
       type: Schema.Types.ObjectId,
-      required: false,
+      required: true,
       ref: 'User'
     },
     title: {

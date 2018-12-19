@@ -34,13 +34,13 @@ const StyledReactTable = styled(ReactTable)`
 
 const tableColumns = [{
     show: false,
-    accessor: 'id'
+    accessor: '_id'
   }, {
   Header: '제목',
   accessor: 'title', // String-based value accessors!
   Cell: props => {
     const { row } = props;
-    return (<Link to={`/question-detail/${row.id}`}>{row.title}</Link>)
+    return (<Link to={`/question-detail/${row._id}`}>{row.title}</Link>)
   },
 }, {
   Header: '언어',
@@ -48,11 +48,11 @@ const tableColumns = [{
   maxWidth: 150
 }, {
   Header: '작성자',
-  accessor: 'author',
+  accessor: 'author.username',
   maxWidth: 150
 }, {
   Header: '리뷰 개수',
-  accessor: 'reviewCount',
+  accessor: 'reviews.length',
   maxWidth: 100
 }, {
   Header: '등록일',

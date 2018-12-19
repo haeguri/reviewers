@@ -12,7 +12,12 @@ module.exports = {
     const fromIndex = pageSize * (pageNo - 1);
 
     try {
-      const questions = await Question.find().skip(fromIndex).limit(pageSize);
+      const questions = 
+        await Question.find()
+        .populate('author', '-password -email -joined')
+        .skip(fromIndex)
+        .limit(pageSize);
+
       res.send({
         totalPageCount,
         totalDataCount,

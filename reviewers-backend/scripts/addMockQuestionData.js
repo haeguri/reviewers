@@ -2,9 +2,7 @@
  * Script for put Question's sample data.
  */
 
-const mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/reviewersDB');
+require('./init');
 
 const { Question } = require('../api/question/questionModel');
 const sampleSourceCode = require('../sampleData/sourceCode');
