@@ -26,8 +26,6 @@ module.exports = app => {
         return next(err);
       }
 
-      console.log(req)
-
       if (!user) { 
         return res.status(400).json({error: info});
       }

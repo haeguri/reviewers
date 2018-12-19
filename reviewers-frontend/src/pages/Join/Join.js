@@ -61,7 +61,7 @@ class Join extends React.Component {
     this.setState({passwordConfirm: e.target.value});
   }
   
-  onJoinClick() {
+  onJoinClick = (e) => {
     const { email, username, password, passwordConfirm } = this.state;
     if(password !== passwordConfirm) {
       console.log('Please check password input.')

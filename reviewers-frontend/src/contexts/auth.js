@@ -19,7 +19,7 @@ class AuthProvider extends React.Component {
 
   actions = {
     join: (data) => {
-      return fetchData(BASE_AUTH_API_URL + '/login', 'POST', data)
+      return fetchData(BASE_AUTH_API_URL + '/join', 'POST', data)
               .then(json => {
                 console.log(this);
                 this.setState({
