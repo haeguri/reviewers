@@ -79,7 +79,7 @@ class Pagination extends React.Component {
   }
   
   render() {
-    const { page, pages, totalDataCount, onPageChange } = this.props;
+    const { page, pages, totalDataCount } = this.props;
 
     if(pages <= 0 || totalDataCount <= 0) {
       return null;
@@ -96,7 +96,7 @@ class Pagination extends React.Component {
     const numberButtons = range(currFromPageNum, currToPageNum + 1).map((v, i) => {
       const className = `${page === v ? 'filled primary' : ''} page-btn`;
       return (
-        <Button key={v} className={className} onClick={() => onPageChange(v)}>{v}</Button>
+        <Button key={v} className={className} onClick={() => this.onPageClick(v)}>{v}</Button>
       );  
     });
 

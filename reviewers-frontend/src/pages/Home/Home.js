@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PageTemplate from '../../templates/PageTemplate';
-import QuestionTable from '../../components/QuestionTable';
+import QuestionTableContainer from '../../containers/QuestionTable/QuestionTableContainer';
 import styled from 'styled-components';
 
 const StyledPageConatiner = styled(PageTemplate)`
@@ -19,7 +19,7 @@ class Home extends Component {
   render() {
     return (
       <StyledPageConatiner width={1000}>
-        <QuestionTable />
+        <QuestionTableContainer />
       </StyledPageConatiner>
     );
   }

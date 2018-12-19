@@ -1,14 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import ReactTable from 'react-table';
 import { Link } from 'react-router-dom';
 import { ReactTableDefaults } from 'react-table';
 import "react-table/react-table.css";
-import { getQuestionsWithPage } from '../../utils/test-utils';
 import styled from 'styled-components';
 import Pagination from '../Pagination';
+import { PAGE_SIZE } from '../../const';
 
-const PAGE_SIZE = 10;
 
 const StyledReactTable = styled(ReactTable)`
   border: none !important;
@@ -81,45 +79,18 @@ const reactTableOptions = {
 };
 
 class QuestionTable extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      page: 0,
-      data: [],
-      pages: 0
-    };
-  }
 
-  componentDidMount = () => {
-    const response = getQuestionsWithPage(1, reactTableOptions.pageSize);
+  render () {
+    const { data, totalDataCount, totalPageCount, pageNo, pageSize, onPageChange } = this.props;
 
-    this.setState({
-      page: 1,
-      pages: response.pages,
-      data: response.data
-    });
-  }
-
-  onPageChange = page => {
-    const response = getQuestionsWithPage(
-      page,
-      reactTableOptions.pageSize
-    )
-
-    this.setState({
-      page,
-      pages: response.pages,
-      data: response.data
-    });
-  }
-
-  render = () => {
     const options = {
       ...reactTableOptions,
-      data: this.state.data,
-      page: this.state.page,
-      pages: this.state.pages,
-      onPageChange: this.onPageChange
+      onPageChange,
+      data,
+      totalDataCount,
+      pageSize,
+      page: pageNo,
+      pages: totalPageCount,
     };
 
     return (
@@ -130,13 +101,5 @@ class QuestionTable extends React.Component {
     )
   }
 }
-
-QuestionTable.propTypes = {
-
-};
-
-QuestionTable.defaultProps = {
-
-};
 
 export default QuestionTable;

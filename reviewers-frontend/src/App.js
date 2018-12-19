@@ -8,15 +8,24 @@ import QuestionEdit from './pages/QuestionEdit';
 import { Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/auth';
 
+const AppProvider = ({contexts, children}) => contexts.reduce(
+  (prev, context) => React.createElement(context, {
+    children: prev
+  }), 
+  children
+)
+
+const contexts = [AuthProvider];
+
 const App = () => (
-  <AuthProvider>
+  <AppProvider contexts={contexts}>
     <Route path="/" exact component={Home}/>
     <Route path="/new-question" component={QuestionNew}/>
     <Route path="/edit-question" component={QuestionEdit}/>
     <Route path="/question-detail/:qId" component={QuestionDetail}/>
     <Route path="/login" component={LoginContainer}/>
     <Route path="/join" component={JoinContainer}/>
-  </AuthProvider>
+  </AppProvider>
 );
 
 export default App;
