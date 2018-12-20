@@ -6,7 +6,7 @@ Reviewers는 자신이 작성한 코드 조각(Snippet)을 공유하고, 다른 
 
 ### Frontend
 
-Reviewers는 React.js를 기반으로 만들어졌으며, 상태관리 도구로는 React v16.3에서 새로워진 Context API를 사용했습니다. 
+Reviewers는 React.js를 기반으로 만들어졌으며, 상태관리 도구로는 React에 내장된 Context API를 사용했습니다. 
 
 - React.js
 - react-router (v4)
