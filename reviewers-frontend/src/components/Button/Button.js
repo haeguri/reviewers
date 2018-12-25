@@ -12,7 +12,7 @@ const StyledButton = styled.button`
 
   &.icon {
     border: none;
-    padding: 0;
+    padding: 4px 6px;
     font-size: 1em;
   }
 

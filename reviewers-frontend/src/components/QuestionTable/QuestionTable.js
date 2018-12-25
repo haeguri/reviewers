@@ -6,7 +6,7 @@ import "react-table/react-table.css";
 import styled from 'styled-components';
 import Pagination from '../Pagination';
 import { PAGE_SIZE } from '../../const';
-
+import moment from 'moment';
 
 const StyledReactTable = styled(ReactTable)`
   border: none !important;
@@ -57,7 +57,8 @@ const tableColumns = [{
 }, {
   Header: '등록일',
   accessor: 'created',
-  maxWidth: 150
+  maxWidth: 150,
+  Cell: props => moment(props.value).format('YYYY-MM-DD HH:mm')
 }];
 
 const reactTableOptions = {

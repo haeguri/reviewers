@@ -33,6 +33,7 @@
     "i": "^0.3.6",
     "jest": "20.0.4",
     "marked": "^0.4.0",
+    "moment": "^2.23.0",
     "monaco-editor-webpack-plugin": "^1.4.0",
     "npm": "^6.4.1",
     "object-assign": "4.1.1",

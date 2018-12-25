@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Editor from '../Editor';
 import ReviewList from '../ReviewList';
 import MarkdownViewer from '../MarkdownViewer';
+import moment from 'moment';
 
 const StyledSection = styled.section`
   overflow: hidden;
@@ -82,10 +83,18 @@ const StyledSection = styled.section`
     .button-area {
       border-bottom: solid 1px #e2e2e2;
       padding: 20px 10px;
+      display: flex;
+      align-self: center;
 
       .actions{
+        margin-left: auto;
         color: #c2c2c2;
         font-size: 18px;
+      }
+
+      .actions button {
+        margin-left: 8px;
+        color: #a2a2a2;
       }
     }
 
@@ -181,7 +190,7 @@ const QuestionDetail = (props) => {
         </section>
         <section className="meta-info-area">
           <span className="author"><a>{author.username}</a></span>
-          <span className="updated">{created}</span>
+          <span className="updated">{moment(created).format('YYYY-MM-DD HH:mm')}</span>
         </section>
         <section className="body-area">
           <span className="toggle-btn" onClick={() => onToggleBodyClick()}>
