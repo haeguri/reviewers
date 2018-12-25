@@ -94,7 +94,7 @@ class Review extends Component {
     const { 
       className, 
       data: { 
-        body, author, updated
+        body, author, created
       } 
     } = this.props;
   
@@ -105,8 +105,8 @@ class Review extends Component {
     return (
       <StyledArticle className={className}>
         <div className="review-header">
-          <span className="author"><a>{author}</a></span>
-          <span className="updated">{updated}</span>
+          <span className="author"><a>{author.username}</a></span>
+          <span className="updated">{created}</span>
         </div>
         {
           !isEditMode ?

@@ -16,42 +16,53 @@ async function main() {
 
   const maxReviewCount = 30;
   // console.log(questions);
-  // let count = 0;
+  let count = 0;
   for(let q of questions) {
-    const totalLine = q.body.split('\n').length;
-    let maxLineNumber = totalLine < 10 ? totalLine : 10;
-    
-    let lineNumberSet = [];
+    const reviews = q.reviews;
+    console.log(reviews);
 
-    for(let i = 0; i < maxReviewCount; i++) {
-      lineNumberSet.push(Math.ceil(Math.random() * maxLineNumber))
-    }
+    reviewIds = reviews.map(r => r._id);
+    // console.log(reviews);
+    q.reviews = reviewIds
 
-    const reviews = [];
-    for(let i = 0; i < maxReviewCount; i++) {
-      let author = users[Math.floor(Math.random() * userCount)]._id;
-      let question = q._id;
-      let body = sampleReviewBody;
-      let lineNumber = lineNumberSet[Math.floor(Math.random() * lineNumberSet.length)];
-
-      const newReview = new Review({
-        author,
-        question,
-        body,
-        lineNumber
-      })
-
-      const result = await newReview.save();
-      reviews.push(result);
-      // tt += (' ' + lineNumber);
-    }
-
-    q.reviews = reviews;
     const result = await q.save();
 
-    // if(count++ === 0) {
-    //   break;
+    
+
+    // const totalLine = q.body.split('\n').length;
+    // let maxLineNumber = totalLine < 10 ? totalLine : 10;
+    
+    // let lineNumberSet = [];
+
+    // for(let i = 0; i < maxReviewCount; i++) {
+    //   lineNumberSet.push(Math.ceil(Math.random() * maxLineNumber))
     // }
+
+    // const reviews = [];
+    // for(let i = 0; i < maxReviewCount; i++) {
+    //   let author = users[Math.floor(Math.random() * userCount)]._id;
+    //   let question = q._id;
+    //   let body = sampleReviewBody;
+    //   let lineNumber = lineNumberSet[Math.floor(Math.random() * lineNumberSet.length)];
+
+    //   const newReview = new Review({
+    //     author,
+    //     question,
+    //     body,
+    //     lineNumber
+    //   })
+
+    //   const result = await newReview.save();
+    //   reviews.push(result);
+    //   // tt += (' ' + lineNumber);
+    // }
+
+    // q.reviews = reviews;
+    // const result = await q.save();
+
+    if(count++ === 0) {
+      break;
+    }
   }
 
   process.exit();

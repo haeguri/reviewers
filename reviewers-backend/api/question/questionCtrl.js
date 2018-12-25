@@ -38,7 +38,17 @@ module.exports = {
   selectOne: async ({ params: { questionId }}, res) => {
     try {
       const question = await Question.findById(questionId)
-                             .populate('author', '-password -email -joined');
+                                    .populate({
+                                      path: 'author',
+                                      model: 'User',
+                                      select: '-password -email -joined'
+                                    })
+                                    .populate({
+                                        path: 'reviews.author',
+                                        model: 'User',
+                                        select: '-password -email -joined'
+                                      }
+                                    )
 
       res.json({
         data: question

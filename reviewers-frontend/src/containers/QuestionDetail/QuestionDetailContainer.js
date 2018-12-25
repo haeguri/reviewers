@@ -14,13 +14,13 @@ class QuestionDetailContainer extends Component {
 
     //test...
     data: {
-      title: '새로운 질문...',
-      language: 'JavaScript',
-      author: 'Author',
-      created: '2018-07-01 23:33:11',
-      body: getSampleMarkdown(),
-      sourceCode: getSampleCode(),
-      reviews: getSampleReviewList(),
+      title: '',
+      language: '',
+      author: '',
+      created: '',
+      body: '',
+      sourceCode: '',
+      reviews: [],
     },
     reviewsOnSelectedLine: [],
     reviewCounts: {},
@@ -54,7 +54,6 @@ class QuestionDetailContainer extends Component {
 
   componentDidMount = async () => {
     const { questionId } = this.props;
-    // debugger;
     const { data } = await api.detailQuestion(questionId);
     const { reviews } = data;
     
