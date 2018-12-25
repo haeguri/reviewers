@@ -36,12 +36,17 @@ module.exports = {
       res.json(question);
     });
   },
-  selectOne: (req, res) => {
-    Question.findById(req.params.questionId, (err, question) => {
-      if (err)
-        res.send(err);
-      res.json(question);
-    });
+  selectOne: async ({ params: { questionId }}, res) => {
+    try {
+      const question = await Question.findById(questionId)
+                      .populate('author', '-password -email -joined');
+
+      res.json({
+        data: question
+      });
+    } catch (err) {
+      res.send(err);
+    }
   },
   update: (req, res) => {
     Question.findOneAndUpdate(

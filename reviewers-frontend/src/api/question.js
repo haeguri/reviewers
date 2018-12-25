@@ -1,6 +1,6 @@
 import { fetchData } from '../utils/http';
 
-const BASE_QUESTION_API_URL = 'api/questions';
+const BASE_QUESTION_API_URL = '/api/questions';
 
 const api = {
   getQuestions: async (pageNo, pageSize) => {

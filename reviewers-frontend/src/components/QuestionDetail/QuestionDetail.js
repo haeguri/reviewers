@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import Button from '../Button';
 import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import Editor from '../Editor';
 import ReviewList from '../ReviewList';
@@ -80,16 +80,26 @@ const StyledSection = styled.section`
     }
 
     .button-area {
-      font-size: 18px;
-      color: #c2c2c2;
+      border-bottom: solid 1px #e2e2e2;
+      padding: 20px 10px;
+
+      .actions{
+        color: #c2c2c2;
+        font-size: 18px;
+      }
+    }
+
+    .body-area, .button-area {
+      margin: 20px 0;
     }
 
     .body-area {
+      background-color: #f9f9f9;
       position: relative;
-      padding: 10px 0;
+      padding: 10px;
 
       .body-contents {
-        max-height: ${props => props.isBodyFold ? '200px' : 'none'};
+        max-height: ${props => props.isBodyFold ? '500px' : 'none'};
         overflow: hidden;
       }
 
@@ -170,7 +180,7 @@ const QuestionDetail = (props) => {
           <span className="language-badge">{language}</span>
         </section>
         <section className="meta-info-area">
-          <span className="author"><a>{author}</a></span>
+          <span className="author"><a>{author.username}</a></span>
           <span className="updated">{created}</span>
         </section>
         <section className="body-area">
@@ -178,16 +188,17 @@ const QuestionDetail = (props) => {
             <a className="toggle-body-fold">
               {
                 isBodyFold ?
-                <FontAwesomeIcon icon='plus-circle'/> :
-                <FontAwesomeIcon icon='minus-circle'/>}
+                <Button icon='plus-circle' /> :
+                <Button icon='minus-circle' />}
             </a>
           </span>
           <MarkdownViewer className="body-contents" rawText={body} />
         </section>
         <section className="button-area">
-          {/* <Link to=${}></Link> */}
-          <FontAwesomeIcon icon="edit" />
-          <FontAwesomeIcon icon="trash-alt" />
+          <div className="actions">
+            <Button icon="edit" />
+            <Button icon="trash-alt" />
+          </div>
         </section>
         <section className="source-code-area">
           <Editor className="editor"

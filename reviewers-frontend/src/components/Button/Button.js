@@ -1,14 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const StyledButton = styled.button`
-  border-width: 1px;
-  border-style: solid;
-  border-color: #b2b2b2;
+  border: solid 1px #b2b2b2;
   padding: 6px 15px;
   border-radius: 3px;
   font-size: 14px;
+  background: #fff;
+
+  &.icon {
+    border: none;
+    padding: 0;
+    font-size: 1em;
+  }
 
   &.filled.primary {
     font-weight: 600;
@@ -19,19 +25,31 @@ const StyledButton = styled.button`
 `;
 
 const Button = (props) => {
-    return (
-        <StyledButton
-            {...props}
-            className={props.className}>
-            { props.children }
-        </StyledButton>
-    );
+  let className = props.className;
+  let children;
+
+  if (props.icon) {
+    className = ' icon';
+    children = (
+      <FontAwesomeIcon icon={props.icon}>
+        {props.children}
+      </FontAwesomeIcon>
+    )
+  } else {
+    children = props.children;
+  }
+
+  return (
+    <StyledButton {...props}
+                  className={className}>
+      { children }
+    </StyledButton>
+  );
 }
 
 Button.defaultProps = {
     className: 'default'
 }
-
 
 Button.propTypes = {
     className: PropTypes.string

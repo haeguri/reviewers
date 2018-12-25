@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import api from '../../api/question';
 import QuestionDetail from '../../components/QuestionDetail';
 import { getSampleCode, getSampleReviewList } from '../../utils/test-utils';
 import { getSampleMarkdown } from '../../utils/test-utils.js';
@@ -23,7 +24,7 @@ class QuestionDetailContainer extends Component {
     },
     reviewsOnSelectedLine: [],
     reviewCounts: {},
-    isBodyFold: false,
+    isBodyFold: true,
     selectedLine: -1,
   }
 
@@ -51,9 +52,12 @@ class QuestionDetailContainer extends Component {
     });
   } 
 
-  componentDidMount = () => {
-    const { data: {reviews} } = this.state;
-
+  componentDidMount = async () => {
+    const { questionId } = this.props;
+    // debugger;
+    const { data } = await api.detailQuestion(questionId);
+    const { reviews } = data;
+    
     const reviewCounts = reviews.reduce((counts, review) => {
             const lineNumber = review.lineNumber;
             counts[lineNumber] = counts[lineNumber] ? counts[lineNumber] + 1 : 1;
@@ -61,6 +65,7 @@ class QuestionDetailContainer extends Component {
           }, {});
 
     this.setState({
+      data,
       reviewCounts,
       reviewsOnSelectedLine: reviews
     });
