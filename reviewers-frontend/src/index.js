@@ -10,6 +10,8 @@ import {
   faAngleDoubleRight ,
   faAngleLeft,
   faAngleRight,
+  faEdit,
+  faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import App from './App';
 import './index.css';
@@ -22,7 +24,9 @@ library.add(
   faAngleDoubleLeft,
   faAngleDoubleRight,
   faAngleLeft,
-  faAngleRight
+  faAngleRight,
+  faEdit,
+  faTrashAlt
 );
 
 const noop = () => {}
@@ -38,4 +42,5 @@ ReactDOM.render(
     </Router>,
     document.getElementById('root')
 );
+
 registerServiceWorker();
