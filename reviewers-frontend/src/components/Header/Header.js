@@ -15,7 +15,7 @@ const StyledNav = styled.nav`
   
   .container {
     height: 100%;
-    width: 900px;
+    max-width: 900px;
     margin: 0 auto; 
     padding: 0 5px;
     overflow: hidden;

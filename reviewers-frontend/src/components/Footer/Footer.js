@@ -4,15 +4,15 @@ import styled from 'styled-components';
 const StyledFooter = styled.footer`
     border-top: solid 1px #e2e2e2;
     height: 100px;
-    width: 100%;
     overflow: hidden;
-    min-width: ${props => {
-      const width = parseInt(props.width, 10);
-      return width > 900 ? width : 900;
-    }}px;
+    width: ${props => props.width}px;
+
+    @media screen and (min-width: ${props => props.width}px) {
+      width: 100%;
+    }
 
     .container {
-      width: 900px;
+      max-width: 900px;
       margin: 0 auto;
     }
 `;
