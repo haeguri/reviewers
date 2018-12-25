@@ -5,17 +5,6 @@ import { Link } from 'react-router-dom';
 import Editor from '../Editor';
 import ReviewList from '../ReviewList';
 import MarkdownViewer from '../MarkdownViewer';
-import { getSampleCode, getSampleReviewList } from '../../utils/test-utils';
-
-// const sampleCode = getSampleCode() + getSampleCode() + '\nfunction test(){\n return { \n }\n}';
-// const reviewList = getSampleReviewList();
-// const reviewCounts = (_=>{
-//   return reviewList.reduce((counts, review) => {
-//     const lineNumber = review.lineNumber;
-//     counts[lineNumber] = counts[lineNumber] ? counts[lineNumber] + 1 : 1;
-//     return counts;
-//   }, {});
-// })();
 
 const StyledSection = styled.section`
   overflow: hidden;
@@ -142,30 +131,36 @@ const StyledSection = styled.section`
 `;
 
 const QuestionDetail = (props) => {
-  let reviewListHeaderMsg;
   const {
     reviewCounts,
-    selectedCodeLine, 
+    reviewsOnSelectedLine,
+    selectedLine, 
     isBodyFold, 
     data: {
       title,
-      created,
       language,
+      author,
+      created,
       body, 
-      sourceCode, 
-      reviews,
-
+      sourceCode
     },
     onLineClick,
     onToggleBodyClick
-  } = this.props;
+  } = props;
 
-  const iconToggleBody = isBodyFold ? <FontAwesomeIcon icon='plus-circle'/> :
-                                      <FontAwesomeIcon icon='minus-circle'/>;
+  let allBadgeExtraClassName;
+  let selectedLineBadge;
+  let allLineBadge;
 
-  if(selectedCodeLine >= 1) {
-    reviewListHeaderMsg = `Line ${selectedCodeLine}`;
+  if(selectedLine >= 1) {
+    selectedLineBadge = (<span className='line-info active'>{selectedLine} Line</span>);
+    allBadgeExtraClassName = ''
+  } else {
+    selectedLineBadge = null;
+    allBadgeExtraClassName = 'active';
   }
+
+  allLineBadge = (<span className={'line-info ' + allBadgeExtraClassName} onClick={() => onLineClick(-1)}>ALL</span>);
 
   return (
     <StyledSection isBodyFold={isBodyFold}>
@@ -180,7 +175,12 @@ const QuestionDetail = (props) => {
         </section>
         <section className="body-area">
           <span className="toggle-btn" onClick={() => onToggleBodyClick()}>
-            <a className="toggle-body-fold">{iconToggleBody}</a>
+            <a className="toggle-body-fold">
+              {
+                isBodyFold ?
+                <FontAwesomeIcon icon='plus-circle'/> :
+                <FontAwesomeIcon icon='minus-circle'/>}
+            </a>
           </span>
           <MarkdownViewer className="body-contents" rawText={body} />
         </section>
@@ -196,52 +196,24 @@ const QuestionDetail = (props) => {
                   reviewCounts={reviewCounts}
                   onLineClick={(curr) => onLineClick(curr)}
                   value={sourceCode}
-                  // react-monaco-editor 옵션
                   options={{
                     readOnly: true,
                     glyphMargin: true,
-                  }} 
+                  }}
           />
         </section>
       </section>
       <section className="right">
         <div className="title-area">
           <span className="txt-review-list">리뷰 목록</span>
-          <span 
-            className={`line-info ${selectedCodeLine === -1 ? ' active' : ''}`}
-            onClick={() => onLineClick(-1)}
-          >ALL</span>
-          {selectedCodeLine < 0 ?
-          null :
-          <span className={`line-info ${selectedCodeLine >= 0 ? ' active' : ''}`}>{reviewListHeaderMsg}</span>}
+          {allLineBadge}
+          {selectedLineBadge}
         </div>
-        <ReviewList className="review-list"
-          data={(_=>{
-            if(selectedCodeLine > 0) {
-              return reviews.filter(r => r.lineNumber === selectedCodeLine);
-            } else {
-              return reviews;
-            }
-          })()} 
-        />
+        <ReviewList className="review-list" 
+                    data={reviewsOnSelectedLine} />
       </section>
     </StyledSection>
   )
 };
-
-class QuestionDetail extends Component {
-  constructor(props) {
-    super(props);
-    
-  }
-
-  render() {
-    
-
-    return (
-
-    );
-  }
-}
 
 export default QuestionDetail;

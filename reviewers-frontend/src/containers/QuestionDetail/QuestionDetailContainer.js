@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import api from '../../api';
 import QuestionDetail from '../../components/QuestionDetail';
 import { getSampleCode, getSampleReviewList } from '../../utils/test-utils';
 import { getSampleMarkdown } from '../../utils/test-utils.js';
@@ -10,25 +9,22 @@ class QuestionDetailContainer extends Component {
     // id: '',
     // data: {},
     // isBodyFold: false,
-    // selectedCodeLine: -1,
+    // selectedLine: -1,
 
     //test...
     data: {
+      title: '새로운 질문...',
+      language: 'JavaScript',
       author: 'Author',
       created: '2018-07-01 23:33:11',
       body: getSampleMarkdown(),
       sourceCode: getSampleCode(),
       reviews: getSampleReviewList(),
     },
-    reviewCounts: (_=>{
-      return this.data.reviews.reduce((counts, review) => {
-        const lineNumber = review.lineNumber;
-        counts[lineNumber] = counts[lineNumber] ? counts[lineNumber] + 1 : 1;
-        return counts;
-      }, {});
-    })(),
+    reviewsOnSelectedLine: [],
+    reviewCounts: {},
     isBodyFold: false,
-    selectedCodeLine: -1,
+    selectedLine: -1,
   }
 
   onToggleBodyClick = (e) => {
@@ -38,21 +34,43 @@ class QuestionDetailContainer extends Component {
   }
 
   onLineClick = (currLine) => {
-    console.log(`onLineClick curr: ${curr}`);
+    console.log(`onLineClick curr: ${currLine}`);
+    
+    const { data: { reviews } } = this.state;
+    let reviewsOnSelectedLine;
+
+    if (currLine > 0) {
+      reviewsOnSelectedLine = reviews.filter(r => r.lineNumber === currLine);
+    } else {
+      reviewsOnSelectedLine = reviews;
+    }
+
     this.setState({
-      selectedCodeLine: curr
+      selectedLine: currLine,
+      reviewsOnSelectedLine,
     });
   } 
 
   componentDidMount = () => {
-    // api.detailQuestion(this.state.id)
+    const { data: {reviews} } = this.state;
+
+    const reviewCounts = reviews.reduce((counts, review) => {
+            const lineNumber = review.lineNumber;
+            counts[lineNumber] = counts[lineNumber] ? counts[lineNumber] + 1 : 1;
+            return counts;
+          }, {});
+
+    this.setState({
+      reviewCounts,
+      reviewsOnSelectedLine: reviews
+    });
   }
 
   render() {
     return (
       <QuestionDetail {...this.state} 
-                      onToggleBodyClick={onToggleBodyClick}
-                      onLineClick={onLineClick}/>
+                      onToggleBodyClick={this.onToggleBodyClick}
+                      onLineClick={this.onLineClick}/>
     );
   }
 }
