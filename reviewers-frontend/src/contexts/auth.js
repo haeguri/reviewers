@@ -1,8 +1,7 @@
 import React, { createContext } from 'react';
 import { fetchData } from '../utils/http';
-import { BASE_API_URL } from './const';
 
-const BASE_AUTH_API_URL = BASE_API_URL + '/auth';
+const BASE_AUTH_API_URL = '/api/auth';
 
 const { 
   Consumer: AuthConsumer, 
@@ -17,8 +16,7 @@ class AuthProvider extends React.Component {
   }
 
   actions = {
-
-    join: (data) => fetchData(BASE_AUTH_API_URL + '/login', 'POST', data)
+    join: (data) => fetchData(BASE_AUTH_API_URL + '/join', 'POST', data)
                     .then(json => {
                       this.setState({
                         email: json.email,

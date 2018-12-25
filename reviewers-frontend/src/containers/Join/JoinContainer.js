@@ -1,5 +1,5 @@
 import React from 'react';
-import Join from '../../pages/Join';
+import Join from '../../components/Join';
 import { AuthConsumer } from '../../contexts/auth';
 
 const JoinContainer = ({history}) => (

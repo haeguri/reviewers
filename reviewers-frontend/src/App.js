@@ -2,7 +2,7 @@ import React from 'react';
 import QuestionDetail from './pages/QuestionDetail';
 import Home from './pages/Home';
 import LoginContainer from './containers/Login';
-import JoinContainer from './containers/Join';
+import Join from './pages/Join';
 import QuestionNew from './pages/QuestionNew';
 import QuestionEdit from './pages/QuestionEdit';
 import { Route } from 'react-router-dom';
@@ -24,7 +24,7 @@ const App = () => (
     <Route path="/edit-question" component={QuestionEdit}/>
     <Route path="/question-detail/:qId" component={QuestionDetail}/>
     <Route path="/login" component={LoginContainer}/>
-    <Route path="/join" component={JoinContainer}/>
+    <Route path="/join" component={Join}/>
   </AppProvider>
 );
 
