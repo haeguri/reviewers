@@ -22,7 +22,7 @@ const Footer = props => (
       <div className="container">
         <p className="intro">Footer</p>
       </div>
-    </StyledFooter>  
+    </StyledFooter>
 );
 
 export default Footer;

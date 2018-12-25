@@ -5,7 +5,6 @@ const { User } = require('../api/auth/authModel');
 
 User.find({}).then(async users => {
   const userCounts = users.length;
-
   const questions = await Question.find({});
 
   // console.log(users[0]._id);
