@@ -3,11 +3,15 @@
 const { Language } = require('./languageModel');
 
 module.exports = {
-  all: (req, res) => {
-    Language.find({}, (err, language) => {
-      if(err)
-        res.send(err);
-      res.json(language);
-    });  
+  all: async (req, res) => {
+    const query = Language.find({})
+    try {
+      const result = await query.select('-_id');
+      res.send({
+        data: result
+      });
+    } catch (err) {
+      res.send(err);
+    }
   }
 };

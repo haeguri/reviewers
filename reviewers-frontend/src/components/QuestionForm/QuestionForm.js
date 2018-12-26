@@ -48,9 +48,17 @@ const StyledSection = styled.section`
 `
 
 const QuestionForm = props => {
-  const { formTitle, submitBtnTxt, langOptions,
-          onTitleChange, onBodyChange, onLangChange, onCodeChange,
-          form } = props;
+  const { 
+    formTitle, 
+    submitBtnTxt, 
+    langOptions,
+    onTitleChange, 
+    onBodyChange, 
+    onLangChange, 
+    onCodeChange,
+    form 
+  } = props;
+
   return (
     <StyledSection>
       <section className="title-area">

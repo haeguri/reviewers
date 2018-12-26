@@ -13,7 +13,7 @@ const StyledDiv = styled.div`
     position: absolute;
     right: 5px;
     top: 3px;
-    padding: 2px 4px;
+    padding: 4px;
     background-color: ${props => props.background};
     border-style: solid;
     border-width: 1px;
@@ -70,25 +70,20 @@ class MarkdownEditor extends Component {
     const { isPreviewMode } = this.state;
 
     return (
-      <StyledDiv
-        innerRef={ref => this.ref = ref}
-        {...others}>
-        <ToggleButton 
-          className="md-preview-btn" 
-          onClick={e => this.onPreviewClick(e)}>
-          Preview
+      <StyledDiv innerRef={ref => this.ref = ref} {...others}>
+        <ToggleButton className="md-preview-btn" onClick={e => this.onPreviewClick(e)}>
+          미리보기
         </ToggleButton>
         {
           !isPreviewMode ?
-          (<TextInput 
-            className="md-input"
-            multiline={true}
-            onChange={e => onTextChange(e)}
-            value={value} />) :
-          (<MarkdownViewer 
-            className="md-viewer"
-            hasScroll={true}
-            rawText={value} />)
+          (<TextInput className="md-input"
+                      multiline={true}
+                      onChange={e => onTextChange(e)}
+                      value={value} />) 
+          :
+          (<MarkdownViewer className="md-viewer"
+                           hasScroll={true}
+                           rawText={value} />)
         }
       </StyledDiv>
     )

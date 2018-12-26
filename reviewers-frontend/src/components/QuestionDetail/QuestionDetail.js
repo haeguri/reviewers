@@ -106,6 +106,7 @@ const StyledSection = styled.section`
       background-color: #f9f9f9;
       position: relative;
       padding: 10px;
+      border-radius: 5px;
 
       .body-contents {
         max-height: ${props => props.isBodyFold ? '500px' : 'none'};

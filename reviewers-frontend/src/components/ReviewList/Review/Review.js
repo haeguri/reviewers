@@ -129,7 +129,6 @@ class Review extends Component {
                 className="md-editor" 
                 value={this.state.editForm.body}
                 onTextChange={(e) => this.onTextChange(e)}/>
-              {null}
             </div>
             <div className="review-footer">
               <a onClick={() => { /* TODO: save api call.. */ }}>저장</a>
