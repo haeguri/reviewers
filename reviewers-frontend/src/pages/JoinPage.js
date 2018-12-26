@@ -1,6 +1,6 @@
 import React from 'react';
-import PageTemplate from '../../templates/PageTemplate';
-import JoinContainer from '../../containers/Join';
+import PageTemplate from '../templates/PageTemplate';
+import JoinContainer from '../containers/JoinContainer';
 
 const JoinPage = (props) => (
   <PageTemplate width={500}>

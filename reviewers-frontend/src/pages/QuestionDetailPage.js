@@ -1,6 +1,6 @@
 import React from 'react';
-import PageTemplate from '../../templates/PageTemplate';
-import QuestionDetailContainer from '../../containers/QuestionDetail';
+import PageTemplate from '../templates/PageTemplate';
+import QuestionDetailContainer from '../containers/QuestionDetailContainer';
 
 const QuestionDetailPage = ({match: {params}}) => {
   return (

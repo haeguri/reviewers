@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import HeaderContainer from '../../containers/Header';
+import HeaderContainer from '../../containers/HeaderContainer';
 import Footer from '../../components/Footer';
 
 const StyledSection = styled.section`

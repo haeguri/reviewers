@@ -1,6 +1,6 @@
 import React from 'react';
-import PageTemplate from '../../templates/PageTemplate';
-import LoginContainer from '../../containers/Login';
+import PageTemplate from '../templates/PageTemplate';
+import LoginContainer from '../containers/LoginContainer';
 
 const LoginPage = (props) => (
   <PageTemplate width={500}>

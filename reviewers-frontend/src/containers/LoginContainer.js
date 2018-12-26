@@ -1,6 +1,6 @@
 import React from 'react';
-import Login from '../../components/Login';
-import { AuthConsumer } from '../../contexts/auth';
+import Login from '../components/Login';
+import { AuthConsumer } from '../contexts/auth';
 
 const LoginConatiner = ({history}) => (
   <AuthConsumer>

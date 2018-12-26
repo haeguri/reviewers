@@ -1,7 +1,7 @@
 import React, { Component }from 'react';
-import api from '../../api/question';
-import QuestionTable from '../../components/QuestionTable';
-import { PAGE_SIZE } from '../../const';
+import api from '../api/question';
+import QuestionTable from '../components/QuestionTable';
+import { PAGE_SIZE } from '../const';
 
 class QuestionTableContainer extends Component {
   state = {

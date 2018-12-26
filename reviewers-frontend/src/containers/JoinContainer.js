@@ -1,6 +1,6 @@
 import React from 'react';
-import Join from '../../components/Join';
-import { AuthConsumer } from '../../contexts/auth';
+import Join from '../components/Join';
+import { AuthConsumer } from '../contexts/auth';
 
 const JoinContainer = ({history}) => (
   <AuthConsumer>

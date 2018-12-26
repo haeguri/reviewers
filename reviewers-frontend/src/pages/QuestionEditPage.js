@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import PageTemplate from '../../templates/PageTemplate';
-import QuestionForm from '../../components/QuestionForm';
-import { getSampleCode, getSampleMarkdown } from '../../utils/test-utils';
+import PageTemplate from '../templates/PageTemplate';
+import QuestionForm from '../components/QuestionForm';
+import { getSampleCode, getSampleMarkdown } from '../utils/test-utils';
 
 const testLanguageOptions = [
   {label: 'JavaScript', value: 'javascript'},
@@ -57,8 +57,6 @@ class QuestionNew extends Component {
         code: newValue
       }
     });
-
-    // console.log('write editor on change', newValue, e);
   }
 
   render() {
@@ -66,8 +64,8 @@ class QuestionNew extends Component {
       <PageTemplate
         width={1200}>
         <QuestionForm 
-          formTitle="새로운 질문"
-          submitBtnTxt="등록하기"
+          formTitle="질문 수정"
+          submitBtnTxt="저장"
           langOptions={testLanguageOptions}
           onTitleChange={this.onTitleChange}
           onBodyChange={this.onBodyChange}

@@ -1,6 +1,6 @@
 import React from 'react';
-import { AuthConsumer } from '../../contexts/auth';
-import Header from '../../components/Header';
+import { AuthConsumer } from '../contexts/auth';
+import Header from '../components/Header';
 
 const HeaderContainer = (props) => (
   <AuthConsumer>

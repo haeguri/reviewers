@@ -1,10 +1,10 @@
 import React from 'react';
-import QuestionDetail from './pages/QuestionDetail';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Join from './pages/Join';
-import QuestionNew from './pages/QuestionNew';
-import QuestionEdit from './pages/QuestionEdit';
+import QuestionDetailPage from './pages/QuestionDetailPage';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import JoinPage from './pages/JoinPage';
+import QuestionNewPage from './pages/QuestionNewPage';
+import QuestionEditPage from './pages/QuestionEditPage';
 import { Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/auth';
 
@@ -19,12 +19,12 @@ const contexts = [AuthProvider];
 
 const App = () => (
   <AppProvider contexts={contexts}>
-    <Route path="/" exact component={Home}/>
-    <Route path="/new-question" component={QuestionNew}/>
-    <Route path="/edit-question" component={QuestionEdit}/>
-    <Route path="/question-detail/:qId" component={QuestionDetail}/>
-    <Route path="/login" component={Login}/>
-    <Route path="/join" component={Join}/>
+    <Route path="/" exact component={HomePage}/>
+    <Route path="/new-question" component={QuestionNewPage}/>
+    <Route path="/edit-question" component={QuestionEditPage}/>
+    <Route path="/question-detail/:qId" component={QuestionDetailPage}/>
+    <Route path="/login" component={LoginPage}/>
+    <Route path="/join" component={JoinPage}/>
   </AppProvider>
 );
 
