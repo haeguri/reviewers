@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import MarkdownEditor from '../../MarkdownEditor';
 import MarkdownViewer from '../../MarkdownViewer';
 
@@ -106,7 +107,7 @@ class Review extends Component {
       <StyledArticle className={className}>
         <div className="review-header">
           <span className="author"><a>{author.username}</a></span>
-          <span className="updated">{created}</span>
+          <span className="updated">{moment(created).format('YYYY-MM-DD HH:MM')}</span>
         </div>
         {
           !isEditMode ?

@@ -15,17 +15,21 @@ const StyledSection = styled.section`
   }
 `;
 
-const ReviewList = props => (
+const ReviewList = props => {
+  let reviewItems;
+
+  if (props.data.length > 0) {
+    reviewItems = props.data.map(v => (<Review className="review-item" key={v._id} data={v} />))
+  } else {
+    reviewItems = <p className="info-data-empty">작성된 리뷰가 없습니다.</p>;
+  }
+
+  return (
     <StyledSection className={props.className}>
-      {
-        props.data.length > 0 ?
-        props.data.map(v => (
-            <Review className="review-item" key={v._id} data={v} />
-        )) :
-        (<p className="info-data-empty">작성된 리뷰가 없습니다.</p>)
-      }
+      {reviewItems}
     </StyledSection>
-);
+  );
+}
 
 ReviewList.propTypes = {
     data: PropTypes.arrayOf(PropTypes.object),

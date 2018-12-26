@@ -1,18 +1,9 @@
 import React, { Component } from 'react';
 import api from '../api/question';
 import QuestionDetail from '../components/QuestionDetail';
-import { getSampleCode, getSampleReviewList } from '../utils/test-utils';
-import { getSampleMarkdown } from '../utils/test-utils.js';
 
 class QuestionDetailContainer extends Component {
   state = {
-    //real
-    // id: '',
-    // data: {},
-    // isBodyFold: false,
-    // selectedLine: -1,
-
-    //test...
     data: {
       title: '',
       language: '',
