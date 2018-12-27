@@ -1,10 +1,10 @@
 import React from 'react';
 import PageTemplate from '../templates/PageTemplate';
-import QuestionFormContainer from '../containers/QuestionFormContainer';
+import QuestionNewFormContainer from '../containers/QuestionNewFormContainer';
 
 const QuestioNewPage = (props) => (
   <PageTemplate width={1200}>
-    <QuestionFormContainer />
+    <QuestionNewFormContainer />
   </PageTemplate>
 );
 

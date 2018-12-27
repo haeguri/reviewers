@@ -63,9 +63,9 @@ module.exports = {
       res.send(err);
     }
   },
-  update: (req, res) => {
+  update: ({params: { questionId }}, res) => {
     Question.findOneAndUpdate(
-      {_id: req.params.questionId},
+      {_id: questionId},
       req.body,
       {new: true},
       (err, question) => {
@@ -77,9 +77,9 @@ module.exports = {
       }
     );
   },
-  delete: (req, res) => {
+  delete: ({params: { questionId }}, res) => {
     Question.remove(
-      {_id: req.params.questionId},
+      {_id: questionId},
       (err, question) => {
         if(err)
           res.send(err);

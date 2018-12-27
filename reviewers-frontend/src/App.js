@@ -21,7 +21,7 @@ const App = () => (
   <AppProvider contexts={contexts}>
     <Route path="/" exact component={HomePage}/>
     <Route path="/new-question" component={QuestionNewPage}/>
-    <Route path="/edit-question" component={QuestionEditPage}/>
+    <Route path="/edit-question/:qId" component={QuestionEditPage}/>
     <Route path="/question-detail/:qId" component={QuestionDetailPage}/>
     <Route path="/login" component={LoginPage}/>
     <Route path="/join" component={JoinPage}/>

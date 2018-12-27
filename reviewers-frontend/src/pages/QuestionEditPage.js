@@ -1,81 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PageTemplate from '../templates/PageTemplate';
-import QuestionForm from '../components/QuestionForm';
-import { getSampleCode, getSampleMarkdown } from '../utils/test-utils';
+import QuestionEditFormContainer from '../containers/QuestionEditFormContainer';
 
-const testLanguageOptions = [
-  {label: 'JavaScript', value: 'javascript'},
-  {label: 'C++',        value: 'c++'},
-  {label: 'Java',       value: 'java'}
-]
+const QuestionEditPage = (props) => (
+  <PageTemplate width={1200}>
+    <QuestionEditFormContainer />
+  </PageTemplate>
+);
 
-class QuestionNew extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      form: {
-        title: 'sample title',
-        code: getSampleCode(),
-        body: getSampleMarkdown(),
-        language: testLanguageOptions[0].value
-      }
-    };
-  }
-
-  onTitleChange = e => {
-    this.setState({
-      form: {
-        ...this.state.form,
-        title: e.target.value
-      }
-    })
-  }
-
-  onLangChange = (selectedItem) => {
-    this.setState({
-      form: {
-        ...this.state.form,
-        language: selectedItem,
-      }
-    });
-  }
-
-  onBodyChange = e => {
-    this.setState({
-      form: {
-        ...this.state.form,
-        body: e.target.value
-      }
-    })
-  }
-
-  onCodeChange = (newValue, e) => {
-    this.setState({
-      form: {
-        ...this.state.form,
-        code: newValue
-      }
-    });
-  }
-
-  render() {
-    return (
-      <PageTemplate
-        width={1200}>
-        <QuestionForm 
-          formTitle="질문 수정"
-          submitBtnTxt="저장"
-          langOptions={testLanguageOptions}
-          onTitleChange={this.onTitleChange}
-          onBodyChange={this.onBodyChange}
-          onLangChange={this.onLangChange}
-          onCodeChange={this.onCodeChange}
-          form={this.state.form}
-        />
-      </PageTemplate>
-    )
-  }
-}
-
-export default QuestionNew;
+export default QuestionEditPage;

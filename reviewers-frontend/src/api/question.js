@@ -22,9 +22,9 @@ const api = {
     const { id } = data;
     const url = `${BASE_QUESTION_API_URL}/${id}`;
     try {
-      await fetchData(url, 'PUT')
-      return this.detailQuestion(id);
-    } catch (err) {}
+      const json = await fetchData(url, 'PUT')
+      return Promise.resolve(json);
+    } catch (err) { }
   },
   deleteQuestion: async (id) => {
     const url = `${BASE_QUESTION_API_URL}/${id}`;
