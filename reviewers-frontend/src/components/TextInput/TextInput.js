@@ -2,10 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const StyledTextAreaInput = styled.textarea`
-  resize: none;
-`;
-
+const StyledTextAreaInput = styled.textarea`resize: none;`;
 const StyledTextInput = styled.input`
   width: 100%;
   height: 30px;
@@ -26,20 +23,15 @@ class TextInput extends React.Component {
       className, 
       maxInputLength, 
       onTextChange, 
-      multiline,
-      ...others
     } = this.props;
     const { 
       StyledInput 
     } = this;
 
     return (
-      <StyledInput 
-        className={className}
-        // innerRef={ref => textInputRef = ref}z
-        maxlength={maxInputLength}
-        onChange={e => onTextChange(e)}
-        {...others}
+      <StyledInput className={className}
+                   maxlength={maxInputLength}
+                   onChange={e => onTextChange(e)}
       />
     )
   }

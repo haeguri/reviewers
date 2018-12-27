@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import MarkdownViewer from '../MarkdownViewer';
 import TextInput from '../TextInput';
-import ToggleButton from '../ToggleButton';
 
 const StyledDiv = styled.div`
   position: relative;
@@ -14,7 +13,6 @@ const StyledDiv = styled.div`
     right: 5px;
     top: 3px;
     padding: 4px;
-    background-color: ${props => props.background};
     border-style: solid;
     border-width: 1px;
     border-radius: 3px;
@@ -66,14 +64,12 @@ class MarkdownEditor extends Component {
   }
 
   render() {
-    const { onTextChange, value, ...others } = this.props;
+    const { onTextChange, value } = this.props;
     const { isPreviewMode } = this.state;
 
     return (
-      <StyledDiv innerRef={ref => this.ref = ref} {...others}>
-        <ToggleButton className="md-preview-btn" onClick={e => this.onPreviewClick(e)}>
-          미리보기
-        </ToggleButton>
+      <StyledDiv>
+        <Button className="md-preview-btn" onClick={e => this.onPreviewClick(e)}>미리보기</Button>
         {
           !isPreviewMode ?
           (<TextInput className="md-input"

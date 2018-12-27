@@ -79,11 +79,11 @@ class ReviewEditor extends Component {
   render() {
     return (
       <StyledDiv>
-        <MarkdownEditor 
-          ref={this.mdEditorRef}
-          className="markdown-editor"
-          value={this.state.input}
-          onTextChange={(e) => this.onTextChange(e)} />
+        <MarkdownEditor className="markdown-editor"
+                        ref={this.mdEditorRef}
+                        value={this.state.input}
+                        onTextChange={(e) => this.onTextChange(e)} 
+        />
         <div className="footer">
           <Button type="button" onClick={() => this.onSaveClick()}>Save</Button>
           <Button type="button" onClick={() => this.props.onCancelClick()}>Cancel</Button>

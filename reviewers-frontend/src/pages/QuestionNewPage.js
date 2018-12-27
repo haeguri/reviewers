@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PageTemplate from '../templates/PageTemplate';
-import QuestionForm from '../components/QuestionForm';
 import QuestionFormContainer from '../containers/QuestionFormContainer';
 
-const questioNewPage = (props) => (
+const QuestioNewPage = (props) => (
   <PageTemplate width={1200}>
     <QuestionFormContainer />
   </PageTemplate>
 );
 
-export default questioNewPage;
+export default QuestioNewPage;

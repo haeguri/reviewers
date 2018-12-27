@@ -113,9 +113,7 @@ class Review extends Component {
           !isEditMode ?
           <React.Fragment>
             <div className="review-body">
-              <MarkdownViewer 
-                rawText={body} 
-                hasScroll={false} />
+              <MarkdownViewer rawText={body} hasScroll={false} />
             </div>
             <div className="review-footer">
               <a onClick={() => this.onEditClick()}>수정</a>
@@ -125,10 +123,10 @@ class Review extends Component {
           :
           <React.Fragment>
             <div className="review-body" >
-              <MarkdownEditor 
-                className="md-editor" 
-                value={this.state.editForm.body}
-                onTextChange={(e) => this.onTextChange(e)}/>
+              <MarkdownEditor className="md-editor" 
+                              value={this.state.editForm.body}
+                              onTextChange={(e) => this.onTextChange(e)}
+              />
             </div>
             <div className="review-footer">
               <a onClick={() => { /* TODO: save api call.. */ }}>저장</a>

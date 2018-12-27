@@ -37,7 +37,7 @@ const StyledDiv = styled.div`
   }
 `;
 
-const getPageGroup = page => Math.ceil(page / MAX_PAGE_BTN_CNT)
+const getPageGroup = page => Math.ceil(page / MAX_PAGE_BTN_CNT);
 
 const MAX_PAGE_BTN_CNT = 7;
 class Pagination extends React.Component {
@@ -102,11 +102,19 @@ class Pagination extends React.Component {
 
     return (
       <StyledDiv>
-        <Button className="most-left arrow-btn" onClick={() => this.onPageClick(1)}><FontAwesomeIcon icon="angle-double-left"/></Button>
-        <Button className="arrow-btn" onClick={() => this.onPrevGroupClick()}><FontAwesomeIcon icon="angle-left"/></Button>
+        <Button className="most-left arrow-btn" onClick={() => this.onPageClick(1)}>
+          <FontAwesomeIcon icon="angle-double-left"/>
+        </Button>
+        <Button className="arrow-btn" onClick={() => this.onPrevGroupClick()}>
+          <FontAwesomeIcon icon="angle-left"/>
+        </Button>
         {numberButtons}
-        <Button className="arrow-btn" onClick={() => this.onNextGroupClick()}><FontAwesomeIcon icon="angle-right"/></Button>
-        <Button className="most-right arrow-btn" onClick={() => this.onPageClick(pages)}><FontAwesomeIcon icon="angle-double-right"/></Button>
+        <Button className="arrow-btn" onClick={() => this.onNextGroupClick()}>
+          <FontAwesomeIcon icon="angle-right"/>
+        </Button>
+        <Button className="most-right arrow-btn" onClick={() => this.onPageClick(pages)}>
+          <FontAwesomeIcon icon="angle-double-right"/>
+        </Button>
       </StyledDiv>
     );
   }
