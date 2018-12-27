@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import MarkdownViewer from '../MarkdownViewer';
 import TextInput from '../TextInput';
+import Button from '../Button';
 
 const StyledDiv = styled.div`
   position: relative;
@@ -55,6 +56,7 @@ class MarkdownEditor extends Component {
   }
 
   onPreviewClick(e) {
+    e.target.classList.toggle('active');
     this.setState({
       isPreviewMode: !this.state.isPreviewMode
     })
@@ -64,11 +66,11 @@ class MarkdownEditor extends Component {
   }
 
   render() {
-    const { onTextChange, value } = this.props;
+    const { onTextChange, value, className } = this.props;
     const { isPreviewMode } = this.state;
 
     return (
-      <StyledDiv>
+      <StyledDiv className={className}>
         <Button className="md-preview-btn" onClick={e => this.onPreviewClick(e)}>미리보기</Button>
         {
           !isPreviewMode ?
