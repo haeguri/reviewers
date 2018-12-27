@@ -9,8 +9,8 @@ class QuestionFormContainer extends Component {
     languageOptions: [],
     form: {
       title: '',
-      code: '',
       body: '',
+      sourceCode: '',
       language: ''
     }
   }
@@ -63,6 +63,11 @@ class QuestionFormContainer extends Component {
 
     // console.log('write editor on change', newValue, e);
   }
+
+  onSubmit = (e) => {
+    e.preventDefault();
+  }
+
   render() {
     return (
       <QuestionForm formTitle="새로운 질문"
@@ -72,6 +77,7 @@ class QuestionFormContainer extends Component {
                     onBodyChange={this.onBodyChange}
                     onLangChange={this.onLangChange}
                     onCodeChange={this.onCodeChange}
+                    onSubmit={this.onSubmit}
                     form={this.state.form}/>
     )
   }
