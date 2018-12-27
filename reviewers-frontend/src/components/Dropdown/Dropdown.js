@@ -3,22 +3,23 @@ import Select from 'react-select';
 import styled from 'styled-components';
 
 const StyledSelect = styled(Select)`
-
+  font-size: 14px;
 `;
 
 const Dropdown = props => {
   const { 
     className,
     value,
-    ...others
+    options,
+    onChange
   } = props;
 
   return (
-    <StyledSelect 
-      className={className}
-      value={value}
-      {...others}>
-    </StyledSelect>
+    <StyledSelect className={className}
+                  value={value}
+                  options={options}
+                  onChange={onChange} 
+    />
   )
 }
 

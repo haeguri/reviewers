@@ -18,9 +18,10 @@ class QuestionFormContainer extends Component {
   async componentDidMount() {
     const { data } = await languageAPI.getLanguages();
 
+    console.log(data);
     this.setState({
       languageOptions: data.map(d => {
-        return { name: d.name, value: d.name }
+        return { label: d.name, value: d.name }
       })
     });
   }

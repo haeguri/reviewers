@@ -71,35 +71,31 @@ const QuestionForm = props => {
         <section className="left">
           <div className="input-group">
             <label>제목</label>
-            <TextInput 
-              className="input-title"
-              onChange={onTitleChange}
+            <TextInput className="input-title"
+                       onChange={onTitleChange}
             />
           </div>
           <div className="input-group">
             <label>본문</label>
-            <MarkdownEditor 
-              className="md-editor" 
-              value={form.body}
-              onTextChange={onBodyChange}
+            <MarkdownEditor className="md-editor" 
+                            value={form.body}
+                            onTextChange={onBodyChange}
             />
           </div>
         </section>
         <section className="right">
           <div className="input-group">
             <label className="inline">프로그래밍 언어</label>
-            <Dropdown 
-              options={langOptions}
-              value={form.language}
-              onChange={onLangChange}
+            <Dropdown options={langOptions}
+                      value={form.language}
+                      onChange={onLangChange}
             />
           </div>
           <div className="input-group">
             <label>소스코드</label>
-            <Editor 
-              height={450}
-              value={form.code}
-              onChange={(newValue, e) => onCodeChange(newValue, e)}
+            <Editor height={450}
+                    value={form.code}
+                    onChange={(newValue, e) => onCodeChange(newValue, e)}
             />
           </div>
         </section>
