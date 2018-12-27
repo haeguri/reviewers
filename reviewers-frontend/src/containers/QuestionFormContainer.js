@@ -7,6 +7,7 @@ import QuestionForm from '../components/QuestionForm';
 class QuestionFormContainer extends Component {
   state = {
     languageOptions: [],
+    selectedLanguageOption: '',
     form: {
       title: '',
       body: '',
@@ -20,9 +21,13 @@ class QuestionFormContainer extends Component {
 
     console.log(data);
     this.setState({
-      languageOptions: data.map(d => {
-        return { label: d.name, value: d.name }
-      })
+      languageOptions: data.map(({label, value}) => {
+        return { label, value }
+      }),
+      selectedLanguageOption: {
+        label: data[0].label,
+        value: data[0].value
+      }
     });
   }
 
@@ -37,9 +42,10 @@ class QuestionFormContainer extends Component {
 
   onLangChange = (selectedItem) => {
     this.setState({
+      selectedLanguageOption: selectedItem,
       form: {
         ...this.state.form,
-        language: selectedItem,
+        language: selectedItem.value,
       }
     });
   }
@@ -57,7 +63,7 @@ class QuestionFormContainer extends Component {
     this.setState({
       form: {
         ...this.state.form,
-        code: newValue
+        sourceCode: newValue
       }
     });
 
@@ -72,6 +78,7 @@ class QuestionFormContainer extends Component {
     return (
       <QuestionForm formTitle="새로운 질문"
                     submitBtnTxt="등록하기"
+                    selectedLanguageOption={this.state.selectedLanguageOption}
                     langOptions={this.state.languageOptions}
                     onTitleChange={this.onTitleChange}
                     onBodyChange={this.onBodyChange}

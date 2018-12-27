@@ -64,19 +64,26 @@ class Editor extends Component {
     });
   }
 
+  componentDidUpdate = (prevProps, prevState) => {
+    if (this.props.language !== prevProps.language) {
+      const model = this.monacoEditor.getModel();
+      this.monacoAPI.editor.setModelLanguage(model, this.props.language);
+      return {};
+    }
+  }
+
   render() {
     return (
       <StyledSection>
-        <MonacoEditor
-          className={this.props.className}
-          height={this.props.height}
-          width={this.props.width}
-          theme="vs"
-          language={this.props.language}
-          value={this.props.value}
-          options={this.props.options}
-          onChange={(newValue, e) => this.props.onChange(newValue, e)}
-          editorDidMount={(editor, monaco) => this._editorDidMount(editor, monaco)}
+        <MonacoEditor className={this.props.className}
+                      height={this.props.height}
+                      width={this.props.width}
+                      theme="vs"
+                      language={this.props.language}
+                      value={this.props.value}
+                      options={this.props.options}
+                      onChange={(newValue, e) => this.props.onChange(newValue, e)}
+                      editorDidMount={(editor, monaco) => this._editorDidMount(editor, monaco)}
         />
       </StyledSection>
     );

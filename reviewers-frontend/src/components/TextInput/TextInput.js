@@ -22,7 +22,7 @@ class TextInput extends React.Component {
     const { 
       className, 
       maxInputLength, 
-      onTextChange, 
+      onChange, 
     } = this.props;
     const { 
       StyledInput 
@@ -31,7 +31,7 @@ class TextInput extends React.Component {
     return (
       <StyledInput className={className}
                    maxlength={maxInputLength}
-                   onChange={e => onTextChange(e)}
+                   onChange={onChange}
       />
     )
   }

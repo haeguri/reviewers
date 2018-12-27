@@ -6,6 +6,14 @@ const StyledSelect = styled(Select)`
   font-size: 14px;
 `;
 
+const customStyles = {
+  control: (base) => ({
+    ...base,
+    height: 30,
+    minHeight: 30,
+  })
+}
+
 const Dropdown = props => {
   const { 
     className,
@@ -16,6 +24,7 @@ const Dropdown = props => {
 
   return (
     <StyledSelect className={className}
+                  styles={customStyles}
                   value={value}
                   options={options}
                   onChange={onChange} 

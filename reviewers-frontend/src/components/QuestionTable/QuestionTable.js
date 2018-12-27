@@ -44,7 +44,7 @@ const tableColumns = [{
   },
 }, {
   Header: '언어',
-  accessor: 'language',
+  accessor: 'language.label',
   maxWidth: 150
 }, {
   Header: '작성자',

@@ -187,7 +187,7 @@ const QuestionDetail = (props) => {
       <section className="left">
         <section className="title-area">
           <h1>{title}</h1>
-          <span className="language-badge">{language}</span>
+          <span className="language-badge">{language.label}</span>
         </section>
         <section className="meta-info-area">
           <span className="author"><a>{author.username}</a></span>

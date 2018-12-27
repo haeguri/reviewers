@@ -76,7 +76,7 @@ class MarkdownEditor extends Component {
           !isPreviewMode ?
           (<TextInput className="md-input"
                       multiline={true}
-                      onChange={e => onTextChange(e)}
+                      onChange={onTextChange}
                       value={value} />) 
           :
           (<MarkdownViewer className="md-viewer"

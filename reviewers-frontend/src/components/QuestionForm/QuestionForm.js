@@ -48,8 +48,9 @@ const StyledSection = styled.section`
 `
 
 const QuestionForm = props => {
-  const { 
-    formTitle, 
+  const {
+    selectedLanguageOption,
+    formTitle,  
     submitBtnTxt, 
     langOptions,
     onTitleChange, 
@@ -87,15 +88,16 @@ const QuestionForm = props => {
           <div className="input-group">
             <label className="inline">프로그래밍 언어</label>
             <Dropdown options={langOptions}
-                      value={form.language}
+                      value={selectedLanguageOption}
                       onChange={onLangChange}
             />
           </div>
           <div className="input-group">
             <label>소스코드</label>
             <Editor height={450}
-                    value={form.code}
+                    value={form.sourceCode}
                     onChange={(newValue, e) => onCodeChange(newValue, e)}
+                    language={selectedLanguageOption.value}
             />
           </div>
         </section>
