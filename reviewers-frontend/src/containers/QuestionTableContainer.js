@@ -29,8 +29,13 @@ class QuestionTableContainer extends Component {
     })
   }
 
-  onPageChange = this._getQuestionCallback;
-  componentDidMount = this._getQuestionCallback.bind(this, 1);
+  onPageChange = () => {
+    this._getQuestionCallback();
+  }
+
+  componentDidMount = () => {
+    this._getQuestionCallback.bind(this, 1)
+  };
 
   render() {
     return (
