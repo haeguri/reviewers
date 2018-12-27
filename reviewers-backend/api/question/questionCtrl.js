@@ -13,6 +13,7 @@ module.exports = {
 
     try {
       const questions = await Question.find()
+                              // reviews를 제거하고, reviewCount를 추가하고 싶다.
                               .populate('author', '-password -email -joined')
                               .skip(fromIndex)
                               .limit(pageSize);

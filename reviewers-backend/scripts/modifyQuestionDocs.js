@@ -1,30 +1,40 @@
 const { mongoose } = require('./init');
 
 const { Question } = require('../api/question/questionModel');
+const { Language } = require('../api/language/languageModel');
 const { User } = require('../api/auth/authModel');
 
 User.find({}).then(async users => {
-  const userCounts = users.length;
+  const languages = await Language.find({});
   const questions = await Question.find({});
 
-  // console.log(users[0]._id);
-  // console.log(questions.length)
+  questions.forEach(async (q, i)=> {
+    const pickedIndex = Math.floor(Math.random() * languages.length);
 
-  questions.forEach((q, i) => {
-    // console.log(users)
-    const pickedIndex = Math.floor(Math.random() * userCounts);
-    Question.findOne({
-              author:users[pickedIndex]
-            })
-            .populate('author').update(
-              {_id: q._id},
-              {author: users[pickedIndex]._id},
-              (err, question) => {
-                console.log(question.author)
-                if(i === question.length-1)  {
-                  process.exit();
-                }
-              }
-    )
+    q.language = languages[pickedIndex];
+    await q.save();
+
+    if(i === questions.length - 1) {
+      process.exit();
+    }
   })
+  // const userCounts = users.length;
+  // const questions = await Question.find({});
+
+  // questions.forEach((q, i) => {
+  //   const pickedIndex = Math.floor(Math.random() * userCounts);
+  //   Question.findOne({
+  //             author:users[pickedIndex]
+  //           })
+  //           .populate('author').update(
+  //             {_id: q._id},
+  //             {author: users[pickedIndex]._id},
+  //             (err, question) => {
+  //               console.log(question.author)
+  //               if(i === question.length-1)  {
+  //                 process.exit();
+  //               }
+  //             }
+  //   )
+  // })
 });

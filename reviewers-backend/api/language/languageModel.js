@@ -4,10 +4,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const LanguageSchema = new Schema({
-    name: {
+    label: {
       type: String,
       required: true
     },
+    value: {
+      type: String,
+      required: true
+    }
 });
 
 module.exports = {
