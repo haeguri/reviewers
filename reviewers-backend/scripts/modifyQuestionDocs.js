@@ -11,13 +11,10 @@ User.find({}).then(async users => {
   questions.forEach(async (q, i)=> {
     const pickedIndex = Math.floor(Math.random() * languages.length);
 
-    q.language = languages[pickedIndex];
+    q.language = languages[pickedIndex]._id;
     await q.save();
-
-    if(i === questions.length - 1) {
-      process.exit();
-    }
   })
+
   // const userCounts = users.length;
   // const questions = await Question.find({});
 

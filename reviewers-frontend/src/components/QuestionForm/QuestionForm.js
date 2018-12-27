@@ -57,6 +57,7 @@ const QuestionForm = props => {
     onBodyChange, 
     onLangChange, 
     onCodeChange,
+    onSubmit,
     form 
   } = props;
 
@@ -65,7 +66,7 @@ const QuestionForm = props => {
       <section className="title-area">
         <h2>{formTitle}</h2>
         <div className="button-area">
-          <Button className="filled primary">{submitBtnTxt}</Button>
+          <Button className="filled primary" onClick={onSubmit}>{submitBtnTxt}</Button>
         </div>
       </section>
       <section className="form">
@@ -74,6 +75,7 @@ const QuestionForm = props => {
             <label>제목</label>
             <TextInput className="input-title"
                        onChange={onTitleChange}
+                       value={form.title}
             />
           </div>
           <div className="input-group">

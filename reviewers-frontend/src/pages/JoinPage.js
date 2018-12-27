@@ -4,7 +4,7 @@ import JoinContainer from '../containers/JoinContainer';
 
 const JoinPage = (props) => (
   <PageTemplate width={500}>
-    <JoinContainer history={props.history}/>
+    <JoinContainer />
   </PageTemplate>
 )
 

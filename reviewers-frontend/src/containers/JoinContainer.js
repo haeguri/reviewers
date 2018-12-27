@@ -1,6 +1,7 @@
 import React from 'react';
 import Join from '../components/Join';
 import { AuthConsumer } from '../contexts/auth';
+import { withRouter } from 'react-router-dom';
 
 const JoinContainer = ({history}) => (
   <AuthConsumer>
@@ -16,4 +17,4 @@ const JoinContainer = ({history}) => (
   </AuthConsumer>
 )
 
-export default JoinContainer;
+export default withRouter(JoinContainer);

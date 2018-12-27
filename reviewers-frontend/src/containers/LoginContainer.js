@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import Login from '../components/Login';
 import { AuthConsumer } from '../contexts/auth';
 
@@ -16,4 +17,4 @@ const LoginConatiner = ({history}) => (
   </AuthConsumer>
 );
 
-export default LoginConatiner;
+export default withRouter(LoginConatiner);

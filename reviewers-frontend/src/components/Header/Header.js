@@ -42,7 +42,7 @@ const StyledNav = styled.nav`
 `;
 
 const Header = props => {
-  const { userInfo: { username, isLogin }, requestLogout } = props;
+  const { authInfo: { username, isLogin }, authActions: { logout } } = props;
 
   const className = 'menu-item';
   return (
@@ -59,7 +59,7 @@ const Header = props => {
             (<NavLink className={className} activeClassName="active" to={'/login'}>로그인</NavLink>) :
             (<React.Fragment>
               <a className={className}>{username} 님</a>
-              <a className={className} onClick={requestLogout}>로그아웃</a>
+              <a className={className} onClick={logout}>로그아웃</a>
             </React.Fragment>)
           }
         </ul>

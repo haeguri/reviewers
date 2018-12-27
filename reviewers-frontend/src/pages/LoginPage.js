@@ -4,7 +4,7 @@ import LoginContainer from '../containers/LoginContainer';
 
 const LoginPage = (props) => (
   <PageTemplate width={500}>
-    <LoginContainer history={props.history}/>
+    <LoginContainer />
   </PageTemplate>
 )
 

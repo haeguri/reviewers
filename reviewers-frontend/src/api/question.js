@@ -9,7 +9,7 @@ const api = {
     return Promise.resolve(json);
   },
   newQuestion: async (data) => {
-    const url = `${BASE_QUESTION_API_URL}/new`;
+    const url = `${BASE_QUESTION_API_URL}`;
     const json = await fetchData(url, 'POST', data);
     return Promise.resolve(json);
   },

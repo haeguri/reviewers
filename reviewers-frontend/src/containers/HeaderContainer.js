@@ -1,15 +1,9 @@
 import React from 'react';
-import { AuthConsumer } from '../contexts/auth';
+import { useAuth } from '../contexts/auth';
 import Header from '../components/Header';
 
-const HeaderContainer = (props) => (
-  <AuthConsumer>
-    {
-      ({state, actions}) => (
-        <Header userInfo={state} requestLogout={actions.logout} {...props} />
-      )
-    }
-  </AuthConsumer>
+const HeaderContainer = ({authInfo, authActions}) => (
+  <Header authInfo={authInfo} authActions={authActions}/>
 );
 
-export default HeaderContainer;
+export default useAuth(HeaderContainer);

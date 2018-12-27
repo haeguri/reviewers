@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import languageAPI from '../api/language';
 import questionAPI from '../api/question';
+import { useAuth } from '../contexts/auth';
 
 import QuestionForm from '../components/QuestionForm';
 
@@ -9,9 +11,10 @@ class QuestionFormContainer extends Component {
     languageOptions: [],
     selectedLanguageOption: '',
     form: {
-      title: '',
-      body: '',
-      sourceCode: '',
+      author: '',
+      title: '새로운 질문..',
+      body: '# 테스트 입니다.',
+      sourceCode: 'function test() { }',
       language: ''
     }
   }
@@ -19,15 +22,15 @@ class QuestionFormContainer extends Component {
   async componentDidMount() {
     const { data } = await languageAPI.getLanguages();
 
-    console.log(data);
     this.setState({
-      languageOptions: data.map(({label, value}) => {
-        return { label, value }
-      }),
-      selectedLanguageOption: {
-        label: data[0].label,
-        value: data[0].value
-      }
+      languageOptions: data,
+      form: {
+        ...this.state.form,
+        // TEMP!!
+        author: this.props.authInfo._id || '5c1a22620157ed1fabef733d',
+        language: data[0]._id
+      },
+      selectedLanguageOption: data[0]
     });
   }
 
@@ -45,7 +48,7 @@ class QuestionFormContainer extends Component {
       selectedLanguageOption: selectedItem,
       form: {
         ...this.state.form,
-        language: selectedItem.value,
+        language: selectedItem._id,
       }
     });
   }
@@ -70,7 +73,15 @@ class QuestionFormContainer extends Component {
     // console.log('write editor on change', newValue, e);
   }
 
-  onSubmit = (e) => {
+  onSubmit = async (e) => {
+    try {
+      const { data } = await questionAPI.newQuestion(this.state.form);
+      this.props.history.push(`/question-detail/${data._id}`);
+      
+    } catch (err) {
+      console.log('error', err);
+    }
+
     e.preventDefault();
   }
 
@@ -90,4 +101,4 @@ class QuestionFormContainer extends Component {
   }
 }
 
-export default QuestionFormContainer;
+export default useAuth(withRouter(QuestionFormContainer));

@@ -2,7 +2,6 @@
 
 const mongoose = require('mongoose');
 const { ReviewSchema } = require('../review/reviewModel');
-const { LanguageSchema } = require('../language/languageModel')
 const Schema = mongoose.Schema;
 
 const QuestionSchema = new Schema({
@@ -27,7 +26,8 @@ const QuestionSchema = new Schema({
       { type: ReviewSchema, ref: 'Review' }
     ],
     language: {
-      type: LanguageSchema,
+      type: Schema.Types.ObjectId,
+      ref: 'Language',
       required: true
     },
     created: {

@@ -27,20 +27,14 @@ const StyledDiv = styled.div`
   }
 
   .md-viewer, .md-input {
+    border: solid 1px #c2c2c2;
     width: 100%;
     height: 100%;
+    border-radius: 5px;
   }
 
   .md-input {
-    border: solid 1px #c2c2c2;
-    border-radius: 5px;
-    font-size: 13px;
-    background-color: inherit;
-  }
-
-  .md-viewer {
-    border: solid 1px #c2c2c2;
-    border-radius: 5px;
+    padding: 5px;
   }
 `;
 

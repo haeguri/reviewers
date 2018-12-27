@@ -13,12 +13,14 @@ module.exports = {
 
     try {
       const questions = await Question.find()
+                              .sort('-created')
                               // reviews를 제거하고, reviewCount를 추가하고 싶다.
+                              .populate('language')
                               .populate('author', '-password -email -joined')
                               .skip(fromIndex)
                               .limit(pageSize);
 
-      res.send({
+      res.json({
         totalPageCount,
         totalDataCount,
         length: questions.length,
@@ -33,7 +35,9 @@ module.exports = {
     newQuestion.save((err, question) => {
       if(err)
         res.send(err);
-      res.json(question);
+      res.json({
+        data: question
+      });
     });
   },
   selectOne: async ({ params: { questionId }}, res) => {
@@ -44,6 +48,7 @@ module.exports = {
                                       model: 'User',
                                       select: '-password -email -joined'
                                     })
+                                    .populate('language')
                                     .populate({
                                         path: 'reviews.author',
                                         model: 'User',
@@ -66,7 +71,9 @@ module.exports = {
       (err, question) => {
         if(err)
           res.send(err);
-        res.json(question)
+        res.json({
+          data: question
+        })
       }
     );
   },
