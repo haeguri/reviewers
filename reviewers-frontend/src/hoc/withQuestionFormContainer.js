@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import questionAPI from '../api/question';
+import languageAPI from '../api/language';
 import { withRouter } from 'react-router-dom';
 import { useAuth } from '../contexts/auth';
 
-const withQuestionFormContainer = (WrappedComponent) => {
-  return class QuestionFormContainer extends Component {
+const withQuestionFormContainer = (WrappedComponent, apiForSubmit, apiForFormInit) => {
+  const QuestionFormContainer = class extends Component {
     state = {
       languageOptions: [],
       selectedLanguageOption: '',
@@ -16,14 +18,42 @@ const withQuestionFormContainer = (WrappedComponent) => {
       }
     }
 
-    componentDidMount = () => {
-      this.setState({
-        form: {
-          ...this.state.form,
-          // TEMP!
-          author: (this.props.authInfo && this.props.authInfo._id) || '5c1a22620157ed1fabef733d',
-        }
-      })
+    componentDidMount = async () => {
+      const { match: { params } } = this.props;
+      const { data: languageOptions } = await languageAPI.getLanguages();
+      let initData;
+      let selectedLanguageOption;
+
+      if (apiForFormInit) {
+        // Edit Form
+        const { data } = await questionAPI.detailQuestion(params.qId);
+        initData = data;
+        selectedLanguageOption = data.language;
+      } else {
+        // New Form
+        initData = this.state.form;
+        selectedLanguageOption = languageOptions[0];
+      }
+
+      initData.author = (this.props.authInfo && this.props.authInfo._id) || '5c1a22620157ed1fabef733d'
+
+      this.setState((state) => ({
+        form: initData,
+        languageOptions,
+        selectedLanguageOption,
+      }));
+    }
+  
+    onSubmit = async (e) => {
+      const { match: { params } } = this.props;
+      try {
+        const { data: { _id } } = await apiForSubmit(params.qId, this.state.form);
+        this.props.history.push(`/question-detail/${_id}`);
+      } catch (err) {
+        console.log('error', err);
+      }
+
+      e.preventDefault();
     }
 
     onTitleChange = (e) => {
@@ -79,6 +109,8 @@ const withQuestionFormContainer = (WrappedComponent) => {
       )
     }
   }
+
+  return withRouter(useAuth(QuestionFormContainer));
 }
 
 export default withQuestionFormContainer;

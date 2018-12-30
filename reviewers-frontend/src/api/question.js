@@ -18,11 +18,10 @@ const api = {
     const json = await fetchData(url, 'GET');
     return Promise.resolve(json);
   },
-  updateQuestion: async (data) => {
-    const { id } = data;
+  updateQuestion: async (id, data) => {
     const url = `${BASE_QUESTION_API_URL}/${id}`;
     try {
-      const json = await fetchData(url, 'PUT')
+      const json = await fetchData(url, 'PUT', data)
       return Promise.resolve(json);
     } catch (err) { }
   },

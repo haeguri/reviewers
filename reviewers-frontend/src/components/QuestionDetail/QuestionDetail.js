@@ -165,8 +165,12 @@ const QuestionDetail = (props) => {
       sourceCode
     },
     onLineClick,
-    onToggleBodyClick
+    onToggleBodyClick,
+    onEditClick,
+    onRemoveClick,
   } = props;
+
+  const isOwner = true;
 
   let allBadgeExtraClassName;
   let selectedLineBadge;
@@ -196,18 +200,23 @@ const QuestionDetail = (props) => {
         <section className="body-area">
           <span className="toggle-btn" onClick={() => onToggleBodyClick()}>
             <a className="toggle-body-fold">
-              {
-                isBodyFold ?
-                <Button icon='plus-circle' /> :
-                <Button icon='minus-circle' />}
+              {isBodyFold ?
+                <Button icon='plus-circle' />
+                :
+                <Button icon='minus-circle' />
+              }
             </a>
           </span>
           <MarkdownViewer className="body-contents" rawText={body} />
         </section>
         <section className="button-area">
           <div className="actions">
-            <Button icon="edit" />
-            <Button icon="trash-alt" />
+            {isOwner && 
+              (<React.Fragment>
+                <Button icon="edit" onClick={onEditClick}/>
+                <Button icon="trash-alt" onClick={onRemoveClick}/>
+              </React.Fragment>)
+            }
           </div>
         </section>
         <section className="source-code-area">

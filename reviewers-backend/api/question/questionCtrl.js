@@ -63,11 +63,24 @@ module.exports = {
       res.send(err);
     }
   },
-  update: ({params: { questionId }}, res) => {
-    Question.findOneAndUpdate(
-      {_id: questionId},
-      req.body,
-      {new: true},
+  update: ({
+    params: { 
+      questionId 
+    }, 
+    body: {
+      title,
+      body,
+      sourceCode,
+      language
+    }}, res) => {
+
+    Question.findOneAndUpdate({
+        _id: questionId
+      }, {
+        title, body, sourceCode, language
+      }, {
+        new: true
+      },
       (err, question) => {
         if(err)
           res.send(err);

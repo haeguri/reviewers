@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import api from '../api/question';
 import QuestionDetail from '../components/QuestionDetail';
 
@@ -43,9 +44,20 @@ class QuestionDetailContainer extends Component {
     });
   } 
 
+  onEditClick = (e) => {
+    const { history } = this.props;
+    const { match: { params } } = this.props;
+
+    history.push(`/edit-question/${params.qId}`);
+  }
+
+  onRemoveClick = (e) => {
+
+  }
+
   componentDidMount = async () => {
-    const { questionId } = this.props;
-    const { data } = await api.detailQuestion(questionId);
+    const { match: { params } } = this.props;
+    const { data } = await api.detailQuestion(params.qId);
     const { reviews } = data;
     
     const reviewCounts = reviews.reduce((counts, review) => {
@@ -65,9 +77,12 @@ class QuestionDetailContainer extends Component {
     return (
       <QuestionDetail {...this.state} 
                       onToggleBodyClick={this.onToggleBodyClick}
-                      onLineClick={this.onLineClick}/>
+                      onLineClick={this.onLineClick}
+                      onEditClick={this.onEditClick}
+                      onRemoveClick={this.onRemoveClick}
+      />
     );
   }
 }
 
-export default QuestionDetailContainer;
+export default withRouter(QuestionDetailContainer);
