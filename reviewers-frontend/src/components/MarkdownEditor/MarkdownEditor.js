@@ -42,8 +42,6 @@ class MarkdownEditor extends Component {
   constructor(props) {
     super(props);
 
-    this.ref = React.createRef();
-
     this.state = {
       isPreviewMode: false
     };
@@ -64,7 +62,8 @@ class MarkdownEditor extends Component {
     const { isPreviewMode } = this.state;
 
     return (
-      <StyledDiv className={className}>
+      <StyledDiv className={className}
+                 innerRef={ref => this.mdEditorDOM = ref}>
         <Button className="md-preview-btn" onClick={e => this.onPreviewClick(e)}>미리보기</Button>
         {
           !isPreviewMode ?

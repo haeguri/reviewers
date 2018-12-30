@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import questionAPI from '../api/question';
 import languageAPI from '../api/language';
-import withQuestionForm from '../hoc/withQuestionForm';
+import withQuestionFormContainer from '../hoc/withQuestionFormContainer';
+import QuestionForm from '../components/QuestionForm';
 
-class QuestionNewContainer extends Component {
+class QuestionNewFormContainer extends Component {
   componentDidMount = async () =>  {
     const { data: langData } = await languageAPI.getLanguages();
     const { state: form } = this;
@@ -11,7 +12,10 @@ class QuestionNewContainer extends Component {
     this.setState({
       languageOptions: langData,
       form: {
-        ...form,
+        questionId: '',
+        title: '',
+        body: '',
+        sourceCode: '',
         language: langData[0]._id,
       },
       selectedLanguageOption: langData[0]
@@ -31,11 +35,14 @@ class QuestionNewContainer extends Component {
   }
 
   render = () => {
-    const { children } = this.props;
     return (
-      {children}
+      <QuestionForm 
+        formTitle="새로운 질문"
+        submitBtnTxt="등록하기"
+        {...this.props}
+      />
     )
   }
 }
 
-export default withQuestionForm(QuestionNewContainer);
+export default withQuestionFormContainer(QuestionNewFormContainer);

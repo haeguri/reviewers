@@ -81,7 +81,7 @@ class Join extends React.Component {
             <TextInput className="form-input" onChange={this.onUsernameChange} value={this.state.username} type="text" placeholder="이름을 입력하세요." />
             <TextInput className="form-input" onChange={this.onPasswordChange} value={this.state.password} type="password" placeholder="비밀번호를 입력하세요." />
             <TextInput className="form-input" onChange={this.onPasswordConfirmChange} value={this.state.passwordConfirm} type="password" placeholder="비밀번호를 다시 입력하세요." />
-            <Button type="button" onClick={this.onJoinClick} className="join-btn filled">회원가입</Button>
+            <Button className="join-btn" type="button" onClick={this.onJoinClick}>회원가입</Button>
             <Link to="/login"><Button className="cancel-btn">취소</Button></Link>
           </form>
         </CardTemplate>

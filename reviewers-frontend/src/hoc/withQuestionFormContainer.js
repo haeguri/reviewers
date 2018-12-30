@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import QuestionForm from '../components/QuestionForm';
 import { useAuth } from '../contexts/auth';
 
-const withQuestionForm = (WrappedComponent) => {
-  const QuestionFormContainer = class extends Component {
+const withQuestionFormContainer = (WrappedComponent) => {
+  return class QuestionFormContainer extends Component {
     state = {
       languageOptions: [],
       selectedLanguageOption: '',
@@ -22,7 +21,7 @@ const withQuestionForm = (WrappedComponent) => {
         form: {
           ...this.state.form,
           // TEMP!
-          author: this.props.authInfo._id || '5c1a22620157ed1fabef733d',
+          author: (this.props.authInfo && this.props.authInfo._id) || '5c1a22620157ed1fabef733d',
         }
       })
     }
@@ -65,27 +64,21 @@ const withQuestionForm = (WrappedComponent) => {
     }
 
     render = () => {
-      // debugger;
-      console.log(this);
       return (
-        <WrappedComponent>
-          <QuestionForm formTitle="새로운 질문"
-                        submitBtnTxt="등록하기"
-                        form={this.state.form}
-                        selectedLanguageOption={this.state.selectedLanguageOption}
-                        langOptions={this.state.languageOptions}
-                        onTitleChange={this.onTitleChange}
-                        onBodyChange={this.onBodyChange}
-                        onLangChange={this.onLangChange}
-                        onCodeChange={this.onCodeChange}
-                        onSubmit={this.onSubmit}
-          />
-        </WrappedComponent>
+        <WrappedComponent 
+          form={this.state.form}
+          selectedLanguageOption={this.state.selectedLanguageOption}
+          langOptions={this.state.languageOptions}
+          onTitleChange={this.onTitleChange}
+          onBodyChange={this.onBodyChange}
+          onLangChange={this.onLangChange}
+          onCodeChange={this.onCodeChange}
+          onSubmit={this.onSubmit}
+          {...this.props}
+        />
       )
     }
   }
-
-  return withRouter(useAuth(QuestionFormContainer));
 }
 
-export default withQuestionForm;
+export default withQuestionFormContainer;

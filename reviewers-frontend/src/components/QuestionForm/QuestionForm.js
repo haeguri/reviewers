@@ -10,6 +10,7 @@ import MarkdownEditor from '../../components/MarkdownEditor';
 
 const StyledSection = styled.section`
   .title-area {
+    padding: 0 10px;
     display: flex;
     align-items: center;
     border-bottom: solid 1px #c2c2c2;
@@ -66,7 +67,7 @@ const QuestionForm = props => {
       <section className="title-area">
         <h2>{formTitle}</h2>
         <div className="button-area">
-          <Button className="filled primary" onClick={onSubmit}>{submitBtnTxt}</Button>
+          <Button className="primary" onClick={onSubmit}>{submitBtnTxt}</Button>
         </div>
       </section>
       <section className="form">

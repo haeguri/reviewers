@@ -17,6 +17,10 @@ const StyledDiv = styled.div`
   .footer {
     padding-top: 10px;
   }
+
+  button.primary {
+    margin-right: 5px;
+  }
 `;
 
 class ReviewEditor extends Component {
@@ -54,17 +58,16 @@ class ReviewEditor extends Component {
   }
 
   componentDidMount() {
-    const { ref } = this.mdEditorRef.current;
-    ref.addEventListener('mouseenter', this._mouseEnterEventListener);
-    ref.addEventListener('mouseleave', this._mouseLeaveEventListener);
+    const { mdEditorDOM } = this.mdEditorRef.current;
+    mdEditorDOM.addEventListener('mouseenter', this._mouseEnterEventListener);
+    mdEditorDOM.addEventListener('mouseleave', this._mouseLeaveEventListener);
   }
 
   componentWillUnmount() {
-    const { ref } = this.mdEditorRef.current;
-    ref.removeEventListener('mouseenter', this._mouseEnterEventListener);
-    ref.removeEventListener('mouseleave', this._mouseLeaveEventListener);
+    const { mdEditorDOM } = this.mdEditorRef.current;
+    mdEditorDOM.removeEventListener('mouseenter', this._mouseEnterEventListener);
+    mdEditorDOM.removeEventListener('mouseleave', this._mouseLeaveEventListener);
   }
-
 
   onTextChange(e) {
     const { target: { value: input }} = e;
@@ -85,8 +88,9 @@ class ReviewEditor extends Component {
                         onTextChange={(e) => this.onTextChange(e)} 
         />
         <div className="footer">
-          <Button type="button" onClick={() => this.onSaveClick()}>Save</Button>
-          <Button type="button" onClick={() => this.props.onCancelClick()}>Cancel</Button>
+          <Button className="primary" 
+                  type="button" onClick={() => this.onSaveClick()}>리뷰 등록</Button>
+          <Button type="button" onClick={() => this.props.onCancelClick()}>취소</Button>
         </div>
       </StyledDiv>
     );

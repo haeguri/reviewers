@@ -66,8 +66,8 @@ class Login extends Component {
                        onChange={this.onEmailChange} value={this.state.email}/>
             <TextInput className="form-input" type="password" placeholder="비밀번호를 입력하세요."
                        onChange={this.onPasswordChange} value={this.state.password}/>
-            <Button type="button" className="login-btn filled" onClick={this.onLoginClick}>로그인</Button>
-            <Link to="/join"><Button className="join-btn filled">회원가입</Button></Link>
+            <Button className="login-btn" type="button" onClick={this.onLoginClick}>로그인</Button>
+            <Link to="/join"><Button className="join-btn">회원가입</Button></Link>
           </form>
         </CardTemplate>
       </StyledDiv>

@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import languageAPI from '../api/language';
 import questionAPI from '../api/question';
-import withQuestionForm from '../hoc/withQuestionForm';
+import withQuestionFormContainer from '../hoc/withQuestionFormContainer';
+import QuestionForm from '../components/QuestionForm';
 
-class QuestionEditContainer extends Component {
+class QuestionEditFormContainer extends Component {
   componentDidMount = async () =>  {
     const { data: langData } = await languageAPI.getLanguages();
-
-    const { match: { params } } = this.props
     const { 
       data: { 
         _id: questionId,
@@ -16,7 +15,7 @@ class QuestionEditContainer extends Component {
         soureCode, 
         language
       }
-    } = await questionAPI.detailQuestion(params.qId);
+    } = await questionAPI.detailQuestion('5c24f5b67e27b970f82529a6');
 
     this.setState({
       languageOptions: langData,
@@ -44,13 +43,14 @@ class QuestionEditContainer extends Component {
   }
 
   render = () => {
-    const { children } = this.props;
     return (
-      <React.Fragment>
-        {children}
-      </React.Fragment>
+      <QuestionForm 
+        formTitle="질문 수정"
+        submitBtnTxt="저장하기"
+        {...this.props}
+      />
     )
   }
 }
 
-export default withQuestionForm(QuestionEditContainer);
+export default withQuestionFormContainer(QuestionEditFormContainer);

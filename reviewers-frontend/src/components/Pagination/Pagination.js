@@ -94,7 +94,12 @@ class Pagination extends React.Component {
     }
 
     const numberButtons = range(currFromPageNum, currToPageNum + 1).map((v, i) => {
-      const className = `${page === v ? 'filled primary' : ''} page-btn`;
+      let className = 'page-btn';
+
+      if (page === v) {
+        className += ' primary';
+      }
+
       return (
         <Button key={v} className={className} onClick={() => this.onPageClick(v)}>{v}</Button>
       );  
