@@ -3,6 +3,12 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+/**
+ * author: '5bd59fdab1bb95445b28f605'
+ * question: '5c28b0516cfcbdddd469c2dd',
+ * lineNumber: 1,
+ * body: 'asdfasdfasdfasdfasdf'
+ */
 const ReviewSchema = new Schema({
     author: {
       type: Schema.Types.ObjectId,

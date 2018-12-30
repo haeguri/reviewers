@@ -6,7 +6,7 @@ module.exports = {
   all: async (req, res) => {
     try {
       const result = await Language.find({});
-      res.send({
+      res.json({
         data: result
       });
     } catch (err) {

@@ -1,6 +1,7 @@
 'use strict';
 
 const { Review } = require('./reviewModel');
+const { Question } = require('../question/questionModel');
 
 module.exports = {
   all: (req, res) => {
@@ -10,13 +11,22 @@ module.exports = {
       res.json(review);
     });  
   },
-  create: (req, res) => {
-    const newReview = new Review(req.body);
-    newReview.save((err, review) => {
-      if(err)
-        res.send(err);
-      res.json(review);
-    });
+  create: async ({ params: { questionId }, body }, res) => {
+    try {
+      const question = await Question.findById(questionId);
+      const newData = {
+        ...body,
+        question: questionId
+      };
+      const newReview = new Review(newData);
+
+      question.reviews.push(newReview)
+      await question.save();
+
+      res.json({data: newReview});
+    } catch (err) {
+      res.send(err);
+    }
   },
   update: (req, res) => {
     Review.findOneAndUpdate(

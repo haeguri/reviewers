@@ -12,13 +12,14 @@ module.exports = {
     const fromIndex = pageSize * (pageNo - 1);
 
     try {
-      const questions = await Question.find()
-                              .sort('-created')
-                              // reviews를 제거하고, reviewCount를 추가하고 싶다.
-                              .populate('language')
-                              .populate('author', '-password -email -joined')
-                              .skip(fromIndex)
-                              .limit(pageSize);
+      const questions = 
+        await Question.find()
+                      .sort('-created')
+                      // reviews를 제거하고, reviewCount를 추가하고 싶다.
+                      .populate('language')
+                      .populate('author', '-password -email -joined')
+                      .skip(fromIndex)
+                      .limit(pageSize);
 
       res.json({
         totalPageCount,
@@ -45,19 +46,20 @@ module.exports = {
   },
   selectOne: async ({ params: { questionId }}, res) => {
     try {
-      const question = await Question.findById(questionId)
-                                    .populate({
-                                      path: 'author',
-                                      model: 'User',
-                                      select: '-password -email -joined'
-                                    })
-                                    .populate('language')
-                                    .populate({
-                                        path: 'reviews.author',
-                                        model: 'User',
-                                        select: '-password -email -joined'
-                                      }
-                                    )
+      const question = 
+        await Question.findById(questionId)
+                      .populate({
+                        path: 'author',
+                        model: 'User',
+                        select: '-password -email -joined'
+                      })
+                      .populate('language')
+                      .populate({
+                          path: 'reviews.author',
+                          model: 'User',
+                          select: '-password -email -joined'
+                        }
+                      )
 
       res.json({
         data: question
