@@ -44,14 +44,20 @@ module.exports = {
       res.send(err);
     }
   },
-  delete: (req, res) => {
-    Review.remove(
-      {_id: req.params.reviewId},
-      (err, review) => {
-        if(err)
-          res.send(err);
-        res.json({message: 'Review successfully deleted'})
-      }
-    );
+  delete: async ({ params: { questionId, reviewId }, body }, res) => {
+    try {
+      const question = await Question.findById(questionId);
+      const targetIndex = question.reviews.findIndex(r => r.id === reviewId);
+
+      question.reviews.splice(targetIndex, 1);
+
+      await question.save();
+
+      res.json({
+        message: 'Review successfully deleted'
+      })
+    } catch (err) {
+      res.send(err);
+    }
   }
 };
