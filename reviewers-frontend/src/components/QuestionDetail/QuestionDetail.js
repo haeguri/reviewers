@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Button from '../Button';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import Editor from '../Editor';
 import ReviewList from '../ReviewList';
 import MarkdownViewer from '../MarkdownViewer';
@@ -168,9 +167,8 @@ const QuestionDetail = (props) => {
     onToggleBodyClick,
     onEditClick,
     onRemoveClick,
+    isOwner
   } = props;
-
-  const isOwner = true;
 
   let allBadgeExtraClassName;
   let selectedLineBadge;

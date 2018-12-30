@@ -30,6 +30,7 @@ const withQuestionFormContainer = (WrappedComponent, apiForSubmit, apiForFormIni
         selectedLanguageOption = data.language;
       } else {
         initData = this.state.form;
+        initData.language = languageOptions[0]._id;
         selectedLanguageOption = languageOptions[0];
       }
 
@@ -46,7 +47,7 @@ const withQuestionFormContainer = (WrappedComponent, apiForSubmit, apiForFormIni
     onSubmit = async (e) => {
       const { match: { params } } = this.props;
       try {
-        const { data: { _id } } = await apiForSubmit(params.qId, this.state.form);
+        const { data: { _id } } = await apiForSubmit(this.state.form, params.qId);
         this.props.history.push(`/question-detail/${_id}`);
       } catch (err) {
         console.log('error', err);

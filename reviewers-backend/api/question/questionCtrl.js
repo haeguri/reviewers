@@ -33,8 +33,11 @@ module.exports = {
   create: (req, res) => {
     const newQuestion = new Question(req.body);
     newQuestion.save((err, question) => {
-      if(err)
+      if(err) {
         res.send(err);
+        return;
+      }
+
       res.json({
         data: question
       });
@@ -82,8 +85,11 @@ module.exports = {
         new: true
       },
       (err, question) => {
-        if(err)
+        if(err) {
           res.send(err);
+          return;
+        }
+          
         res.json({
           data: question
         })
@@ -95,8 +101,11 @@ module.exports = {
         _id: questionId
       },
       (err) => {
-        if(err)
+        if(err) {
           res.send(err);
+          return;
+        }
+
         res.json({message: 'Question successfully deleted'})
       }
     );

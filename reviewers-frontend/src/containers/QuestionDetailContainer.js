@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { useAuth } from '../contexts/auth';
 import { withRouter } from 'react-router-dom';
 import questionAPI from '../api/question';
 import QuestionDetail from '../components/QuestionDetail';
@@ -18,6 +19,7 @@ class QuestionDetailContainer extends Component {
     reviewCounts: {},
     isBodyFold: true,
     selectedLine: -1,
+    isOwner: false,
   }
 
   onToggleBodyClick = (e) => {
@@ -62,17 +64,20 @@ class QuestionDetailContainer extends Component {
   }
 
   componentDidMount = async () => {
-    const { match: { params } } = this.props;
+    const { match: { params }, authInfo } = this.props;
     const { data } = await questionAPI.detailQuestion(params.qId);
-    const { reviews } = data;
+    const { reviews, author } = data;
     
     const reviewCounts = reviews.reduce((counts, review) => {
             const lineNumber = review.lineNumber;
             counts[lineNumber] = counts[lineNumber] ? counts[lineNumber] + 1 : 1;
             return counts;
           }, {});
+    
+    const isOwner = author._id === authInfo._id;
 
     this.setState({
+      isOwner,
       data,
       reviewCounts,
       reviewsOnSelectedLine: reviews
@@ -91,4 +96,4 @@ class QuestionDetailContainer extends Component {
   }
 }
 
-export default withRouter(QuestionDetailContainer);
+export default withRouter(useAuth(QuestionDetailContainer));

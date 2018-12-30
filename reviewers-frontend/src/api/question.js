@@ -18,7 +18,7 @@ const api = {
     const json = await fetchData(url, 'GET');
     return Promise.resolve(json);
   },
-  updateQuestion: async (id, data) => {
+  updateQuestion: async (data, id) => {
     const url = `${BASE_QUESTION_API_URL}/${id}`;
     try {
       const json = await fetchData(url, 'PUT', data)
