@@ -91,9 +91,10 @@ module.exports = {
     );
   },
   delete: ({params: { questionId }}, res) => {
-    Question.remove(
-      {_id: questionId},
-      (err, question) => {
+    Question.remove({
+        _id: questionId
+      },
+      (err) => {
         if(err)
           res.send(err);
         res.json({message: 'Question successfully deleted'})

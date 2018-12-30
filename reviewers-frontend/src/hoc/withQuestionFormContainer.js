@@ -25,16 +25,15 @@ const withQuestionFormContainer = (WrappedComponent, apiForSubmit, apiForFormIni
       let selectedLanguageOption;
 
       if (apiForFormInit) {
-        // Edit Form
         const { data } = await questionAPI.detailQuestion(params.qId);
         initData = data;
         selectedLanguageOption = data.language;
       } else {
-        // New Form
         initData = this.state.form;
         selectedLanguageOption = languageOptions[0];
       }
 
+      // ONLY TEST!!!
       initData.author = (this.props.authInfo && this.props.authInfo._id) || '5c1a22620157ed1fabef733d'
 
       this.setState((state) => ({

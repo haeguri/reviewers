@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import api from '../api/question';
+import questionAPI from '../api/question';
 import QuestionDetail from '../components/QuestionDetail';
 
 class QuestionDetailContainer extends Component {
@@ -44,20 +44,26 @@ class QuestionDetailContainer extends Component {
     });
   } 
 
-  onEditClick = (e) => {
-    const { history } = this.props;
-    const { match: { params } } = this.props;
+  onEditClick = async (e) => {
+    const { history, match: { params } } = this.props;
 
     history.push(`/edit-question/${params.qId}`);
   }
 
-  onRemoveClick = (e) => {
+  onRemoveClick = async (e) => {
+    const { history, match: { params } } = this.props;
 
+    try {
+      await questionAPI.deleteQuestion(params.qId);
+      history.push('/');
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   componentDidMount = async () => {
     const { match: { params } } = this.props;
-    const { data } = await api.detailQuestion(params.qId);
+    const { data } = await questionAPI.detailQuestion(params.qId);
     const { reviews } = data;
     
     const reviewCounts = reviews.reduce((counts, review) => {

@@ -39,8 +39,6 @@ const Button = (props) => {
         {children}
       </FontAwesomeIcon>
     )
-  } else {
-    children = children;
   }
 
   return (
