@@ -23,7 +23,7 @@ const StyledArticle = styled.article`
         color: #646464;
       }
 
-      .updated {
+      .created {
         margin-left: auto;
         font-size: 13px;
         color: #9a9b9d;
@@ -107,7 +107,7 @@ class Review extends Component {
       <StyledArticle className={className}>
         <div className="review-header">
           <span className="author"><a>{author.username}</a></span>
-          <span className="updated">{moment(created).format('YYYY-MM-DD HH:MM')}</span>
+          <span className="created">{moment(created).format('YYYY-MM-DD HH:mm')}</span>
         </div>
         {
           !isEditMode ?

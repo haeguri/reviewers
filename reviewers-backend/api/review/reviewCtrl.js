@@ -11,11 +11,13 @@ module.exports = {
           .populate({
             path: 'reviews.author',
             model: 'User',
-            select: '-password -email -joined'
+            select: '-password -email -joined',
           });
 
       res.json({
-        data: question.reviews
+        data: question.reviews.sort((r1, r2) => {
+          return r2.created.getTime() - r1.created.getTime();
+        })
       })
 
     } catch (err) {

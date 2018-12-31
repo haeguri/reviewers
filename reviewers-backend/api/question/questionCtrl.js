@@ -16,6 +16,7 @@ module.exports = {
         await Question.find()
                       .sort('-created')
                       // reviews를 제거하고, reviewCount를 추가하고 싶다.
+                      .select('-reviews.question -reviews.lineNumber -reviews.body -reviews.created -reviews.author')
                       .populate('language')
                       .populate('author', '-password -email -joined')
                       .skip(fromIndex)
@@ -48,6 +49,7 @@ module.exports = {
     try {
       const question = 
         await Question.findById(questionId)
+                      .select('-reviews.question -reviews.lineNumber -reviews.body -reviews.created -reviews.author')
                       .populate({
                         path: 'author',
                         model: 'User',

@@ -1,11 +1,11 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
 import QuestionDetailPage from './pages/QuestionDetailPage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import JoinPage from './pages/JoinPage';
 import QuestionNewPage from './pages/QuestionNewPage';
 import QuestionEditPage from './pages/QuestionEditPage';
-import { Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/auth';
 import { ReviewProvider } from './contexts/review';
 
@@ -16,7 +16,7 @@ const AppProvider = ({contexts, children}) => contexts.reduce(
   children
 )
 
-const contexts = [AuthProvider, ReviewProvider];
+const contexts = [ReviewProvider, AuthProvider];
 
 const App = () => (
   <AppProvider contexts={contexts}>
