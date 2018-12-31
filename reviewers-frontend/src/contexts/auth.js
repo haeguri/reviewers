@@ -18,47 +18,47 @@ class AuthProvider extends React.Component {
   }
 
   actions = {
-    join: (data) => 
+    join: (data) => (
       fetchData(BASE_AUTH_API_URL + '/join', 'POST', data)
-      .then(json => {
-        this.setState({
-          _id: json._id,
-          email: json.email,
-          username: json.username,
-          isLogin: true
-        });
-      
-        return Promise.resolve(json);
-      })
-    ,
+        .then(json => {
+          this.setState({
+            _id: json._id,
+            email: json.email,
+            username: json.username,
+            isLogin: true
+          });
+        
+          return Promise.resolve(json);
+        })
+    ),
 
-    login: (data) => 
+    login: (data) => (
       fetchData(BASE_AUTH_API_URL + '/login', 'POST', data)
-      .then(json => {
-      this.setState({
-        _id: json._id,
-        email: json.email,
-        username: json.username,
-        isLogin: true
-      });
-    
-      return Promise.resolve(json);
-    })
-    ,
+        .then(json => {
+          this.setState({
+            _id: json._id,
+            email: json.email,
+            username: json.username,
+            isLogin: true
+          });
+        
+          return Promise.resolve(json);
+        })
+    ),
   
-    logout: () => 
+    logout: () => (
       fetchData(BASE_AUTH_API_URL + '/logout', 'POST')
-      .then(response => {
-        this.setState({
-          _id: '',
-          email: '',
-          username: '',
-          isLogin: false
-        });
+        .then(response => {
+          this.setState({
+            _id: '',
+            email: '',
+            username: '',
+            isLogin: false
+          });
 
-        return Promise.resolve(response);
-      })
-
+          return Promise.resolve(response);
+        })
+      )
   }
 
   render() {

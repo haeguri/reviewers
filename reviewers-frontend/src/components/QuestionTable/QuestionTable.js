@@ -11,24 +11,31 @@ import moment from 'moment';
 const StyledReactTable = styled(ReactTable)`
   border: none !important;
 
-  .rt-thead {
-    border-bottom: solid 3px #c2c2c2;
-    box-shadow: none !important;
-  }
+  &.ReactTable {
+    .rt-thead {
+      border-bottom: solid 3px #e2e2e2;
+      box-shadow: none !important;
+    }
 
-  .react-table-cell {
-    text-align: center;
-    color: #222;
-  } 
+    .react-table-cell {
+      text-align: center;
+      color: #222;
+    } 
 
-  .react-table-header {
-    outline: none;
-    border: none !important;
-    color: #828283;
-  }
+    .react-table-header {
+      outline: none;
+      border: none !important;
+      color: #828283;  
+    }
 
-  .pagination-bottom {
-    padding: 30px 0;
+    .pagination-bottom {
+      padding: 30px 0;
+    }
+
+    .rt-td {
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
   }
 `;
 

@@ -8,7 +8,7 @@ const withQuestionFormContainer = (WrappedComponent, apiForSubmit, apiForFormIni
   const QuestionFormContainer = class extends Component {
     state = {
       languageOptions: [],
-      selectedLanguageOption: '',
+      selectedLanguageOption: {},
       form: {
         author: '',
         title: '',

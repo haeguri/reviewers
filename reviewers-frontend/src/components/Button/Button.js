@@ -11,8 +11,8 @@ const StyledButton = styled.button`
   border: solid 1px #b2b2b2;
 
   &.primary {
-    background: #1162bc;
-    border-color: #1162bc;
+    background: #0f4da9;
+    border-color: #0f4da9;
     color: white;
     font-weight: 600;
   }

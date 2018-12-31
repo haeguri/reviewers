@@ -8,13 +8,7 @@ class ReviewEditorContainer extends Component {
 
     this.state = {
       form: {
-        body: [
-          "# test",
-          "## test",
-          "- test",
-          "- test",
-          "- test"
-        ].join('\n'),
+        body: '',
         author: props.authInfo._id,
         lineNumber: props.lineNumber
       }

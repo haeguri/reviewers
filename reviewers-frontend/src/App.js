@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute';
 import QuestionDetailPage from './pages/QuestionDetailPage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
@@ -20,12 +21,34 @@ const contexts = [ReviewProvider, AuthProvider];
 
 const App = () => (
   <AppProvider contexts={contexts}>
-    <Route path="/" exact component={HomePage}/>
-    <Route path="/new-question" component={QuestionNewPage}/>
-    <Route path="/edit-question/:qId" component={QuestionEditPage}/>
-    <Route path="/question-detail/:qId" component={QuestionDetailPage}/>
-    <Route path="/login" component={LoginPage}/>
-    <Route path="/join" component={JoinPage}/>
+    <Route 
+      path="/" exact 
+      component={HomePage}
+    />
+    <ProtectedRoute
+      onlyUser
+      path="/new-question" 
+      component={QuestionNewPage}
+    />
+    <ProtectedRoute 
+      onlyUser
+      path="/edit-question/:qId" 
+      component={QuestionEditPage}
+    />
+    <Route
+      path="/question-detail/:qId" 
+      component={QuestionDetailPage}
+    />
+    <ProtectedRoute
+      anonymous 
+      path="/login" 
+      component={LoginPage}
+    />
+    <ProtectedRoute 
+      anonymous
+      path="/join" 
+      component={JoinPage}
+    />
   </AppProvider>
 );
 

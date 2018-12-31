@@ -35,7 +35,7 @@ const Dropdown = props => {
 
 Dropdown.propTypes = {
   className: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.object,
   options: PropTypes.array,
   onChange: PropTypes.func
 };

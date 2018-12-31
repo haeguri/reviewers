@@ -77,10 +77,34 @@ class Join extends React.Component {
       <StyledDiv>
         <CardTemplate className="join-card" headerMsg={'회원가입'}>
           <form className="join-form">
-            <TextInput className="form-input" onChange={this.onEmailChange} value={this.state.email} type="email" placeholder="이메일을 입력하세요." />
-            <TextInput className="form-input" onChange={this.onUsernameChange} value={this.state.username} type="text" placeholder="이름을 입력하세요." />
-            <TextInput className="form-input" onChange={this.onPasswordChange} value={this.state.password} type="password" placeholder="비밀번호를 입력하세요." />
-            <TextInput className="form-input" onChange={this.onPasswordConfirmChange} value={this.state.passwordConfirm} type="password" placeholder="비밀번호를 다시 입력하세요." />
+            <TextInput 
+              type="email" 
+              className="form-input" 
+              onChange={this.onEmailChange} 
+              value={this.state.email} 
+              placeholder="이메일을 입력하세요." 
+            />
+            <TextInput 
+              type="text" 
+              className="form-input"
+              onChange={this.onUsernameChange}
+              value={this.state.username}
+              placeholder="이름을 입력하세요." 
+            />
+            <TextInput 
+              type="password"
+              className="form-input" 
+              onChange={this.onPasswordChange} 
+              value={this.state.password} 
+              placeholder="비밀번호를 입력하세요." 
+            />
+            <TextInput 
+              type="password"
+              className="form-input" 
+              onChange={this.onPasswordConfirmChange} 
+              value={this.state.passwordConfirm}
+              placeholder="비밀번호를 다시 입력하세요."
+            />
             <Button className="join-btn" type="button" onClick={this.onJoinClick}>회원가입</Button>
             <Link to="/login"><Button className="cancel-btn">취소</Button></Link>
           </form>

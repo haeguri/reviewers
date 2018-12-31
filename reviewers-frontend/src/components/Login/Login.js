@@ -62,10 +62,20 @@ class Login extends Component {
       <StyledDiv>
         <CardTemplate className="login-card" headerMsg={'로그인'}>
           <form className="login-form">
-            <TextInput className="form-input" type="text" placeholder="이메일을 입력하세요." 
-                       onChange={this.onEmailChange} value={this.state.email}/>
-            <TextInput className="form-input" type="password" placeholder="비밀번호를 입력하세요."
-                       onChange={this.onPasswordChange} value={this.state.password}/>
+            <TextInput
+              type="text" 
+              className="form-input"
+              onChange={this.onEmailChange}
+              value={this.state.email}
+              placeholder="이메일을 입력하세요."
+            />
+            <TextInput
+              type="password"
+              className="form-input"  
+              onChange={this.onPasswordChange}
+              value={this.state.password}
+              placeholder="비밀번호를 입력하세요."
+            />
             <Button className="login-btn" type="button" onClick={this.onLoginClick}>로그인</Button>
             <Link to="/join"><Button className="join-btn">회원가입</Button></Link>
           </form>

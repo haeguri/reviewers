@@ -13,7 +13,7 @@ const StyledSection = styled.section`
   flex-direction: row;
 
   .language-badge, .line-info {
-    padding: 2px 7px;
+    padding: 5px 7px;
     font-size: 12px;
     border-radius: 5px;
   }
@@ -22,7 +22,6 @@ const StyledSection = styled.section`
     border: solid 2px #1162bc;
     color: #1162bc;
     margin-left: 15px;
-    margin-bottom: 5px;
   }
 
   .line-info.active {
