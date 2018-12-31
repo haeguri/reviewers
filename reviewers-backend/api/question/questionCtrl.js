@@ -54,12 +54,6 @@ module.exports = {
                         select: '-password -email -joined'
                       })
                       .populate('language')
-                      .populate({
-                          path: 'reviews.author',
-                          model: 'User',
-                          select: '-password -email -joined'
-                        }
-                      )
 
       res.json({
         data: question

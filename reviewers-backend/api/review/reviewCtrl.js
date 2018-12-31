@@ -6,11 +6,15 @@ const { Question } = require('../question/questionModel');
 module.exports = {
   all: async ({ params: { questionId } }, res) => {
     try {
-      const question = await Question.findById(questionId);
+      const question = 
+        await Question.findById(questionId)
+          .populate({
+            path: 'reviews.author',
+            model: 'User',
+            select: '-password -email -joined'
+          });
 
-      console.log(question);
-
-      res.send({
+      res.json({
         data: question.reviews
       })
 
@@ -51,7 +55,7 @@ module.exports = {
       res.send(err);
     }
   },
-  delete: async ({ params: { questionId, reviewId }, body }, res) => {
+  delete: async ({ params: { questionId, reviewId } }, res) => {
     try {
       const question = await Question.findById(questionId);
       const targetIndex = question.reviews.findIndex(r => r.id === reviewId);
