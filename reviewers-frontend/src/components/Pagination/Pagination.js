@@ -9,6 +9,13 @@ const StyledDiv = styled.div`
   display: flex;
   justify-content: center;
 
+  & > button {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    color: #a2a2a2;
+    border-right-width: 0;
+  }
+
   .page-btn {
     border-radius: 0 !important;
     padding-left: 0;
@@ -18,7 +25,7 @@ const StyledDiv = styled.div`
 
   .arrow-btn {
     border-radius: 0;
-    width: 30px;
+    width: 42px;
     padding: 0;
   }
 
@@ -30,6 +37,7 @@ const StyledDiv = styled.div`
   }
 
   .most-right.arrow-btn {
+    border-right-width: 1px;
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
     border-bottom-right-radius: 3px;

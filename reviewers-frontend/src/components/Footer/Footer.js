@@ -15,12 +15,17 @@ const StyledFooter = styled.footer`
       max-width: 900px;
       margin: 0 auto;
     }
+
+    .intro {
+      text-align: center;
+      color: #a2a2a2;
+    }
 `;
 
 const Footer = props => (
     <StyledFooter width={props.width}>
       <div className="container">
-        <p className="intro">Footer</p>
+        <p className="intro">Made by <a href="https://github.com/haeguri" target="_blank"><strong>Haegyun Jung</strong></a></p>
       </div>
     </StyledFooter>
 );
