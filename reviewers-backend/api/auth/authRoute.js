@@ -14,13 +14,18 @@ module.exports = app => {
         return res.status(400).json({error: info});
       }
 
-      return res.status(201).send(user);
+      req.logIn(user, (err) => {
+        if (err) {
+          return next(err);
+        }
 
+        return res.status(201).send(user);
+      })
     })(req, res, next);
   });
 
   app.post('/login', (req, res, next) => {
-    passport.authenticate("login", function(err, user, info){
+    passport.authenticate("login", (err, user, info) => {
       // console.log('login authenticate callback');
       if (err) { 
         return next(err);
@@ -52,4 +57,12 @@ module.exports = app => {
       })
     }
   });
+
+  app.post('/check', (req, res) => {
+    if(req.isAuthenticated()) {
+      res.status(200).send(req.user);
+    } else {
+      res.status(406).send();
+    }
+  })
 }

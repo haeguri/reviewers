@@ -17,7 +17,38 @@ class AuthProvider extends React.Component {
     isLogin: false
   }
 
+  componentDidMount = async () => {
+    try {
+      const {
+        _id,
+        email,
+        username,
+      } = await this.actions.checkAuthentication();
+      
+      this.setState({
+        _id,
+        email,
+        username,
+        isLogin: true
+      });
+    } catch (err) { }
+  }
+
   actions = {
+    checkAuthentication: () => (
+      fetchData(BASE_AUTH_API_URL + '/check', 'POST')
+        .then(json => {
+          this.setState({
+            _id: json._id,
+            email: json.email,
+            username: json.username,
+            isLogin: true
+          });
+        
+          return Promise.resolve(json);
+        })
+    ),
+
     join: (data) => (
       fetchData(BASE_AUTH_API_URL + '/join', 'POST', data)
         .then(json => {
@@ -79,7 +110,7 @@ function useAuth(WrappedComponent) {
         ({state, actions}) => (
           <WrappedComponent 
             authInfo={state} 
-            authActions={actions} 
+            authActions={actions}
             {...props}
           />
         )
