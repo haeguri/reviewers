@@ -7,7 +7,7 @@ const QuestionEditFormContainer = (props) => (
   <QuestionForm 
     formTitle="질문 수정"
     submitBtnTxt="저장하기"
-    {...this.props}
+    {...props}
   />
 );
 

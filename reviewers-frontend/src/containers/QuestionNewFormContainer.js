@@ -7,7 +7,7 @@ const QuestionNewFormContainer = (props) => (
   <QuestionForm 
     formTitle="새로운 질문"
     submitBtnTxt="등록하기"
-    {...this.props}
+    {...props}
   />
 )
 
