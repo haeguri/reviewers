@@ -4,12 +4,19 @@ const { Review } = require('./reviewModel');
 const { Question } = require('../question/questionModel');
 
 module.exports = {
-  all: (req, res) => {
-    Review.find({}, (err, review) => {
-      if(err)
-        res.send(err);
-      res.json(review);
-    });  
+  all: async ({ params: { questionId } }, res) => {
+    try {
+      const question = await Question.findById(questionId);
+
+      console.log(question);
+
+      res.send({
+        data: question.reviews
+      })
+
+    } catch (err) {
+      res.send(err);
+    }
   },
   create: async ({ params: { questionId }, body }, res) => {
     try {

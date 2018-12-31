@@ -43,9 +43,12 @@ const StyledSection = styled.section`
 `;
 
 class Editor extends Component {
+  state = {
+    isMouseInReviewEditor: false
+  }
+
   monacoEditor = null;
   monacoAPI = null;
-
   prevReviewCountDecoIds = [];
 
   constructor(props) {
@@ -60,16 +63,22 @@ class Editor extends Component {
       lineDecorationsWidth: 20,
       minimap: {
         enabled: false
-      }
+      },
     });
   }
 
-  componentDidUpdate = (prevProps, prevState) => {
+  componentDidMount() {
+    this._invokeUpdateReviewCount();
+  }
+
+  componentDidUpdate = (prevProps) => {
     if (this.props.language !== prevProps.language) {
       const model = this.monacoEditor.getModel();
       this.monacoAPI.editor.setModelLanguage(model, this.props.language);
       return {};
     }
+
+    this._invokeUpdateReviewCount();
   }
 
   render() {
@@ -89,15 +98,6 @@ class Editor extends Component {
     );
   }
 
-  componentDidUpdate() {
-    this._invokeUpdateReviewCount();
-  }
-
-  componentDidMount() {
-    this._invokeUpdateReviewCount();
-
-  }
-
   _invokeUpdateReviewCount() {
     const { reviewCounts } = this.props;
     let { prevReviewCountDecoIds } = this;
@@ -105,6 +105,12 @@ class Editor extends Component {
     let lines = Object.keys(reviewCounts).filter(c => c > 0).sort();
 
     this.prevReviewCountDecoIds = this._updateHasReviewIcon(prevReviewCountDecoIds, lines);
+  }
+
+  setIsMousePositionInReview = (v) => {
+    this.setState({
+      isMouseInReviewEditor: v
+    });
   }
 
   // child component componentDidMount
@@ -129,20 +135,24 @@ class Editor extends Component {
     const viewZoneIds = [];
 
     monacoEditor.onMouseDown(e => {
-      if(e.target.position === null) {
-          return;
+      if (e.target.position === null) {
+        return;
+      }
+
+      if (this.state.isMouseInReviewEditor) {
+        return;
       }
 
       let currLineNumber = e.target.position.lineNumber;
 
+
       onLineClick(currLineNumber);
 
-      if(activeLineNumbers.indexOf(currLineNumber) >= 0) {
-          return;
+      if (activeLineNumbers.indexOf(currLineNumber) >= 0) {
+        return;
       }
 
       if(e.target.element.className.indexOf(CLASS_NAME.REVIEW_BTN) >= 0) {
-
         monacoEditor.changeViewZones(changeAccessor => {
           let currViewZoneId;
 
@@ -165,7 +175,8 @@ class Editor extends Component {
                 monacoEditor.changeViewZones(changeAccessor => changeAccessor.removeZone(currViewZoneId));
                 activeLineNumbers = activeLineNumbers.filter(n => n !== currLineNumber);
                 ReactDOM.unmountComponentAtNode(reviewDOM);
-              }}>
+              }}
+              setIsMousePositionInReview={this.setIsMousePositionInReview}>
             </ReviewEditor>,
             reviewDOM
           );

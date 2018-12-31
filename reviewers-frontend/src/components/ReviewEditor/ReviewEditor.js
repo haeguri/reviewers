@@ -32,41 +32,51 @@ class ReviewEditor extends Component {
     super(props);
 
     this.mdEditorRef = React.createRef();
-
-    this._mouseEnterEventListener = this._mouseEnterEventListener.bind(this);
-    this._mouseLeaveEventListener = this._mouseLeaveEventListener.bind(this);
   }
 
-  _mouseEnterEventListener() {
-    console.log('disable scroll');
+  _mouseEnterOnMdEditor = () => {
     this.props.editor.updateOptions({
       scrollbar: {
         vertical: 'hidden',
         handleMouseWheel: false
       }
-    })
+    });
   }
 
-  _mouseLeaveEventListener() {
-    console.log('enable scroll');
+  _mouseEnterOnReviewEditor = () => {
+    this.props.setIsMousePositionInReview(true);
+  }
+
+  _mouseLeaveOnMdEditor = () => {
     this.props.editor.updateOptions({
       scrollbar: {
         vertical: 'visible',
         handleMouseWheel: true
       }
-    })
+    });
+  }
+  
+  _mouseLeaveOnReviewEditor = () => {
+    this.props.setIsMousePositionInReview(false);
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
+    const { reviewEditorRef } = this;
     const { mdEditorDOM } = this.mdEditorRef.current;
-    mdEditorDOM.addEventListener('mouseenter', this._mouseEnterEventListener);
-    mdEditorDOM.addEventListener('mouseleave', this._mouseLeaveEventListener);
+    mdEditorDOM.addEventListener('mouseenter', this._mouseEnterOnMdEditor);
+    mdEditorDOM.addEventListener('mouseleave', this._mouseLeaveOnMdEditor);
+    reviewEditorRef.addEventListener('mouseenter', this._mouseEnterOnReviewEditor);
+    reviewEditorRef.addEventListener('mouseleave', this._mouseLeaveOnReviewEditor);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
+    const { reviewEditorRef } = this;
     const { mdEditorDOM } = this.mdEditorRef.current;
-    mdEditorDOM.removeEventListener('mouseenter', this._mouseEnterEventListener);
-    mdEditorDOM.removeEventListener('mouseleave', this._mouseLeaveEventListener);
+    mdEditorDOM.removeEventListener('mouseenter', this._mouseEnterOnMdEditor);
+    mdEditorDOM.removeEventListener('mouseleave', this._mouseLeaveOnMdEditor);
+    reviewEditorRef.removeEventListener('mouseenter', this._mouseEnterOnReviewEditor);
+    reviewEditorRef.removeEventListener('mouseleave', this._mouseLeaveOnReviewEditor);
+    this.props.setIsMousePositionInReview(false);
   }
 
   onTextChange(e) {
@@ -81,7 +91,7 @@ class ReviewEditor extends Component {
 
   render() {
     return (
-      <StyledDiv>
+      <StyledDiv innerRef={ref => this.reviewEditorRef = ref}>
         <MarkdownEditor className="markdown-editor"
                         ref={this.mdEditorRef}
                         value={this.state.input}

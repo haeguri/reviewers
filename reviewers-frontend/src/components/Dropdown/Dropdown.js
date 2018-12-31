@@ -1,6 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const StyledSelect = styled(Select)`
   font-size: 14px;
@@ -33,11 +34,10 @@ const Dropdown = props => {
 }
 
 Dropdown.propTypes = {
-
-};
-
-Dropdown.defaultValues = {
-
+  className: PropTypes.string,
+  value: PropTypes.string,
+  options: PropTypes.array,
+  onChange: PropTypes.func
 };
 
 export default Dropdown;
