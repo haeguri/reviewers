@@ -59,84 +59,59 @@ const StyledArticle = styled.article`
     }
 `;
 
-class Review extends Component {
-  constructor(props) {
-    super(props);
+const Review = (props) => {
+  const { 
+    isOwner,
+    className, 
+    isEditMode,
+    form,
+    data: { 
+      body, author, created
+    },
+    onTextChange,
+    onEditClick,
+    onCancelClick,
+    onSaveClick,
+    onRemoveClick
+  } = props;
 
-    this.state = {
-      isEditMode: false,
-      editForm: {
-        body: this.props.data.body
-      }
-    };
-  }
-
-  onEditClick() {
-    this.setState({
-      isEditMode: true
-    })
-  }
-
-  onCancelClick() {
-    this.setState({
-      isEditMode: false
-    });
-  }
-
-  onTextChange(e) {
-    this.setState({
-      editForm: {
-        body: e.target.value
-      }
-    });
-  }
-
-  render() {
-    const { 
-      className, 
-      data: { 
-        body, author, created
-      } 
-    } = this.props;
-  
-    const {
-      isEditMode
-    } = this.state;
-  
-    return (
-      <StyledArticle className={className}>
-        <div className="review-header">
-          <span className="author"><a>{author.username}</a></span>
-          <span className="created">{moment(created).format('YYYY-MM-DD HH:mm')}</span>
-        </div>
-        {
-          !isEditMode ?
-          <React.Fragment>
-            <div className="review-body">
-              <MarkdownViewer rawText={body} hasScroll={false} />
-            </div>
-            <div className="review-footer">
-              <a onClick={() => this.onEditClick()}>수정</a>
-              <a onClick={() => { /* TODO: confirm modal call */ }}>삭제</a>
-            </div>
-          </React.Fragment>
-          :
-          <React.Fragment>
-            <div className="review-body" >
-              <MarkdownEditor className="md-editor" 
-                              value={this.state.editForm.body}
-                              onTextChange={(e) => this.onTextChange(e)}
-              />
-            </div>
-            <div className="review-footer">
-              <a onClick={() => { /* TODO: save api call.. */ }}>저장</a>
-              <a onClick={() => this.onCancelClick()}>취소</a>
-            </div>
-          </React.Fragment>
-        }
-      </StyledArticle>
-    ) 
-  }
+  return (
+    <StyledArticle className={className}>
+      <div className="review-header">
+        <span className="author"><a>{author.username}</a></span>
+        <span className="created">{moment(created).format('YYYY-MM-DD HH:mm')}</span>
+      </div>
+      {isEditMode? (
+        <React.Fragment>
+          <div className="review-body" >
+            <MarkdownEditor 
+              className="md-editor" 
+              value={form.body}
+              onTextChange={onTextChange}
+            />
+          </div>
+          <div className="review-footer">
+            <a onClick={onSaveClick}>저장</a>
+            <a onClick={onCancelClick}>취소</a>
+          </div>
+        </React.Fragment>
+      ) : (
+        <React.Fragment>
+          <div className="review-body">
+            <MarkdownViewer rawText={body} hasScroll={false} />
+          </div>
+          <div className="review-footer">
+            {isOwner && (
+              <React.Fragment>
+                <a onClick={onEditClick}>수정</a>
+                <a onClick={onRemoveClick}>삭제</a>
+              </React.Fragment>
+            )}
+          </div>
+        </React.Fragment>
+      )}
+    </StyledArticle>
+  )
 }
 
 Review.propTypes = {

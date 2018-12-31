@@ -237,8 +237,11 @@ const QuestionDetail = (props) => {
           {allLineBadge}
           {selectedLineBadge}
         </div>
-        <ReviewList className="review-list" 
-                    data={reviews} />
+        <ReviewList 
+          className="review-list"
+          selectedLine={selectedLine}
+          data={reviews} 
+        />
       </section>
     </StyledSection>
   )

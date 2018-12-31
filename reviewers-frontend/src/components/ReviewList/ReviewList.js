@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import Review from './Review';
+import ReviewContainer from '../../containers/ReviewContainer';
 
 const StyledSection = styled.section`
   .review-item { 
@@ -16,17 +16,22 @@ const StyledSection = styled.section`
 `;
 
 const ReviewList = props => {
-  let reviewItems;
-
-  if (props.data.length > 0) {
-    reviewItems = props.data.map(v => (<Review className="review-item" key={v._id} data={v} />))
-  } else {
-    reviewItems = <p className="info-data-empty">작성된 리뷰가 없습니다.</p>;
-  }
+  const { data, selectedLine } = props;
 
   return (
     <StyledSection className={props.className}>
-      {reviewItems}
+      {data.length <= 0 ? (
+        <p className="info-data-empty">작성된 리뷰가 없습니다.</p>
+      ) : (
+        data.map(v => (
+          <ReviewContainer 
+            className="review-item" 
+            selectedLine={selectedLine}
+            key={v._id} 
+            data={v} 
+          />
+        ))
+      )}
     </StyledSection>
   );
 }
