@@ -152,7 +152,7 @@ const StyledSection = styled.section`
 const QuestionDetail = (props) => {
   const {
     reviewCounts,
-    reviewsOnSelectedLine,
+    reviews,
     selectedLine, 
     isBodyFold, 
     data: {
@@ -238,7 +238,7 @@ const QuestionDetail = (props) => {
           {selectedLineBadge}
         </div>
         <ReviewList className="review-list" 
-                    data={reviewsOnSelectedLine} />
+                    data={reviews} />
       </section>
     </StyledSection>
   )

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Button from '../Button';
 import MarkdownEditor from '../MarkdownEditor';
-import { getSampleMarkdown } from '../../utils/test-utils';
 
 const StyledDiv = styled.div`
   height: 100%;
@@ -24,10 +23,6 @@ const StyledDiv = styled.div`
 `;
 
 class ReviewEditor extends Component {
-  state = {
-    input: getSampleMarkdown()
-  }
-
   constructor(props) {
     super(props);
 
@@ -35,7 +30,7 @@ class ReviewEditor extends Component {
   }
 
   _mouseEnterOnMdEditor = () => {
-    this.props.editor.updateOptions({
+    this.props.monacoEditor.updateOptions({
       scrollbar: {
         vertical: 'hidden',
         handleMouseWheel: false
@@ -48,7 +43,7 @@ class ReviewEditor extends Component {
   }
 
   _mouseLeaveOnMdEditor = () => {
-    this.props.editor.updateOptions({
+    this.props.monacoEditor.updateOptions({
       scrollbar: {
         vertical: 'visible',
         handleMouseWheel: true
@@ -79,28 +74,25 @@ class ReviewEditor extends Component {
     this.props.setIsMousePositionInReview(false);
   }
 
-  onTextChange(e) {
-    const { target: { value: input }} = e;
-    this.setState({ input });
-    // e.stopPropagation();
-  }
-
-  onSaveClick() {
-
-  }
-
   render() {
+    const { 
+      value,
+      onSaveClick, 
+      onCancelClick, 
+      onTextChange 
+    } = this.props;
+    
     return (
       <StyledDiv innerRef={ref => this.reviewEditorRef = ref}>
         <MarkdownEditor className="markdown-editor"
                         ref={this.mdEditorRef}
-                        value={this.state.input}
-                        onTextChange={(e) => this.onTextChange(e)} 
+                        value={value}
+                        onTextChange={onTextChange} 
         />
         <div className="footer">
           <Button className="primary" 
-                  type="button" onClick={() => this.onSaveClick()}>리뷰 등록</Button>
-          <Button type="button" onClick={() => this.props.onCancelClick()}>취소</Button>
+                  type="button" onClick={onSaveClick}>리뷰 등록</Button>
+          <Button type="button" onClick={onCancelClick}>취소</Button>
         </div>
       </StyledDiv>
     );

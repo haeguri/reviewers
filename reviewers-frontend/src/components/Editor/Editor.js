@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import MonacoEditor from 'react-monaco-editor';
+import { withRouter } from 'react-router-dom';
+import { useAuth } from '../../contexts/auth';
+import { useReviewAPI } from '../../contexts/review';
 import styled from 'styled-components';
-import ReviewEditor from '../ReviewEditor';
+import ReviewEditorContainer from '../../containers/ReviewEditorContainer';
 
 const CLASS_NAME = {
   REVIEW_BTN: 'icon review-btn',
@@ -130,9 +133,10 @@ class Editor extends Component {
 
   _attachMouseDownEventListener() {
     const { monacoEditor } = this;
-    const { onLineClick } = this.props;
-    let activeLineNumbers = [];
+    const { match: { params }, onLineClick, reviewActions, authInfo } = this.props;
+
     const viewZoneIds = [];
+    let activeLineNumbers = [];
 
     monacoEditor.onMouseDown(e => {
       if (e.target.position === null) {
@@ -169,15 +173,19 @@ class Editor extends Component {
           activeLineNumbers.push(currLineNumber);
 
           ReactDOM.render(
-            <ReviewEditor
-              editor={monacoEditor}
+            <ReviewEditorContainer
+              authInfo={authInfo}
+              reviewActions={reviewActions}
+              lineNumber={currLineNumber}
+              questionId={params.qId}
+              monacoEditor={monacoEditor}
               onCancelClick={() => {
                 monacoEditor.changeViewZones(changeAccessor => changeAccessor.removeZone(currViewZoneId));
                 activeLineNumbers = activeLineNumbers.filter(n => n !== currLineNumber);
                 ReactDOM.unmountComponentAtNode(reviewDOM);
               }}
               setIsMousePositionInReview={this.setIsMousePositionInReview}>
-            </ReviewEditor>,
+            </ReviewEditorContainer>,
             reviewDOM
           );
         });
@@ -254,4 +262,4 @@ Editor.propTypes = {
     reviewCounts: PropTypes.objectOf(PropTypes.number),
 };
 
-export default Editor;
+export default withRouter(useAuth(useReviewAPI(Editor)));

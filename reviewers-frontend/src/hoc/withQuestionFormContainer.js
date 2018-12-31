@@ -19,7 +19,7 @@ const withQuestionFormContainer = (WrappedComponent, apiForSubmit, apiForFormIni
     }
 
     componentDidMount = async () => {
-      const { match: { params } } = this.props;
+      const { match: { params }, authInfo } = this.props;
       const { data: languageOptions } = await languageAPI.getLanguages();
       let initData;
       let selectedLanguageOption;
@@ -35,7 +35,7 @@ const withQuestionFormContainer = (WrappedComponent, apiForSubmit, apiForFormIni
       }
 
       // ONLY TEST!!!
-      initData.author = (this.props.authInfo && this.props.authInfo._id) || '5c1a22620157ed1fabef733d'
+      initData.author = authInfo._id;
 
       this.setState((state) => ({
         form: initData,
