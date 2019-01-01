@@ -25,7 +25,7 @@ const StyledFooter = styled.footer`
 const Footer = props => (
     <StyledFooter width={props.width}>
       <div className="container">
-        <p className="intro">Made by <a href="https://github.com/haeguri" target="_blank"><strong>Haegyun Jung</strong></a></p>
+        <p className="intro">Made by <a href="https://github.com/haeguri" rel="noopener noreferrer" target="_blank"><strong>Haegyun Jung</strong></a></p>
       </div>
     </StyledFooter>
 );

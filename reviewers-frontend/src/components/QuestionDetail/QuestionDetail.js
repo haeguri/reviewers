@@ -5,6 +5,7 @@ import Editor from '../Editor';
 import ReviewList from '../ReviewList';
 import MarkdownViewer from '../MarkdownViewer';
 import moment from 'moment';
+import { badge, languageBadge } from '../../utils/style-utils';
 
 const StyledSection = styled.section`
   overflow: hidden;
@@ -12,28 +13,20 @@ const StyledSection = styled.section`
   display: flex;
   flex-direction: row;
 
-  .language-badge, .line-info {
-    padding: 5px 7px;
-    font-size: 12px;
-    border-radius: 5px;
-  }
-
-  .language-badge { 
-    border: solid 2px #1162bc;
-    color: #1162bc;
+  .language-badge {
     margin-left: 15px;
   }
 
-  .line-info.active {
-    background-color: #1162bc;
-    color: white;
-    font-weight: 600;
-  }
+  ${badge}
 
   .line-info {
     cursor: pointer;
-    background-color: white;
-    color: #1162bc;
+    background: #fff;
+    border: solid 2px #fff;
+  }
+
+  .line-info.active {
+    border: solid 2px #1162bc;
   }
 
   .left, .right {
@@ -174,21 +167,21 @@ const QuestionDetail = (props) => {
   let allLineBadge;
 
   if(selectedLine >= 1) {
-    selectedLineBadge = (<span className='line-info active'>{selectedLine} Line</span>);
+    selectedLineBadge = (<span className='badge line-info active'>{selectedLine} Line</span>);
     allBadgeExtraClassName = ''
   } else {
     selectedLineBadge = null;
-    allBadgeExtraClassName = 'active';
+    allBadgeExtraClassName = ' active';
   }
 
-  allLineBadge = (<span className={'line-info ' + allBadgeExtraClassName} onClick={() => onLineClick(-1)}>ALL</span>);
+  allLineBadge = (<span className={'badge line-info' + allBadgeExtraClassName} onClick={() => onLineClick(-1)}>ALL</span>);
 
   return (
     <StyledSection isBodyFold={isBodyFold}>
       <section className="left">
         <section className="title-area">
           <h1>{title}</h1>
-          <span className="language-badge">{language.label}</span>
+          <span className="badge language-badge">{language.label}</span>
         </section>
         <section className="meta-info-area">
           <span className="author"><a>{author.username}</a></span>

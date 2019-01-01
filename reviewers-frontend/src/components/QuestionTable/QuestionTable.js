@@ -7,9 +7,12 @@ import styled from 'styled-components';
 import Pagination from '../Pagination';
 import { PAGE_SIZE } from '../../const';
 import moment from 'moment';
+import { badge } from '../../utils/style-utils';
 
 const StyledReactTable = styled(ReactTable)`
   border: none !important;
+
+  ${badge}
 
   &.ReactTable {
     .rt-thead {
@@ -43,16 +46,27 @@ const tableColumns = [{
     show: false,
     accessor: '_id'
   }, {
+  Header: '언어',
+  accessor: 'language.label',
+  maxWidth: 150,
+  Cell: props => {
+    return (
+      <span className="badge">
+        {props.value}
+      </span>
+    ) 
+  }
+}, {
   Header: '제목',
   accessor: 'title', // String-based value accessors!
   Cell: props => {
     const { row } = props;
-    return (<Link to={`/question-detail/${row._id}`}>{row.title}</Link>)
+    return (
+      <Link to={`/question-detail/${row._id}`}>
+        {row.title}
+      </Link>
+    )
   },
-}, {
-  Header: '언어',
-  accessor: 'language.label',
-  maxWidth: 150
 }, {
   Header: '작성자',
   accessor: 'author.username',
