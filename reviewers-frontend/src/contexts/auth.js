@@ -10,8 +10,7 @@ const {
 
 class AuthProvider extends React.Component {
   state = {
-    // ONLY TEST!
-    _id: '5c1a22620157ed1fabef733d',
+    _id: '',
     email: '',
     username: '',
     isLogin: false

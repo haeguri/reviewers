@@ -37,10 +37,10 @@ class Join extends React.Component {
     super(props);
 
     this.state = {
-      email: 'testn@test.com',
-      username: 'testn',
-      password: 'qwer1234',
-      passwordConfirm: 'qwer1234'
+      email: '',
+      username: '',
+      password: '',
+      passwordConfirm: ''
     };
   }
 

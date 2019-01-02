@@ -39,9 +39,8 @@ const StyledDiv = styled.div`
 
 class Login extends Component {
   state = {
-    // test values...
-    email: 'test4@test.com',
-    password: 'qwer1234'
+    email: '',
+    password: ''
   }
 
   onEmailChange = (e) => {

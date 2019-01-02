@@ -1,6 +1,6 @@
 import { css } from 'styled-components';
 
-export const badge = (...args) => css`
+export const includeBadgeStyle = (...args) => css`
   .badge {
     padding: 5px 7px;
     font-size: 12px;  
@@ -16,10 +16,4 @@ export const badge = (...args) => css`
   }
 
   ${css(...args)}
-`;
-
-export const languageBadge = (props) => css`
-  .language-badge {
-    
-  }
 `;

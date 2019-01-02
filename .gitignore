@@ -2,6 +2,7 @@
 
 # dependencies
 reviewers-backend/node_modules
+reviewers-backend/build
 reviewers-frontend/node_modules
 
 # testing

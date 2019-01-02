@@ -7,12 +7,12 @@ import styled from 'styled-components';
 import Pagination from '../Pagination';
 import { PAGE_SIZE } from '../../const';
 import moment from 'moment';
-import { badge } from '../../utils/style-utils';
+import { includeBadgeStyle } from '../../utils/style-utils';
 
 const StyledReactTable = styled(ReactTable)`
   border: none !important;
 
-  ${badge}
+  ${includeBadgeStyle}
 
   &.ReactTable {
     .rt-thead {
@@ -33,6 +33,10 @@ const StyledReactTable = styled(ReactTable)`
 
     .pagination-bottom {
       padding: 30px 0;
+    }
+
+    .rt-tr-group {
+      min-height: 50px;
     }
 
     .rt-td {

@@ -5,7 +5,7 @@ import Editor from '../Editor';
 import ReviewList from '../ReviewList';
 import MarkdownViewer from '../MarkdownViewer';
 import moment from 'moment';
-import { badge, languageBadge } from '../../utils/style-utils';
+import { includeBadgeStyle } from '../../utils/style-utils';
 
 const StyledSection = styled.section`
   overflow: hidden;
@@ -17,7 +17,7 @@ const StyledSection = styled.section`
     margin-left: 15px;
   }
 
-  ${badge}
+  ${includeBadgeStyle}
 
   .line-info {
     cursor: pointer;
@@ -106,7 +106,7 @@ const StyledSection = styled.section`
 
       .toggle-btn {
         position: absolute;
-        top: 20px;
+        top: 15px;
         left: -40px;
 
         svg {

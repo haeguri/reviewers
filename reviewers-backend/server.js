@@ -1,13 +1,14 @@
-const express = require('express'),
-      app = express(),
-      mongoose = require('mongoose'),
-      bodyParser = require('body-parser');
-      passport = require('passport'),
-      passportConfig = require('./config/passport'),
-      session = require('express-session'),
-      flash = require('connect-flash'),
-      SESSION_ID = require('./config/const').SESSION_ID,
-      port = process.env.PORT || 3030;
+const express = require('express');
+const app = express();
+const path = require('path');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const passport = require('passport');
+const passportConfig = require('./config/passport');
+const session = require('express-session');
+const flash = require('connect-flash');
+const SESSION_ID = require('./config/const').SESSION_ID;
+const port = process.env.PORT || 3030;
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/reviewersDB');
@@ -36,6 +37,13 @@ app.use(passport.session());
 app.use(flash());
 
 app.use('/api', require('./api/apiRoute'));
+
+app.use(express.static(path.join(__dirname, 'build'))); 
+
+app.get('/*', function(req, res) { 
+    res.sendFile(path.join(__dirname, 'build', 'index.html')); 
+}); 
+
 
 app.listen(port, () => {
   console.log(`Server running on ${port} port`);

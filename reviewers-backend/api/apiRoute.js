@@ -3,7 +3,6 @@ const apiRouter = express.Router();
 
 const questionRouter = express.Router();
 const languageRouter = express.Router();
-const reviewRouter = express.Router();
 const authRouter = express.Router();
 
 require('./question/questionRoute')(questionRouter);

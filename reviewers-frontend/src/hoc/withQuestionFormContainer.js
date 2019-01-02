@@ -34,7 +34,6 @@ const withQuestionFormContainer = (WrappedComponent, apiForSubmit, apiForFormIni
         selectedLanguageOption = languageOptions[0];
       }
 
-      // ONLY TEST!!!
       initData.author = authInfo._id;
 
       this.setState((state) => ({

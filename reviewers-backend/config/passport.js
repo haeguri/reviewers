@@ -26,7 +26,7 @@ module.exports = passport => {
     },
     function verifyCallback(req, email, password, done) {
       // console.log('join verify callback');
-      User.findOne({email}, (err, user) => {
+      User.findOne({email}, async (err, user) => {
         // 1. DB 조회 등 서버 측 에러
         if(err) {
           return done(error)
@@ -35,10 +35,7 @@ module.exports = passport => {
         // 2. 인증 에러
         if(user) {
           /**
-           * done의 인자?
-           * 1: 서버 측 에러 
-           * 2: 인증 실패 시 false를, 인증 성공 시 user 객체 반환
-           * 3: 사용자 정의 에러
+           * done("서버 측 에러 ", "인증 실패 시 false를, 인증 성공 시 user 객체 반환", "사용자 정의 에러")
            */
           return done(null, false, {  message: 'User already exists' });
         } else {
@@ -47,13 +44,12 @@ module.exports = passport => {
           newUser.username = req.body.username;
           newUser.password = newUser.generateHash(password);
 
-          newUser.save(err => {
-            if(err) {
-              throw err;
-            };
-
-            return done(null, newUser);
-          })
+          try {
+            await newUser.save()
+            done(null, newUser);
+          } catch (err) {
+            done(null, false, err);
+          }
         }
       })
     }
