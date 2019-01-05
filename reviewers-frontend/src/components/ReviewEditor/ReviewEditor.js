@@ -84,15 +84,15 @@ class ReviewEditor extends Component {
     
     return (
       <StyledDiv innerRef={ref => this.reviewEditorRef = ref}>
-        <MarkdownEditor className="markdown-editor"
-                        ref={this.mdEditorRef}
-                        value={value}
-                        onTextChange={onTextChange} 
+        <MarkdownEditor 
+          className="markdown-editor"
+          ref={this.mdEditorRef}
+          value={value}
+          onTextChange={onTextChange} 
         />
         <div className="footer">
-          <Button className="primary" 
-                  type="button" onClick={onSaveClick}>리뷰 등록</Button>
-          <Button type="button" onClick={onCancelClick}>취소</Button>
+          <Button className="primary" onClick={onSaveClick}>리뷰 등록</Button>
+          <Button onClick={onCancelClick}>취소</Button>
         </div>
       </StyledDiv>
     );

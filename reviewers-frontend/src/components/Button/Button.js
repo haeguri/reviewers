@@ -50,7 +50,12 @@ const Button = (props) => {
 }
 
 Button.propTypes = {
-    className: PropTypes.string
+  className: PropTypes.string,
+  type: PropTypes.string
+}
+
+Button.defaultProps = {
+  type: 'button'
 }
 
 export default Button;
