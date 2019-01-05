@@ -13,7 +13,7 @@ const StyledDiv = styled.div`
 
     .form-input {
       height: 36px;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
 
     .join-btn, .cancel-btn {

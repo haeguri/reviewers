@@ -26,15 +26,14 @@ const StyledDiv = styled.div`
     }
   }
 
-  .md-viewer, .md-input {
+  .md-viewer {
     border: solid 1px #c2c2c2;
+  }
+
+  .md-viewer, .md-input {
     width: 100%;
     height: 100%;
     border-radius: 5px;
-  }
-
-  .md-input {
-    padding: 5px;
   }
 `;
 
@@ -52,9 +51,6 @@ class MarkdownEditor extends Component {
     this.setState({
       isPreviewMode: !this.state.isPreviewMode
     })
-
-    // not working.
-    // e.stopPropagation();
   }
 
   render() {

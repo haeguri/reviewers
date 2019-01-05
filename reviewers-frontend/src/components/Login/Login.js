@@ -13,8 +13,7 @@ const StyledDiv = styled.div`
     margin: 40px 40px 100px;
 
     .form-input {
-      height: 36px;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
 
     .login-btn, .join-btn {
@@ -39,6 +38,7 @@ const StyledDiv = styled.div`
 
 const Login = (props) => {
   const {
+    errors,
     email,
     password,
     onEmailChange,
@@ -55,6 +55,7 @@ const Login = (props) => {
             className="form-input"
             onChange={onEmailChange}
             value={email}
+            error={errors.email}
             placeholder="이메일을 입력하세요."
           />
           <TextInput
@@ -62,6 +63,7 @@ const Login = (props) => {
             className="form-input"  
             onChange={onPasswordChange}
             value={password}
+            error={errors.password}
             placeholder="비밀번호를 입력하세요."
           />
           <Button type="submit" className="login-btn" onClick={onLoginClick}>로그인</Button>
@@ -73,6 +75,7 @@ const Login = (props) => {
 }
 
 Login.propTypes = {
+  errors: PropTypes.object,
   email: PropTypes.string,
   password: PropTypes.string,
   onEmailChange: PropTypes.func.isRequired,
