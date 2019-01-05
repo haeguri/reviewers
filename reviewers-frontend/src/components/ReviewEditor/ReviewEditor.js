@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Button from '../Button';
 import MarkdownEditor from '../MarkdownEditor';
-import InputError from '../InputError';
 
 const StyledForm = styled.form`
   height: 100%;

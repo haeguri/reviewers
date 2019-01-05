@@ -6,7 +6,7 @@ class ReviewEditorContainer extends Component {
   constructor(props) {
     super(props);
 
-    this.hasValidForm = true;
+    this.invalidFields = new Set();
     this.state = {
       form: {
         body: '',
@@ -21,9 +21,9 @@ class ReviewEditorContainer extends Component {
 
   setErrorState = (field, msg) => {
     if (msg === null) {
-      this.hasValidForm = true;
+      this.invalidFields.delete(field);
     } else {
-      this.hasValidForm = false;
+      this.invalidFields.add(field);
     }
 
     this.setState((state) => ({
@@ -44,8 +44,8 @@ class ReviewEditorContainer extends Component {
       this.setErrorState('body', null);
     }
 
-    if (!this.hasValidForm) {
-      this.hasValidForm = true;
+    if (this.invalidFields.size > 0) {
+      this.invalidFields.clear();
       return;
     }
 

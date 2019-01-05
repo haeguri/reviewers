@@ -4,11 +4,13 @@ import { useAuth } from '../contexts/auth';
 import { withRouter } from 'react-router-dom';
 import {
   isValidEmail,
-  isvalidUsername
+  isValidUsername,
+  isValidPassword,
 } from '../utils/validation';
 
 class JoinContainer extends Component {
-  hasValidForm = false;
+  invalidFields = new Set();
+
   state = {
     form: {
       email: '',
@@ -20,6 +22,7 @@ class JoinContainer extends Component {
       email: null,
       username: null,
       password: null,
+      passwordConfirm: null
     }
   };
 
@@ -61,9 +64,9 @@ class JoinContainer extends Component {
 
   setErrorState = (field, msg) => {
     if (msg === null) {
-      this.hasValidForm = true;
+      this.invalidFields.delete(field);
     } else {
-      this.hasValidForm = false;
+      this.invalidFields.add(field);
     }
 
     this.setState((state) => ({
@@ -88,7 +91,7 @@ class JoinContainer extends Component {
 
     if (!username) {
       this.setErrorState('username', '사용자 이름이 입력되지 않았습니다.');
-    } else if (!isvalidUsername(username)) {
+    } else if (!isValidUsername(username)) {
       this.setErrorState('username', '사용자 이름 형식이 올바르지 않습니다.');
     } else {
       this.setErrorState('username', null);
@@ -96,14 +99,24 @@ class JoinContainer extends Component {
 
     if (!password) {
       this.setErrorState('password', '비밀번호가 입력되지 않았습니다.');
+    } else if (!isValidPassword(password)) {
+      this.setErrorState('password', '비밀번호 형식은 4~16자리 영문자, 숫자입니다.');
     } else if (password !== passwordConfirm) {
       this.setErrorState('password', '두 개의 비밀번호가 다릅니다.');
     } else {
       this.setErrorState('password', null);
     }
 
-    if (!this.hasValidForm) {
-      this.hasValidForm = true;
+    if (!passwordConfirm) {
+      this.setErrorState('passwordConfirm', '비밀번호가 입력되지 않았습니다.');
+    } else if (!isValidPassword(passwordConfirm)) {
+      this.setErrorState('passwordConfirm', '비밀번호 형식은 4~16자리 영문자, 숫자입니다.');
+    } else {
+      this.setErrorState('passwordConfirm', null);
+    }
+
+    if (this.invalidFields.size > 0) {
+      this.invalidFields.clear();
       return;
     }
 

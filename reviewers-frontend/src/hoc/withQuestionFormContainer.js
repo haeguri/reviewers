@@ -6,7 +6,7 @@ import { useAuth } from '../contexts/auth';
 
 const withQuestionFormContainer = (WrappedComponent, apiForSubmit, apiForFormInit) => {
   const QuestionFormContainer = class extends Component {
-    hasValidForm = true;
+    invalidFields = new Set();
     state = {
       languageOptions: [],
       selectedLanguageOption: {},
@@ -51,9 +51,9 @@ const withQuestionFormContainer = (WrappedComponent, apiForSubmit, apiForFormIni
 
     setErrorState = (field, msg) => {
       if (msg === null) {
-        this.hasValidForm = true;
+        this.invalidFields.delete(field);
       } else {
-        this.hasValidForm = false;
+        this.invalidFields.add(field);
       }
   
       this.setState((state) => ({
@@ -90,8 +90,8 @@ const withQuestionFormContainer = (WrappedComponent, apiForSubmit, apiForFormIni
         this.setErrorState('sourceCode', null);
       }
 
-      if (!this.hasValidForm) {
-        this.hasValidForm = true;
+      if (this.invalidFields.size > 0) {
+        this.invalidFields.clear();
         return;
       }
 

@@ -10,7 +10,7 @@ class ReviewContainer extends Component {
   }
 
   initialize = (props) => {
-    this.hasValidForm = true;
+    this.invalidFields = new Set();
     this.setState({
       isEditMode: false,
       form: {
@@ -24,9 +24,9 @@ class ReviewContainer extends Component {
 
   setErrorState = (field, msg) => {
     if (msg === null) {
-      this.hasValidForm = true;
+      this.invalidFields.delete(field);
     } else {
-      this.hasValidForm = false;
+      this.invalidFields.add(field);
     }
 
     this.setState((state) => ({
@@ -60,8 +60,8 @@ class ReviewContainer extends Component {
       this.setErrorState('body', null);
     }
 
-    if (!this.hasValidForm) {
-      this.hasValidForm = true;
+    if (this.invalidFields.size > 0) {
+      this.invalidFields.clear();
       return;
     }
 

@@ -242,13 +242,14 @@ class Editor extends Component {
 
   _updateReviewBtn(prevDecoIds, line) {
     const { monacoAPI, monacoEditor } = this;
-
-    return monacoEditor.deltaDecorations(prevDecoIds, [{
+    const decoOptions = [{
       range: new monacoAPI.Range(line, 1, line, 1),
       options: {
         linesDecorationsClassName: CLASS_NAME.REVIEW_BTN
       }
-    }]);
+    }];
+
+    return monacoEditor.deltaDecorations(prevDecoIds, decoOptions);
   }
 
   _updateHasReviewIcon(prevDecoIds, lines) {

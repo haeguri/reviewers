@@ -79,6 +79,7 @@ const Join = (props) => {
             onChange={onPasswordConfirmChange} 
             value={passwordConfirm}
             placeholder="비밀번호를 다시 입력하세요."
+            error={errors.passwordConfirm}
           />
           <Button type="submit" className="join-btn" onClick={onJoinClick}>회원가입</Button>
           <Link to="/login"><Button className="cancel-btn">취소</Button></Link>

@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import Login from '../components/Login';
 import { useAuth } from '../contexts/auth';
-import { isValidEmail, isValidPassword } from '../utils/validation';
+import { isValidEmail } from '../utils/validation';
 
 class LoginContainer extends Component {
-  hasValidForm = true;
-
+  invalidFields = new Set();
   state = {
     form: {
       email: '',
@@ -38,9 +37,9 @@ class LoginContainer extends Component {
 
   setErrorState = (field, msg) => {
     if (msg === null) {
-      this.hasValidForm = true;
+      this.invalidFields.delete(field);
     } else {
-      this.hasValidForm = false;
+      this.invalidFields.add(field);
     }
 
     this.setState((state) => ({
@@ -65,14 +64,12 @@ class LoginContainer extends Component {
 
     if (!password) {
       this.setErrorState('password', '비밀번호가 입력되지 않았습니다.');
-    } else if (!isValidPassword(password)) {
-      this.setErrorState('password', '비밀번호 형식은 4~16자리 영문자, 숫자입니다.');
     } else {
       this.setErrorState('password', null);
     }
 
-    if (!this.hasValidForm) {
-      this.hasValidForm = true;
+    if (this.invalidFields.size > 0) {
+      this.invalidFields.clear();
       return;
     }
 
