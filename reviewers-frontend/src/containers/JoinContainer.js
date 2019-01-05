@@ -2,14 +2,24 @@ import React, { Component } from 'react';
 import Join from '../components/Join';
 import { useAuth } from '../contexts/auth';
 import { withRouter } from 'react-router-dom';
+import {
+  isValidEmail,
+  isvalidUsername
+} from '../utils/validation';
 
 class JoinContainer extends Component {
+  hasValidForm = false;
   state = {
     form: {
       email: '',
       username: '',
       password: '',
       passwordConfirm: ''
+    },
+    errors: {
+      email: null,
+      username: null,
+      password: null,
     }
   };
 
@@ -47,14 +57,48 @@ class JoinContainer extends Component {
         passwordConfirm: e.target.value
       }
     });
-  }  
+  }
+
+  setErrorState = (field, msg) => {
+    this.hasValidForm = false;
+    this.setState((state) => ({
+      errors: {
+        ...state.errors,
+        [field]: msg
+      }
+    }))
+  }
 
   onJoinClick = async (e) => {
-    const { email, username, password, passwordConfirm } = this.state.form;
+    const { form: { email, username, password, passwordConfirm } } = this.state;
     const { authActions } = this.props;
 
-    if(password !== passwordConfirm) {
-      // 에러처리..
+    if (!email) {
+      this.setErrorState('email', '이메일이 입력되지 않았습니다.');
+    } else if (!isValidEmail(email)) {
+      this.setErrorState('email', '이메일 형식이 올바르지 않습니다.');
+    } else {
+      this.setErrorState('email', null);
+    }
+
+    if (!username) {
+      this.setErrorState('username', '사용자 이름이 입력되지 않았습니다.');
+    } else if (!isvalidUsername(username)) {
+      this.setErrorState('username', '사용자 이름 형식이 올바르지 않습니다.');
+    } else {
+      this.setErrorState('username', null);
+    }
+
+    if (!password) {
+      this.setErrorState('password', '비밀번호가 입력되지 않았습니다.');
+    } else if (password !== passwordConfirm) {
+      this.setErrorState('password', '두 개의 비밀번호가 다릅니다.');
+    } else {
+      this.setErrorState('password', null);
+    }
+
+    if (!this.hasValidForm) {
+      this.hasValidForm = true;
       return;
     }
 
@@ -68,6 +112,7 @@ class JoinContainer extends Component {
   }
 
   render = () => {
+    const { form, errors } = this.state;
     const { authInfo, history } = this.props;
 
     if (authInfo.isLogin) {
@@ -75,8 +120,9 @@ class JoinContainer extends Component {
     }
 
     return (
-      <Join 
-        {...this.state.form}
+      <Join
+        {...form}
+        errors={errors}
         onEmailChange={this.onEmailChange}
         onUsernameChange={this.onUsernameChange}
         onPasswordChange={this.onPasswordChange}

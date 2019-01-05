@@ -12,7 +12,6 @@ const StyledDiv = styled.div`
     margin: 40px 40px 100px;
 
     .form-input {
-      height: 36px;
       margin-bottom: 15px;
     }
 
@@ -33,7 +32,8 @@ const StyledDiv = styled.div`
 `;
 
 const Join = (props) => {
-  const { 
+  const {
+    errors,
     email,
     username,
     password,
@@ -53,7 +53,8 @@ const Join = (props) => {
             type="email" 
             className="form-input" 
             onChange={onEmailChange} 
-            value={email} 
+            value={email}
+            error={errors.email}
             placeholder="이메일을 입력하세요." 
           />
           <TextInput 
@@ -61,13 +62,15 @@ const Join = (props) => {
             className="form-input"
             onChange={onUsernameChange}
             value={username}
+            error={errors.username}
             placeholder="이름을 입력하세요." 
           />
           <TextInput 
             type="password"
             className="form-input" 
-            onChange={onPasswordChange} 
-            value={password} 
+            onChange={onPasswordChange}
+            value={password}
+            error={errors.password}
             placeholder="비밀번호를 입력하세요." 
           />
           <TextInput 

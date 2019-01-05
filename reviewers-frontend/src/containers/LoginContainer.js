@@ -47,18 +47,23 @@ class LoginContainer extends Component {
   }
 
   onLoginClick = async (e) => {
-    const { form } = this.state;
+    const { form: { email, password } } = this.state;
+    const { authActions } = this.props;
 
-    if (!form.email) {
+    if (!email) {
       this.setErrorState('email', '이메일이 입력되지 않았습니다.');
-    } else if (!isValidEmail(form.email)) {
+    } else if (!isValidEmail(email)) {
       this.setErrorState('email', '이메일 형식이 올바르지 않습니다.');
+    } else {
+      this.setErrorState('email', null);
     }
 
-    if (!form.password) {
+    if (!password) {
       this.setErrorState('password', '비밀번호가 입력되지 않았습니다.');
-    } else if (!isValidPassword(form.password)) {
-      this.setErrorState('password', '비밀번호 형식은 6~16자리 영문자, 숫자입니다.');
+    } else if (!isValidPassword(password)) {
+      this.setErrorState('password', '비밀번호 형식은 4~16자리 영문자, 숫자입니다.');
+    } else {
+      this.setErrorState('password', null);
     }
 
     if (!this.hasValidForm) {
@@ -66,10 +71,8 @@ class LoginContainer extends Component {
       return;
     }
 
-    const { authActions, history } = this.props;
     try {
       await authActions.login(this.state.form);
-      history.push('/');
     } catch (err) {
       // 서버 측 에러 처리
     }
@@ -85,9 +88,8 @@ class LoginContainer extends Component {
 
     return (
       <Login 
+        {...form}
         errors={errors}
-        email={form.email}
-        password={form.password}
         onEmailChange={this.onEmailChange}
         onPasswordChange={this.onPasswordChange}
         onLoginClick={this.onLoginClick}
