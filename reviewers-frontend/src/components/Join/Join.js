@@ -13,7 +13,7 @@ const StyledDiv = styled.div`
 
     .form-input {
       height: 36px;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
 
     .join-btn, .cancel-btn {
@@ -32,86 +32,57 @@ const StyledDiv = styled.div`
   }
 `;
 
-class Join extends React.Component {
-  constructor(props) {
-    super(props);
+const Join = (props) => {
+  const { 
+    email,
+    username,
+    password,
+    passwordConfirm,
+    onEmailChange,
+    onUsernameChange,
+    onPasswordChange,
+    onPasswordConfirmChange,
+    onJoinClick
+  } = props;
 
-    this.state = {
-      email: '',
-      username: '',
-      password: '',
-      passwordConfirm: ''
-    };
-  }
-
-  onEmailChange = (e) => {
-    this.setState({email: e.target.value})
-  } 
-
-  onUsernameChange = (e) => {
-    this.setState({username: e.target.value});
-  }
-
-  onPasswordChange = (e) => {
-    this.setState({password: e.target.value});
-  }
-
-  onPasswordConfirmChange = (e) => {
-    this.setState({passwordConfirm: e.target.value});
-  }
-  
-  onJoinClick = (e) => {
-    const { email, username, password, passwordConfirm } = this.state;
-    if(password !== passwordConfirm) {
-      console.log('Please check password input.')
-      return;
-    }
-
-    this.props.requestJoin({
-      email, username, password
-    });
-  }
-
-  render() {
-    return (
-      <StyledDiv>
-        <CardTemplate className="join-card" headerMsg={'회원가입'}>
-          <form className="join-form">
-            <TextInput 
-              type="email" 
-              className="form-input" 
-              onChange={this.onEmailChange} 
-              value={this.state.email} 
-              placeholder="이메일을 입력하세요." 
-            />
-            <TextInput 
-              type="text" 
-              className="form-input"
-              onChange={this.onUsernameChange}
-              value={this.state.username}
-              placeholder="이름을 입력하세요." 
-            />
-            <TextInput 
-              type="password"
-              className="form-input" 
-              onChange={this.onPasswordChange} 
-              value={this.state.password} 
-              placeholder="비밀번호를 입력하세요." 
-            />
-            <TextInput 
-              type="password"
-              className="form-input" 
-              onChange={this.onPasswordConfirmChange} 
-              value={this.state.passwordConfirm}
-              placeholder="비밀번호를 다시 입력하세요."
-            />
-            <Button type="submit" className="join-btn" onClick={this.onJoinClick}>회원가입</Button>
-            <Link to="/login"><Button className="cancel-btn">취소</Button></Link>
-          </form>
-        </CardTemplate>
-      </StyledDiv>
-    )
-  }
+  return (
+    <StyledDiv>
+      <CardTemplate className="join-card" headerMsg={'회원가입'}>
+        <form className="join-form">
+          <TextInput 
+            type="email" 
+            className="form-input" 
+            onChange={onEmailChange} 
+            value={email} 
+            placeholder="이메일을 입력하세요." 
+          />
+          <TextInput 
+            type="text" 
+            className="form-input"
+            onChange={onUsernameChange}
+            value={username}
+            placeholder="이름을 입력하세요." 
+          />
+          <TextInput 
+            type="password"
+            className="form-input" 
+            onChange={onPasswordChange} 
+            value={password} 
+            placeholder="비밀번호를 입력하세요." 
+          />
+          <TextInput 
+            type="password"
+            className="form-input" 
+            onChange={onPasswordConfirmChange} 
+            value={passwordConfirm}
+            placeholder="비밀번호를 다시 입력하세요."
+          />
+          <Button type="submit" className="join-btn" onClick={onJoinClick}>회원가입</Button>
+          <Link to="/login"><Button className="cancel-btn">취소</Button></Link>
+        </form>
+      </CardTemplate>
+    </StyledDiv>
+  )
 }
 
 export default Join;

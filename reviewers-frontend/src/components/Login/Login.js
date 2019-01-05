@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -14,7 +14,7 @@ const StyledDiv = styled.div`
 
     .form-input {
       height: 36px;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
 
     .login-btn, .join-btn {
@@ -37,55 +37,47 @@ const StyledDiv = styled.div`
   }
 `;
 
-class Login extends Component {
-  state = {
-    email: '',
-    password: ''
-  }
+const Login = (props) => {
+  const {
+    email,
+    password,
+    onEmailChange,
+    onPasswordChange,
+    onLoginClick
+  } = props;
 
-  onEmailChange = (e) => {
-    this.setState({email: e.target.value})
-  } 
-
-  onPasswordChange = (e) => {
-    this.setState({password: e.target.value});
-  }
-
-  onLoginClick = (e) => {
-    const { email, password } = this.state;
-    this.props.requestLogin({email, password});
-  }
-
-  render() {
-    return (
-      <StyledDiv>
-        <CardTemplate className="login-card" headerMsg={'로그인'}>
-          <form className="login-form">
-            <TextInput
-              type="text" 
-              className="form-input"
-              onChange={this.onEmailChange}
-              value={this.state.email}
-              placeholder="이메일을 입력하세요."
-            />
-            <TextInput
-              type="password"
-              className="form-input"  
-              onChange={this.onPasswordChange}
-              value={this.state.password}
-              placeholder="비밀번호를 입력하세요."
-            />
-            <Button type="submit" className="login-btn" onClick={this.onLoginClick}>로그인</Button>
-            <Link to="/join"><Button className="join-btn">회원가입</Button></Link>
-          </form>
-        </CardTemplate>
-      </StyledDiv>
-    );
-  }
+  return (
+    <StyledDiv>
+      <CardTemplate className="login-card" headerMsg={'로그인'}>
+        <form className="login-form">
+          <TextInput
+            type="text" 
+            className="form-input"
+            onChange={onEmailChange}
+            value={email}
+            placeholder="이메일을 입력하세요."
+          />
+          <TextInput
+            type="password"
+            className="form-input"  
+            onChange={onPasswordChange}
+            value={password}
+            placeholder="비밀번호를 입력하세요."
+          />
+          <Button type="submit" className="login-btn" onClick={onLoginClick}>로그인</Button>
+          <Link to="/join"><Button className="join-btn">회원가입</Button></Link>
+        </form>
+      </CardTemplate>
+    </StyledDiv>
+  )
 }
 
 Login.propTypes = {
-  requestLogin: PropTypes.func.isRequired
+  email: PropTypes.string,
+  password: PropTypes.string,
+  onEmailChange: PropTypes.func.isRequired,
+  onPasswordChange: PropTypes.func.isRequired,
+  onLoginClick: PropTypes.func.isRequired
 }
 
 export default Login;
