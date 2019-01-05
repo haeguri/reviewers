@@ -10,8 +10,8 @@ const StyledSelect = styled(Select)`
 const customStyles = {
   control: (base) => ({
     ...base,
-    height: 30,
-    minHeight: 30,
+    height: 36,
+    minHeight: 36,
   })
 }
 

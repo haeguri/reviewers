@@ -60,7 +60,12 @@ class JoinContainer extends Component {
   }
 
   setErrorState = (field, msg) => {
-    this.hasValidForm = false;
+    if (msg === null) {
+      this.hasValidForm = true;
+    } else {
+      this.hasValidForm = false;
+    }
+
     this.setState((state) => ({
       errors: {
         ...state.errors,

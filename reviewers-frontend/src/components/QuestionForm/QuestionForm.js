@@ -27,6 +27,10 @@ const StyledForm = styled.form`
 
   .left, .right {
     padding: 0 10px;
+
+    & > .input-group:first-child {
+      max-height: 50px;
+    }
   }
 
   .left {
@@ -40,7 +44,7 @@ const StyledForm = styled.form`
   }
 
   .input-group {
-    margin: 10px 0 20px 0;
+    margin: 10px 0 30px 0;
 
     label {
       font-weight: 600;
@@ -54,6 +58,7 @@ const StyledForm = styled.form`
 
 const QuestionForm = props => {
   const {
+    errors,
     selectedLanguageOption,
     formTitle,  
     submitBtnTxt, 
@@ -78,33 +83,40 @@ const QuestionForm = props => {
         <section className="left">
           <div className="input-group">
             <label>제목</label>
-            <TextInput className="input-title"
-                       onChange={onTitleChange}
-                       value={form.title}
+            <TextInput 
+              className="input-title"
+              onChange={onTitleChange}
+              value={form.title}
+              error={errors.title}
             />
           </div>
           <div className="input-group">
-            <label>본문</label>
-            <MarkdownEditor className="md-editor" 
-                            value={form.body}
-                            onTextChange={onBodyChange}
+            <label>내용</label>
+            <MarkdownEditor 
+              className="md-editor" 
+              value={form.body}
+              onTextChange={onBodyChange}
+              error={errors.body}
             />
           </div>
         </section>
         <section className="right">
           <div className="input-group">
-            <label className="inline">프로그래밍 언어</label>
-            <Dropdown options={langOptions}
-                      value={selectedLanguageOption}
-                      onChange={onLangChange}
+            <label className="inline">언어</label>
+            <Dropdown 
+              options={langOptions}
+              value={selectedLanguageOption}
+              onChange={onLangChange}
             />
           </div>
           <div className="input-group">
             <label>소스코드</label>
-            <Editor height={450}
-                    value={form.sourceCode}
-                    onChange={(newValue, e) => onCodeChange(newValue, e)}
-                    language={selectedLanguageOption.value}
+            <Editor 
+              height={450}
+              value={form.sourceCode}
+              onChange={(newValue, e) => onCodeChange(newValue, e)}
+              language={selectedLanguageOption.value}
+              error={errors.sourceCode}
             />
           </div>
         </section>

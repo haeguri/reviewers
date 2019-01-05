@@ -5,25 +5,46 @@ import { useAuth } from '../contexts/auth';
 import { useReviewAPI } from '../contexts/review';
 
 class ReviewContainer extends Component {
-  state = {
-    isEditMode: false,
-    form: {
-      body: this.props.data.body
+  constructor(props) {
+    super(props);
+
+    this.hasValidForm = true;
+    this.state = {
+      isEditMode: false,
+      form: {
+        body: props.data.body
+      },
+      errors: {
+        body: null
+      }
+    };
+  }
+
+  setErrorState = (field, msg) => {
+    if (msg === null) {
+      this.hasValidForm = true;
+    } else {
+      this.hasValidForm = false;
     }
-  };
+
+    this.setState((state) => ({
+      errors: {
+        ...state.errors,
+        [field]: msg
+      }
+    }))
+  }
 
   onSaveClick = async (e) => {
     const { 
-      match: {
-        params 
-      },
-      data: { 
-        _id 
-      }, 
+      match: { params },
+      data: { _id }, 
       lineNumber, 
       authInfo, 
       reviewActions, 
     } = this.props;
+
+    const { form: { body } } = this.state;
 
     const data = {
       author: authInfo._id,
@@ -31,12 +52,21 @@ class ReviewContainer extends Component {
       body: this.state.form.body,
     };
 
+     if (!body) {
+      this.setErrorState('body', '내용이 입력되지 않았습니다.');
+    } else {
+      this.setErrorState('body', null);
+    }
+
+    if (!this.hasValidForm) {
+      this.hasValidForm = true;
+      return;
+    }
+
     try {
       await reviewActions.updateReview(data, params.qId, _id);
       this.setState({
-        form: {
-          body: ''
-        },
+        form: { body: '' },
         isEditMode: false
       })
     } catch(err) {
@@ -79,16 +109,27 @@ class ReviewContainer extends Component {
   }
 
   render = () => {
-    const { data, className, authInfo } = this.props;
+    const {
+      errors,
+      isEditMode,
+      form
+    } = this.state;
+
+    const { 
+      data, 
+      className, 
+      authInfo 
+    } = this.props;
 
     const isOwner = authInfo._id === data.author._id;
 
     return (
       <Review
+        errors={errors}
         isOwner={isOwner}
         className={className}
-        form={this.state.form}
-        isEditMode={this.state.isEditMode}
+        form={form}
+        isEditMode={isEditMode}
         data={data}
         onTextChange={this.onTextChange}
         onEditClick={this.onEditClick}

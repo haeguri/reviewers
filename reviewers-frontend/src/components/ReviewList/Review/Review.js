@@ -61,6 +61,7 @@ const StyledArticle = styled.article`
 
 const Review = (props) => {
   const { 
+    errors,
     isOwner,
     className, 
     isEditMode,
@@ -88,6 +89,7 @@ const Review = (props) => {
               className="md-editor" 
               value={form.body}
               onTextChange={onTextChange}
+              error={errors.error}
             />
           </div>
           <div className="review-footer">

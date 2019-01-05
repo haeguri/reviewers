@@ -7,6 +7,7 @@ import { useAuth } from '../../contexts/auth';
 import { useReviewAPI } from '../../contexts/review';
 import styled from 'styled-components';
 import ReviewEditorContainer from '../../containers/ReviewEditorContainer';
+import InputError from '../InputError';
 
 const CLASS_NAME = {
   REVIEW_BTN: 'icon review-btn',
@@ -14,8 +15,11 @@ const CLASS_NAME = {
 }
 
 const StyledSection = styled.section`
-  height: ${props => props.height}px;
-  border: solid 1px #c2c2c2;
+  border-width: 1px;
+  border-style: solid;
+  border-color: ${props => props.error ? '#ff0000' : '#c2c2c2'};
+  border-radius: 3px;
+  overflow: hidden;
 
   .icon::before {
     display: inline-block;
@@ -85,19 +89,32 @@ class Editor extends Component {
   }
 
   render() {
+    const {
+      className,
+      height,
+      language,
+      value,
+      options,
+      onChange,
+      error
+    } = this.props;
+
     return (
-      <StyledSection>
-        <MonacoEditor className={this.props.className}
-                      height={this.props.height}
-                      width={this.props.width}
-                      theme="vs"
-                      language={this.props.language}
-                      value={this.props.value}
-                      options={this.props.options}
-                      onChange={(newValue, e) => this.props.onChange(newValue, e)}
-                      editorDidMount={(editor, monaco) => this._editorDidMount(editor, monaco)}
-        />
-      </StyledSection>
+      <React.Fragment>
+        <StyledSection error={error}>
+          <MonacoEditor 
+            className={className}
+            height={height}
+            theme="vs"
+            language={language}
+            value={value}
+            options={options}
+            onChange={(newValue, e) => onChange(newValue, e)}
+            editorDidMount={(editor, monaco) => this._editorDidMount(editor, monaco)}
+          />
+        </StyledSection>
+        <InputError error={error} />
+      </React.Fragment>
     );
   }
 
@@ -169,7 +186,7 @@ class Editor extends Component {
 
           currViewZoneId = changeAccessor.addZone({
               afterLineNumber: currLineNumber,
-              heightInPx: 253,
+              heightInPx: 280,
               domNode: reviewDOM,
           });
 

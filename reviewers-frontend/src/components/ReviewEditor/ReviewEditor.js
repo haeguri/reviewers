@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Button from '../Button';
 import MarkdownEditor from '../MarkdownEditor';
+import InputError from '../InputError';
 
 const StyledForm = styled.form`
   height: 100%;
@@ -10,7 +11,8 @@ const StyledForm = styled.form`
   border: solid 1px #c2c2c2;
 
   .markdown-editor {
-    height: 186px;
+    height: 200px;
+    margin-bottom: 10px;
   }
 
   .footer {
@@ -75,7 +77,8 @@ class ReviewEditor extends Component {
   }
 
   render() {
-    const { 
+    const {
+      errors,
       value,
       onSaveClick, 
       onCancelClick, 
@@ -83,12 +86,13 @@ class ReviewEditor extends Component {
     } = this.props;
     
     return (
-      <StyledForm innerRef={ref => this.reviewEditorRef = ref}>
+      <StyledForm innerRef={ref => this.reviewEditorRef = ref} error={errors.body}>
         <MarkdownEditor 
           className="markdown-editor"
           ref={this.mdEditorRef}
           value={value}
-          onTextChange={onTextChange} 
+          onTextChange={onTextChange}
+          error={errors.body}
         />
         <div className="footer">
           <Button type="submit" className="primary" onClick={onSaveClick}>리뷰 등록</Button>

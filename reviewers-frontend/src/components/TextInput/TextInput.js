@@ -1,13 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import InputError from '../InputError';
+
+const borderColorMixin = css`
+  border-color: ${props => {
+    if (props.error) {
+      return '#ff0000';
+    } else if (props.error === null) {
+      return '#c2c2c2';
+    } else if (props.error === undefined) {
+      return 'inherit';
+    }
+  }};
+`
 
 const StyledDiv = styled.div`
   input, textarea {
     font-size: 13px;
     border-style: solid;
     border-width: 1px;
-    border-color: ${props => props.error ? '#ff0000' : '#c2c2c2'};
+    ${borderColorMixin}
     border-radius: 3px;
     width: 100%;
     height: 100%;
@@ -24,12 +37,6 @@ const StyledDiv = styled.div`
     border-radius: 4px;
     padding-top: 0;
     padding-bottom: 0;
-  }
-
-  .error-msg {
-    font-size: 13px;
-    color: #ff0000;
-    padding: ${props => props.error ? `0 5px` : `0`};
   }
 `;
 
@@ -48,7 +55,7 @@ const TextInput = (props) => {
       ) : (
         <textarea {...others} />
       )}
-      <span className="error-msg">{error}</span>
+      <InputError error={error}/>
     </StyledDiv>
   )
 }
