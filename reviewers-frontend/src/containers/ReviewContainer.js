@@ -5,11 +5,13 @@ import { useAuth } from '../contexts/auth';
 import { useReviewAPI } from '../contexts/review';
 
 class ReviewContainer extends Component {
-  constructor(props) {
-    super(props);
+  componentWillMount = () => {
+    this.initialize(this.props);
+  }
 
+  initialize = (props) => {
     this.hasValidForm = true;
-    this.state = {
+    this.setState({
       isEditMode: false,
       form: {
         body: props.data.body
@@ -17,7 +19,7 @@ class ReviewContainer extends Component {
       errors: {
         body: null
       }
-    };
+    })
   }
 
   setErrorState = (field, msg) => {
@@ -66,7 +68,6 @@ class ReviewContainer extends Component {
     try {
       await reviewActions.updateReview(data, params.qId, _id);
       this.setState({
-        form: { body: '' },
         isEditMode: false
       })
     } catch(err) {
@@ -84,6 +85,8 @@ class ReviewContainer extends Component {
     this.setState({
       isEditMode: false
     });
+
+    this.initialize(this.props);
   }
 
   onTextChange = (e) => {
@@ -96,13 +99,9 @@ class ReviewContainer extends Component {
 
   onRemoveClick = async (e) => {
     const {
-      match: {
-        params
-      },
+      match: { params },
+      data: { _id },
       reviewActions,
-      data: {
-        _id
-      }
     } = this.props;
 
     await reviewActions.deleteReview(params.qId, _id);

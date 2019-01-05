@@ -37,7 +37,7 @@ const StyledArticle = styled.article`
     }
 
     .review-footer {
-      padding: 10px;
+      padding: 18px 10px 10px 5px;
 
       a {
         background: none;
@@ -85,11 +85,11 @@ const Review = (props) => {
       {isEditMode? (
         <React.Fragment>
           <div className="review-body" >
-            <MarkdownEditor 
+            <MarkdownEditor
               className="md-editor" 
               value={form.body}
               onTextChange={onTextChange}
-              error={errors.error}
+              error={errors.body}
             />
           </div>
           <div className="review-footer">
@@ -100,7 +100,10 @@ const Review = (props) => {
       ) : (
         <React.Fragment>
           <div className="review-body">
-            <MarkdownViewer rawText={body} hasScroll={false} />
+            <MarkdownViewer
+              hasScroll={false}
+              rawText={body}
+            />
           </div>
           <div className="review-footer">
             {isOwner && (
