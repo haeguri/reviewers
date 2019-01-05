@@ -79,7 +79,8 @@ class Editor extends Component {
   }
 
   componentDidUpdate = (prevProps) => {
-    if (this.props.language !== prevProps.language) {
+    if (!this.props.isReadOnly && 
+        this.props.language !== prevProps.language) {
       const model = this.monacoEditor.getModel();
       this.monacoAPI.editor.setModelLanguage(model, this.props.language);
       return {};

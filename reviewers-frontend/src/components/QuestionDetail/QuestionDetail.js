@@ -210,17 +210,18 @@ const QuestionDetail = (props) => {
           </div>
         </section>
         <section className="source-code-area">
-          <Editor className="editor"
-                  height={600}
-                  isReadOnly={true}
-                  reviewCounts={reviewCounts}
-                  onLineClick={(curr) => onLineClick(curr)}
-                  value={sourceCode}
-                  language={language.value}
-                  options={{
-                    readOnly: true,
-                    glyphMargin: true
-                  }}
+          <Editor 
+            className="editor"
+            height={600}
+            isReadOnly={true}
+            reviewCounts={reviewCounts}
+            onLineClick={(curr) => onLineClick(curr)}
+            value={sourceCode}
+            language={language.value}
+            options={{
+              readOnly: true,
+              glyphMargin: true
+            }}
           />
         </section>
       </section>
