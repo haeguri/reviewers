@@ -51,8 +51,6 @@ const withQuestionFormContainer = (WrappedComponent, apiForSubmit, apiForFormIni
       } catch (err) {
         console.log('error', err);
       }
-
-      e.preventDefault();
     }
 
     onTitleChange = (e) => {

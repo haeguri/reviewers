@@ -8,7 +8,7 @@ import TextInput from '../../components/TextInput';
 import Dropdown from '../../components/Dropdown';
 import MarkdownEditor from '../../components/MarkdownEditor';
 
-const StyledSection = styled.section`
+const StyledForm = styled.form`
   .title-area {
     padding: 0 10px;
     display: flex;
@@ -46,7 +46,7 @@ const StyledSection = styled.section`
   .md-editor {
     height: 460px;
   }
-`
+`;
 
 const QuestionForm = props => {
   const {
@@ -63,11 +63,11 @@ const QuestionForm = props => {
   } = props;
 
   return (
-    <StyledSection>
+    <StyledForm>
       <section className="title-area">
         <h2>{formTitle}</h2>
         <div className="button-area">
-          <Button className="primary" onClick={onSubmit}>{submitBtnTxt}</Button>
+          <Button type="submit" className="primary" onClick={onSubmit}>{submitBtnTxt}</Button>
         </div>
       </section>
       <section className="form">
@@ -105,7 +105,7 @@ const QuestionForm = props => {
           </div>
         </section>
       </section>
-    </StyledSection>
+    </StyledForm>
   )
 }
 

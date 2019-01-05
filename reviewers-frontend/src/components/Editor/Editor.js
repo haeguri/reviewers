@@ -133,7 +133,7 @@ class Editor extends Component {
 
   _attachMouseDownEventListener() {
     const { monacoEditor } = this;
-    const { match: { params }, onLineClick, reviewActions, authInfo } = this.props;
+    const { match: { params }, onLineClick, reviewActions } = this.props;
 
     const viewZoneIds = [];
     let activeLineNumbers = [];
@@ -165,7 +165,7 @@ class Editor extends Component {
 
           currViewZoneId = changeAccessor.addZone({
               afterLineNumber: currLineNumber,
-              heightInPx: 250,
+              heightInPx: 253,
               domNode: reviewDOM,
           });
 
@@ -174,7 +174,7 @@ class Editor extends Component {
 
           ReactDOM.render(
             <ReviewEditorContainer
-              authInfo={authInfo}
+              authInfo={this.props.authInfo}
               reviewActions={reviewActions}
               lineNumber={currLineNumber}
               questionId={params.qId}
@@ -246,7 +246,6 @@ class Editor extends Component {
 
 Editor.defaultProps = {
     onChange: _=>{},
-    language: 'javascript',
     onLineClick: _=>{},
     reviewCounts: {}
 };

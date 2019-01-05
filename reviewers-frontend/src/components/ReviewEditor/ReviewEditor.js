@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Button from '../Button';
 import MarkdownEditor from '../MarkdownEditor';
 
-const StyledDiv = styled.div`
+const StyledForm = styled.form`
   height: 100%;
   padding: 15px;
   border: solid 1px #c2c2c2;
@@ -83,7 +83,7 @@ class ReviewEditor extends Component {
     } = this.props;
     
     return (
-      <StyledDiv innerRef={ref => this.reviewEditorRef = ref}>
+      <StyledForm innerRef={ref => this.reviewEditorRef = ref}>
         <MarkdownEditor 
           className="markdown-editor"
           ref={this.mdEditorRef}
@@ -91,10 +91,10 @@ class ReviewEditor extends Component {
           onTextChange={onTextChange} 
         />
         <div className="footer">
-          <Button className="primary" onClick={onSaveClick}>리뷰 등록</Button>
-          <Button onClick={onCancelClick}>취소</Button>
+          <Button type="submit" className="primary" onClick={onSaveClick}>리뷰 등록</Button>
+          <Button type="cancel" onClick={onCancelClick}>취소</Button>
         </div>
-      </StyledDiv>
+      </StyledForm>
     );
   }
 }

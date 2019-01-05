@@ -216,9 +216,10 @@ const QuestionDetail = (props) => {
                   reviewCounts={reviewCounts}
                   onLineClick={(curr) => onLineClick(curr)}
                   value={sourceCode}
+                  language={language.value}
                   options={{
                     readOnly: true,
-                    glyphMargin: true,
+                    glyphMargin: true
                   }}
           />
         </section>

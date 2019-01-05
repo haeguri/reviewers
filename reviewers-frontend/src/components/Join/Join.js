@@ -105,7 +105,7 @@ class Join extends React.Component {
               value={this.state.passwordConfirm}
               placeholder="비밀번호를 다시 입력하세요."
             />
-            <Button className="join-btn" onClick={this.onJoinClick}>회원가입</Button>
+            <Button type="submit" className="join-btn" onClick={this.onJoinClick}>회원가입</Button>
             <Link to="/login"><Button className="cancel-btn">취소</Button></Link>
           </form>
         </CardTemplate>

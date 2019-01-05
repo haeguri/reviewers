@@ -29,6 +29,8 @@ const Button = (props) => {
     className, 
     icon, 
     children,
+    onClick,
+    type,
     ...others 
   } = props;
 
@@ -41,9 +43,20 @@ const Button = (props) => {
     )
   }
 
+  const onButtonClick = (e) => {
+    if(type === 'submit') {
+      e.preventDefault();
+    }
+
+    onClick(e);
+  }
+
   return (
-    <StyledButton className={className}
-                  {...others}>
+    <StyledButton
+      type={type}
+      className={className}
+      onClick={onButtonClick}
+      {...others}>
       { children }
     </StyledButton>
   );

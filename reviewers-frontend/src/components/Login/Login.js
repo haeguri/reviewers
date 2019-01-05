@@ -53,7 +53,7 @@ class Login extends Component {
 
   onLoginClick = (e) => {
     const { email, password } = this.state;
-    this.props.requestLogin({email, password})
+    this.props.requestLogin({email, password});
   }
 
   render() {
@@ -75,7 +75,7 @@ class Login extends Component {
               value={this.state.password}
               placeholder="비밀번호를 입력하세요."
             />
-            <Button className="login-btn" onClick={this.onLoginClick}>로그인</Button>
+            <Button type="submit" className="login-btn" onClick={this.onLoginClick}>로그인</Button>
             <Link to="/join"><Button className="join-btn">회원가입</Button></Link>
           </form>
         </CardTemplate>
