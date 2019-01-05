@@ -40,11 +40,15 @@ const StyledForm = styled.form`
   }
 
   .input-group {
-    margin: 10px 0;
+    margin: 10px 0 20px 0;
+
+    label {
+      font-weight: 600;
+    }
   }
 
   .md-editor {
-    height: 460px;
+    height: 453px;
   }
 `;
 

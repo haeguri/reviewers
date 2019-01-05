@@ -133,7 +133,7 @@ class Editor extends Component {
 
   _attachMouseDownEventListener() {
     const { monacoEditor } = this;
-    const { match: { params }, onLineClick, reviewActions } = this.props;
+    const { match: { params }, history, onLineClick, reviewActions } = this.props;
 
     const viewZoneIds = [];
     let activeLineNumbers = [];
@@ -157,6 +157,10 @@ class Editor extends Component {
       }
 
       if(e.target.element.className.indexOf(CLASS_NAME.REVIEW_BTN) >= 0) {
+        if (!this.props.authInfo.isLogin) {
+          history.push('/login');
+        }
+
         monacoEditor.changeViewZones(changeAccessor => {
           let currViewZoneId;
 
