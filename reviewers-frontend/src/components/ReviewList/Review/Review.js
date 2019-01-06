@@ -57,6 +57,10 @@ const StyledArticle = styled.article`
     .md-editor {
       height: 250px;
     }
+
+    code {
+      white-space: pre-wrap;
+    }
 `;
 
 const Review = (props) => {
