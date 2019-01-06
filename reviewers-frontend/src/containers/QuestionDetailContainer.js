@@ -16,20 +16,16 @@ class QuestionDetailContainer extends Component {
       sourceCode: '',
     },
     isBodyFold: true,
-    selectedLine: -1,
-    isOwner: false,
+    selectedLine: -1
   }
 
   componentDidMount = async () => {
-    const { match: { params }, authInfo, reviewActions } = this.props;
+    const { match: { params }, reviewActions } = this.props;
     const { data } = await questionAPI.detailQuestion(params.qId);
     
     await reviewActions.getReviews(params.qId);
 
-    const isOwner = data.author._id === authInfo._id;
-
     this.setState({
-      isOwner,
       data
     });
   }
@@ -66,7 +62,8 @@ class QuestionDetailContainer extends Component {
   }
 
   render() {
-    const { reviewData } = this.props;
+    const { data } = this.state;
+    const { reviewData, authInfo } = this.props;
 
     const reviewsOnSelectedLine = this._getReviewOnSelectedLine(
       reviewData,
@@ -74,15 +71,18 @@ class QuestionDetailContainer extends Component {
     );
 
     const reviewCounts = this._getReviewCounts(reviewData);
+    const isOwner = data.author._id === authInfo._id
 
     return (
-      <QuestionDetail {...this.state} 
-                      reviews={reviewsOnSelectedLine}
-                      reviewCounts={reviewCounts}
-                      onToggleBodyClick={this.onToggleBodyClick}
-                      onLineClick={this.onLineClick}
-                      onEditClick={this.onEditClick}
-                      onRemoveClick={this.onRemoveClick}
+      <QuestionDetail 
+        {...this.state} 
+        isOwner={isOwner}
+        reviews={reviewsOnSelectedLine}
+        reviewCounts={reviewCounts}
+        onToggleBodyClick={this.onToggleBodyClick}
+        onLineClick={this.onLineClick}
+        onEditClick={this.onEditClick}
+        onRemoveClick={this.onRemoveClick}
       />
     );
   }
