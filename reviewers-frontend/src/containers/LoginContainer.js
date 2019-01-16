@@ -3,17 +3,13 @@ import { withRouter } from 'react-router-dom';
 import Login from '../components/Login';
 import { useAuth } from '../contexts/auth';
 import { isValidEmail } from '../utils/validation';
+import withFormValidation from '../hoc/withFormValidation';
 
 class LoginContainer extends Component {
-  invalidFields = new Set();
   state = {
     form: {
       email: '',
       password: ''
-    },
-    errors: {
-      email: null,
-      password: null
     }
   }
 
@@ -35,41 +31,37 @@ class LoginContainer extends Component {
     });
   }
 
-  setErrorState = (field, msg) => {
-    if (msg === null) {
-      this.invalidFields.delete(field);
-    } else {
-      this.invalidFields.add(field);
-    }
-
-    this.setState((state) => ({
-      errors: {
-        ...state.errors,
-        [field]: msg
-      }
-    }))
-  }
-
   onLoginClick = async (e) => {
-    const { form: { email, password } } = this.state;
-    const { authActions } = this.props;
+    const { 
+      form: { 
+        email, 
+        password 
+      } 
+    } = this.state;
 
-    if (!email) {
-      this.setErrorState('email', '이메일이 입력되지 않았습니다.');
-    } else if (!isValidEmail(email)) {
-      this.setErrorState('email', '이메일 형식이 올바르지 않습니다.');
-    } else {
-      this.setErrorState('email', null);
-    }
+    const { 
+      authActions,
+      validateForm,
+      isValidForm,
+    } = this.props;
 
-    if (!password) {
-      this.setErrorState('password', '비밀번호가 입력되지 않았습니다.');
-    } else {
-      this.setErrorState('password', null);
-    }
+    validateForm([
+      {
+        field: 'email',
+        tests: [
+          [email, '이메일이 입력되지 않았습니다.'],
+          [isValidEmail(email), '이메일 형식이 올바르지 않습니다.']
+        ]
+      },
+      {
+        field: 'password',
+        tests: [
+          [password, '비밀번호가 입력되지 않았습니다.']
+        ]
+      }
+    ])
 
-    if (this.invalidFields.size > 0) {
-      this.invalidFields.clear();
+    if (!isValidForm()) {
       return;
     }
 
@@ -81,8 +73,8 @@ class LoginContainer extends Component {
   }
 
   render = () => {
-    const { form, errors } = this.state;
-    const { history, authInfo } = this.props;
+    const { form } = this.state;
+    const { history, authInfo, errors } = this.props;
 
     if (authInfo.isLogin) {
       history.push('/');
@@ -100,4 +92,4 @@ class LoginContainer extends Component {
   }
 }
 
-export default withRouter(useAuth(LoginContainer));
+export default withRouter(useAuth(withFormValidation(LoginContainer)));
