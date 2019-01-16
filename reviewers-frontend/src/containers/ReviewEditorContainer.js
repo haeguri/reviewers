@@ -1,51 +1,39 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReviewEditor from '../components/ReviewEditor/ReviewEditor';
+import withFormValidation from '../hoc/withFormValidation';
 
 class ReviewEditorContainer extends Component {
   constructor(props) {
     super(props);
 
-    this.invalidFields = new Set();
     this.state = {
       form: {
         body: '',
         author: props.authInfo._id,
         lineNumber: props.lineNumber
-      },
-      errors: {
-        body: null,
       }
     };
   }
 
-  setErrorState = (field, msg) => {
-    if (msg === null) {
-      this.invalidFields.delete(field);
-    } else {
-      this.invalidFields.add(field);
-    }
-
-    this.setState((state) => ({
-      errors: {
-        ...state.errors,
-        [field]: msg
-      }
-    }))
-  }
-
   onSaveClick = async (e) => {
     const { form: { body } } = this.state;
-    const { reviewActions, questionId, onCancelClick } = this.props;
+    const { 
+      reviewActions, 
+      questionId, 
+      onCancelClick,
+      validateForm,
+      isValidForm
+    } = this.props;
 
-    if (!body) {
-      this.setErrorState('body', '내용이 입력되지 않았습니다.');
-    } else {
-      this.setErrorState('body', null);
-    }
+    validateForm([
+      {
+        field: 'body',
+        tests: [body, '내용이 입력되지 않았습니다.']
+      }
+    ])
 
-    if (this.invalidFields.size > 0) {
-      this.invalidFields.clear();
+    if (!isValidForm()) {
       return;
     }
 
@@ -67,14 +55,11 @@ class ReviewEditorContainer extends Component {
   }
 
   render = () => {
-    const {
-      errors
-    } = this.state;
-
     const { 
       monacoEditor, 
       onCancelClick, 
-      setIsMousePositionInReview
+      setIsMousePositionInReview,
+      errors
     } = this.props;
 
     return (
@@ -99,4 +84,4 @@ ReviewEditorContainer.propTypes = {
   monacoEditor: PropTypes.object,
 };
 
-export default ReviewEditorContainer;
+export default withFormValidation(ReviewEditorContainer);

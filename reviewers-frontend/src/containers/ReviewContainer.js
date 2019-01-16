@@ -3,6 +3,7 @@ import Review from '../components/ReviewList/Review';
 import { withRouter } from 'react-router-dom';
 import { useAuth } from '../contexts/auth';
 import { useReviewAPI } from '../contexts/review';
+import withFormValidation from '../hoc/withFormValidation';
 
 class ReviewContainer extends Component {
   componentWillMount = () => {
@@ -10,31 +11,12 @@ class ReviewContainer extends Component {
   }
 
   initialize = (props) => {
-    this.invalidFields = new Set();
     this.setState({
       isEditMode: false,
       form: {
         body: props.data.body
-      },
-      errors: {
-        body: null
       }
     })
-  }
-
-  setErrorState = (field, msg) => {
-    if (msg === null) {
-      this.invalidFields.delete(field);
-    } else {
-      this.invalidFields.add(field);
-    }
-
-    this.setState((state) => ({
-      errors: {
-        ...state.errors,
-        [field]: msg
-      }
-    }))
   }
 
   onSaveClick = async (e) => {
@@ -43,7 +25,9 @@ class ReviewContainer extends Component {
       data: { _id }, 
       lineNumber, 
       authInfo, 
-      reviewActions, 
+      reviewActions,
+      validateForm,
+      isValidForm
     } = this.props;
 
     const { form: { body } } = this.state;
@@ -54,14 +38,16 @@ class ReviewContainer extends Component {
       body: this.state.form.body,
     };
 
-     if (!body) {
-      this.setErrorState('body', '내용이 입력되지 않았습니다.');
-    } else {
-      this.setErrorState('body', null);
-    }
+    validateForm([
+      {
+        field: 'body',
+        tests: [
+          [body, '내용이 입력되지 않았습니다.']
+        ]
+      }
+    ]);
 
-    if (this.invalidFields.size > 0) {
-      this.invalidFields.clear();
+    if (!isValidForm()) {
       return;
     }
 
@@ -82,11 +68,13 @@ class ReviewContainer extends Component {
   }
 
   onCancelClick = (e) => {
+    const { resetValidation } = this.props;
     this.setState({
       isEditMode: false
     });
 
     this.initialize(this.props);
+    resetValidation();
   }
 
   onTextChange = (e) => {
@@ -109,7 +97,6 @@ class ReviewContainer extends Component {
 
   render = () => {
     const {
-      errors,
       isEditMode,
       form
     } = this.state;
@@ -117,7 +104,8 @@ class ReviewContainer extends Component {
     const { 
       data, 
       className, 
-      authInfo 
+      authInfo,
+      errors
     } = this.props;
 
     const isOwner = authInfo._id === data.author._id;
@@ -140,4 +128,4 @@ class ReviewContainer extends Component {
   }
 }
 
-export default withRouter(useAuth(useReviewAPI(ReviewContainer)));
+export default withRouter(useAuth(useReviewAPI(withFormValidation(ReviewContainer))));

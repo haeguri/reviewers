@@ -19,6 +19,11 @@ const withFormValidation = (WrappedFormComponent) => {
       return true;
     }
 
+    resetValidation = () => {
+      this.invalidFields = new Set();
+      this.setState({errors: {}});
+    }
+
     validateForm = (targets) => {
       const errors = targets.reduce((err, curr) => {
         const { field, tests } = curr;
@@ -42,11 +47,20 @@ const withFormValidation = (WrappedFormComponent) => {
     }
     
     render = () => {
-      const { validateForm, isValidForm, state: { errors } } = this;
+      const { 
+        validateForm, 
+        isValidForm, 
+        resetValidation, 
+        state: { 
+          errors 
+        } 
+      } = this;
+
       return (
         <WrappedFormComponent 
           validateForm={validateForm}
           isValidForm={isValidForm}
+          resetValidation={resetValidation}
           errors={errors}
           {...this.props}
         />

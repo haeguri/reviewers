@@ -7,10 +7,8 @@ const borderColorMixin = css`
   border-color: ${props => {
     if (props.error) {
       return '#ff0000';
-    } else if (props.error === null) {
+    } else {
       return '#c2c2c2';
-    } else if (props.error === undefined) {
-      return 'inherit';
     }
   }};
 `

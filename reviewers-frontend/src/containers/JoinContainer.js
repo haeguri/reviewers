@@ -10,8 +10,6 @@ import {
 } from '../utils/validation';
 
 class JoinContainer extends Component {
-  invalidFields = new Set();
-
   state = {
     form: {
       email: '',

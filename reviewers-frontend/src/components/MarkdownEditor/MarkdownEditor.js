@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import MarkdownViewer from '../MarkdownViewer';
 import TextInput from '../TextInput';
 import Button from '../Button';
-import InputError from '../InputError';
 
 const StyledDiv = styled.div`
   position: relative;
@@ -35,7 +34,6 @@ const StyledDiv = styled.div`
     width: 100%;
     height: 100%;
     border-radius: 3px;
-    border-color: ${props => props.error ? '#ff0000' : '#c2c2c2'};
   }
 `;
 
@@ -65,7 +63,6 @@ class MarkdownEditor extends Component {
       <StyledDiv 
         className={className}
         innerRef={ref => this.mdEditorDOM = ref}
-        error={error}
       >
         <Button className="md-preview-btn" onClick={this.onPreviewClick}>미리보기</Button>
         {!isPreviewMode ? (
@@ -74,6 +71,7 @@ class MarkdownEditor extends Component {
             multiline={true}
             onChange={onTextChange}
             value={value}
+            error={error}
           />
         ) : (
           <MarkdownViewer   
@@ -82,7 +80,6 @@ class MarkdownEditor extends Component {
             rawText={value} 
           />
         )}
-        <InputError error={error}/>
       </StyledDiv>
     )
   }

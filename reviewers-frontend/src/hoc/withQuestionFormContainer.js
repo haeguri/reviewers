@@ -3,10 +3,10 @@ import questionAPI from '../api/question';
 import languageAPI from '../api/language';
 import { withRouter } from 'react-router-dom';
 import { useAuth } from '../contexts/auth';
+import withFormValidation from '../hoc/withFormValidation';
 
 const withQuestionFormContainer = (WrappedComponent, apiForSubmit, apiForFormInit) => {
   const QuestionFormContainer = class extends Component {
-    invalidFields = new Set();
     state = {
       languageOptions: [],
       selectedLanguageOption: {},
@@ -16,11 +16,6 @@ const withQuestionFormContainer = (WrappedComponent, apiForSubmit, apiForFormIni
         body: '',
         sourceCode: '',
         language: ''
-      },
-      errors: {
-        title: null,
-        body: null,
-        sourcecode: null
       }
     }
 
@@ -48,50 +43,48 @@ const withQuestionFormContainer = (WrappedComponent, apiForSubmit, apiForFormIni
         selectedLanguageOption,
       }));
     }
-
-    setErrorState = (field, msg) => {
-      if (msg === null) {
-        this.invalidFields.delete(field);
-      } else {
-        this.invalidFields.add(field);
-      }
-  
-      this.setState((state) => ({
-        errors: {
-          ...state.errors,
-          [field]: msg
-        }
-      }))
-    }  
   
     onSubmit = async (e) => {
-      const { form: { title, body, sourceCode } } = this.state;
-      const { match: { params } } = this.props;
+      const { 
+        form: { 
+          title, 
+          body, 
+          sourceCode 
+        } 
+      } = this.state;
 
-      if (!title) {
-        this.setErrorState('title', '제목이 입력되지 않았습니다.');
-      } else if (title.length > 50) {
-        this.setErrorState('title', '길이의 제한은 50자 입니다.');
-      } else {
-        this.setErrorState('title', null);
-      }
+      const { 
+        match: { 
+          params 
+        },
+        validateForm,
+        isValidForm
+      } = this.props;
 
-      if (!body) {
-        this.setErrorState('body', '내용이 입력되지 않았습니다.');
-      } else if (body.length > 10000) {
-        this.setErrorState('body', '길이의 제한은 1000자 입니다.');
-      } else {
-        this.setErrorState('body', null);
-      }
+      validateForm([
+        {
+          field: 'title',
+          tests: [
+            [title, '제목이 입력되지 않았습니다.'],
+            [title.length <= 50, '길이의 제한은 50자 입니다.'] 
+          ]
+        },
+        {
+          field: 'body',
+          tests: [
+            [body, '내용이 입력되지 않았습니다.'],
+            [body.length <= 10000, '길이의 제한은 10000자 입니다.']
+          ]
+        },
+        {
+          field: 'sourceCode',
+          tests: [
+            [sourceCode, '소스코드가 입력되지 않았습니다.']
+          ]
+        }
+      ])
 
-      if (!sourceCode) {
-        this.setErrorState('sourceCode', '소스코드가 입력되지 않았습니다.');
-      } else {
-        this.setErrorState('sourceCode', null);
-      }
-
-      if (this.invalidFields.size > 0) {
-        this.invalidFields.clear();
+      if (!isValidForm()) {
         return;
       }
 
@@ -142,11 +135,11 @@ const withQuestionFormContainer = (WrappedComponent, apiForSubmit, apiForFormIni
 
     render = () => {
       const { 
-        form, 
-        errors,
+        form,
         selectedLanguageOption,
         languageOptions
       } = this.state;
+      const { errors } = this.props;
 
       return (
         <WrappedComponent 
@@ -165,7 +158,7 @@ const withQuestionFormContainer = (WrappedComponent, apiForSubmit, apiForFormIni
     }
   }
 
-  return withRouter(useAuth(QuestionFormContainer));
+  return withRouter(useAuth(withFormValidation(QuestionFormContainer)));
 }
 
 export default withQuestionFormContainer;
