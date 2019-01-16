@@ -24,11 +24,12 @@ const Dropdown = props => {
   } = props;
 
   return (
-    <StyledSelect className={className}
-                  styles={customStyles}
-                  value={value}
-                  options={options}
-                  onChange={onChange} 
+    <StyledSelect 
+      className={className}
+      styles={customStyles}
+      value={value}
+      options={options}
+      onChange={onChange} 
     />
   )
 }

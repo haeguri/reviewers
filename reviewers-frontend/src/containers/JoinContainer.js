@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Join from '../components/Join';
 import { useAuth } from '../contexts/auth';
 import { withRouter } from 'react-router-dom';
+import withFormValidation from '../hoc/withFormValidation';
 import {
   isValidEmail,
   isValidUsername,
@@ -17,12 +18,6 @@ class JoinContainer extends Component {
       username: '',
       password: '',
       passwordConfirm: ''
-    },
-    errors: {
-      email: null,
-      username: null,
-      password: null,
-      passwordConfirm: null
     }
   };
 
@@ -62,61 +57,55 @@ class JoinContainer extends Component {
     });
   }
 
-  setErrorState = (field, msg) => {
-    if (msg === null) {
-      this.invalidFields.delete(field);
-    } else {
-      this.invalidFields.add(field);
-    }
-
-    this.setState((state) => ({
-      errors: {
-        ...state.errors,
-        [field]: msg
-      }
-    }))
-  }
-
   onJoinClick = async (e) => {
-    const { form: { email, username, password, passwordConfirm } } = this.state;
-    const { authActions } = this.props;
+    const { 
+      form: { 
+        email, 
+        username,
+        password, 
+        passwordConfirm 
+      } 
+    } = this.state;
 
-    if (!email) {
-      this.setErrorState('email', '이메일이 입력되지 않았습니다.');
-    } else if (!isValidEmail(email)) {
-      this.setErrorState('email', '이메일 형식이 올바르지 않습니다.');
-    } else {
-      this.setErrorState('email', null);
-    }
+    const { 
+      authActions, 
+      validateForm, 
+      isValidForm 
+    } = this.props;
 
-    if (!username) {
-      this.setErrorState('username', '사용자 이름이 입력되지 않았습니다.');
-    } else if (!isValidUsername(username)) {
-      this.setErrorState('username', '사용자 이름 형식이 올바르지 않습니다.');
-    } else {
-      this.setErrorState('username', null);
-    }
+    validateForm([
+      {
+        field: 'email',
+        tests: [
+          [email, '이메일이 입력되지 않았습니다.'],
+          [isValidEmail(email), '이메일 형식이 올바르지 않습니다.'],
+        ]
+      },
+      {
+        field: 'username',
+        tests: [
+          [username, '사용자 이름이 입력되지 않았습니다.'],
+          [isValidUsername(username), '사용자 이름 형식이 올바르지 않습니다.']
+        ]
+      },
+      {
+        field: 'password',
+        tests: [
+          [password, '비밀번호가 입력되지 않았습니다.'],
+          [isValidPassword(password), '비밀번호 형식은 4~16자리 영문자, 숫자입니다.'],
+          [password === passwordConfirm, '두 개의 비밀번호가 다릅니다.']
+        ]
+      },
+      {
+        field: 'passwordConfirm',
+        tests: [
+          [passwordConfirm, '비밀번호가 입력되지 않았습니다.'],
+          [isValidPassword(passwordConfirm), '비밀번호 형식은 4~16자리 영문자, 숫자입니다.'],
+        ]
+      }
+    ])
 
-    if (!password) {
-      this.setErrorState('password', '비밀번호가 입력되지 않았습니다.');
-    } else if (!isValidPassword(password)) {
-      this.setErrorState('password', '비밀번호 형식은 4~16자리 영문자, 숫자입니다.');
-    } else if (password !== passwordConfirm) {
-      this.setErrorState('password', '두 개의 비밀번호가 다릅니다.');
-    } else {
-      this.setErrorState('password', null);
-    }
-
-    if (!passwordConfirm) {
-      this.setErrorState('passwordConfirm', '비밀번호가 입력되지 않았습니다.');
-    } else if (!isValidPassword(passwordConfirm)) {
-      this.setErrorState('passwordConfirm', '비밀번호 형식은 4~16자리 영문자, 숫자입니다.');
-    } else {
-      this.setErrorState('passwordConfirm', null);
-    }
-
-    if (this.invalidFields.size > 0) {
-      this.invalidFields.clear();
+    if (!isValidForm()) {
       return;
     }
 
@@ -130,8 +119,8 @@ class JoinContainer extends Component {
   }
 
   render = () => {
-    const { form, errors } = this.state;
-    const { authInfo, history } = this.props;
+    const { form } = this.state;
+    const { authInfo, history, errors } = this.props;
 
     if (authInfo.isLogin) {
       history.push('/');
@@ -151,4 +140,4 @@ class JoinContainer extends Component {
   }
 }
 
-export default withRouter(useAuth(JoinContainer));
+export default withRouter(useAuth(withFormValidation(JoinContainer)));
