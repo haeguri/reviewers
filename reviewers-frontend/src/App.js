@@ -1,14 +1,16 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
-import QuestionDetailPage from './pages/QuestionDetailPage';
+import { AuthProvider } from './contexts/auth';
+import { ReviewProvider } from './contexts/review';
+import withSplitting from './hoc/withSplitting';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import JoinPage from './pages/JoinPage';
-import QuestionNewPage from './pages/QuestionNewPage';
-import QuestionEditPage from './pages/QuestionEditPage';
-import { AuthProvider } from './contexts/auth';
-import { ReviewProvider } from './contexts/review';
+
+const QuestionDetailPage = withSplitting(() => import('./pages/QuestionDetailPage'));
+const QuestionNewPage = withSplitting(() => import('./pages/QuestionNewPage'));
+const QuestionEditPage = withSplitting(() => import('./pages/QuestionEditPage'));
 
 const AppProvider = ({contexts, children}) => contexts.reduce(
   (prev, context) => React.createElement(context, {
